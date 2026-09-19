@@ -323,57 +323,258 @@ Please contact me for site visit and consultation.`;
 }
 
 // ----------------------------------------------------
-// 5. Interactive Before & After Slider
+// 5. Interactive Before & After Transformation Engine
 // ----------------------------------------------------
+const BA_PROJECTS = {
+  "living-room": {
+    id: "living-room",
+    title: "Luxury Villa Residence",
+    tabId: "ba-tab-living",
+    beforeImg: "assets/renovation-before-web.jpg",
+    beforeFallback: window.MAK_BA_BEFORE || "assets/renovation-before.jpg",
+    beforeLabel: "BEFORE: RAW RCC & MASONRY SHELL",
+    afterImg: "assets/renovation-after-web.jpg",
+    afterFallback: window.MAK_BA_AFTER || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80",
+    afterLabel: "AFTER: BESPOKE TURNKEY LUXURY",
+    structuralTitle: "Grade-A RCC & Steel",
+    structuralDesc: "Engineered with UltraTech M25/M30 concrete mix and Tata Tiscon Fe 550D rebar. Integrated anti-termite plinth injection and 100% Vasthu beam alignment.",
+    finishingTitle: "Bespoke Interior Craftsmanship",
+    finishingDesc: "Italian Bottochino / Glazed Vitrified flooring, teakwood paneling, concealed copper MEP conduits, and warm 3000K recessed ambient LED illumination.",
+    timelineTitle: "Guaranteed Delivery & Warranty",
+    timelineDesc: "Handed over in 180 days with zero cost escalation guarantee. Includes a 10-Year structural engineering warranty and 1-Year complimentary MEP care."
+  },
+  "villa-exterior": {
+    id: "villa-exterior",
+    title: "Contemporary Villa Facade",
+    tabId: "ba-tab-villa",
+    beforeImg: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
+    beforeFallback: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
+    beforeLabel: "BEFORE: STRUCTURAL COLUMN SCAFFOLDING",
+    afterImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    afterFallback: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    afterLabel: "AFTER: MODERN ARCHITECTURAL VILLA",
+    structuralTitle: "Deep Pile & Anti-Seismic Columns",
+    structuralDesc: "Designed for coastal delta soil bearing capacity with corrosion-resistant epoxy-coated rebars and monolithic slab castings.",
+    finishingTitle: "Weather-Shield Facade & Glazing",
+    finishingDesc: "High-grade textured silicon emulsion, Saint-Gobain acoustic double-glazed glass railings, exterior pergolas, and landscape lighting.",
+    timelineTitle: "Turnkey Civil & Facade Handover",
+    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification."
+  },
+  "commercial-peb": {
+    id: "commercial-peb",
+    title: "PEB Industrial Facility",
+    tabId: "ba-tab-peb",
+    beforeImg: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
+    beforeFallback: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
+    beforeLabel: "BEFORE: HEAVY STEEL TRUSS ASSEMBLY",
+    afterImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
+    afterFallback: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
+    afterLabel: "AFTER: ARCHITECTURAL COMMERCIAL FACILITY",
+    structuralTitle: "Pre-Engineered High-Tensile Steel",
+    structuralDesc: "Grade 345 MPa high-tensile steel rafters, cold-formed Z & C purlins, and heavy-duty anchor bolt assemblies designed for wind loads up to 50 m/s.",
+    finishingTitle: "Insulated Cladding & MEP Integration",
+    finishingDesc: "Standing seam color-coated roofing sheets with rockwool insulation, polycarbonate daylight panels, and industrial epoxy flooring.",
+    timelineTitle: "90-Day Rapid Commissioning",
+    timelineDesc: "Precision factory fabrication with rapid on-site bolt assembly, fire safety compliance, and ISO 9001:2015 quality assurance."
+  }
+};
+
+let currentBaProject = "living-room";
+let baAutoScanActive = false;
+let baAutoScanRaf = null;
+let baAutoScanStartTime = null;
+
+function setBaPosition(percentage) {
+  const container = document.getElementById("ba-slider-box");
+  if (!container) return;
+  const clamped = Math.max(0, Math.min(100, percentage));
+  container.style.setProperty("--ba-pos", `${clamped}%`);
+  state.sliderPosition = clamped;
+}
+
+function switchBaProject(projectId) {
+  const proj = BA_PROJECTS[projectId];
+  if (!proj) return;
+  currentBaProject = projectId;
+
+  // Stop auto scan on switch
+  if (baAutoScanActive) toggleBaAutoScan();
+
+  // Update tabs
+  ["ba-tab-living", "ba-tab-villa", "ba-tab-peb"].forEach(tabId => {
+    const tab = document.getElementById(tabId);
+    if (!tab) return;
+    if (tabId === proj.tabId) {
+      tab.classList.add("active");
+    } else {
+      tab.classList.remove("active");
+    }
+  });
+
+  // Fade out slightly and swap images
+  const imgBefore = document.getElementById("ba-img-before");
+  const imgAfter = document.getElementById("ba-img-after");
+  const textBefore = document.getElementById("ba-text-before");
+  const textAfter = document.getElementById("ba-text-after");
+
+  if (imgBefore && imgAfter) {
+    imgBefore.style.opacity = "0.4";
+    imgAfter.style.opacity = "0.4";
+
+    setTimeout(() => {
+      if (projectId === "living-room") {
+        var isGitHub = window.location.hostname.indexOf("github.io") !== -1;
+        imgBefore.src = (isGitHub && window.MAK_BA_BEFORE) ? window.MAK_BA_BEFORE : proj.beforeImg;
+        imgAfter.src = (isGitHub && window.MAK_BA_AFTER) ? window.MAK_BA_AFTER : proj.afterImg;
+      } else {
+        imgBefore.src = proj.beforeImg;
+        imgAfter.src = proj.afterImg;
+      }
+
+      imgBefore.onerror = function() {
+        this.onerror = null;
+        if (proj.beforeFallback) this.src = proj.beforeFallback;
+      };
+      imgAfter.onerror = function() {
+        this.onerror = null;
+        if (proj.afterFallback) this.src = proj.afterFallback;
+      };
+
+      if (textBefore) textBefore.textContent = proj.beforeLabel;
+      if (textAfter) textAfter.textContent = proj.afterLabel;
+
+      imgBefore.style.opacity = "1";
+      imgAfter.style.opacity = "1";
+    }, 150);
+  }
+
+  // Update Spec Cards
+  const structTitle = document.getElementById("ba-spec-structural-title");
+  const structDesc = document.getElementById("ba-spec-structural-desc");
+  const finishTitle = document.getElementById("ba-spec-finishing-title");
+  const finishDesc = document.getElementById("ba-spec-finishing-desc");
+  const timeTitle = document.getElementById("ba-spec-timeline-title");
+  const timeDesc = document.getElementById("ba-spec-timeline-desc");
+
+  if (structTitle) structTitle.textContent = proj.structuralTitle;
+  if (structDesc) structDesc.textContent = proj.structuralDesc;
+  if (finishTitle) finishTitle.textContent = proj.finishingTitle;
+  if (finishDesc) finishDesc.textContent = proj.finishingDesc;
+  if (timeTitle) timeTitle.textContent = proj.timelineTitle;
+  if (timeDesc) timeDesc.textContent = proj.timelineDesc;
+
+  // Reset slider to 50%
+  setBaPosition(50);
+}
+
+function toggleBaAutoScan() {
+  const btn = document.getElementById("ba-autoscan-btn");
+  const label = document.getElementById("ba-autoscan-label");
+  const icon = document.getElementById("ba-autoscan-icon");
+
+  if (baAutoScanActive) {
+    baAutoScanActive = false;
+    if (baAutoScanRaf) cancelAnimationFrame(baAutoScanRaf);
+    baAutoScanRaf = null;
+    if (label) label.textContent = "Auto Reveal";
+    if (btn) btn.classList.remove("ring-2", "ring-[#d4af37]");
+    if (icon && window.lucide) {
+      icon.setAttribute("data-lucide", "play");
+      window.lucide.createIcons();
+    }
+  } else {
+    baAutoScanActive = true;
+    baAutoScanStartTime = null;
+    if (label) label.textContent = "Pause Reveal";
+    if (btn) btn.classList.add("ring-2", "ring-[#d4af37]");
+    if (icon && window.lucide) {
+      icon.setAttribute("data-lucide", "pause");
+      window.lucide.createIcons();
+    }
+
+    function scanStep(timestamp) {
+      if (!baAutoScanActive) return;
+      if (!baAutoScanStartTime) baAutoScanStartTime = timestamp;
+      const elapsed = (timestamp - baAutoScanStartTime) / 1000;
+      // Oscillate smoothly between 12% and 88% over 4.5 seconds
+      const pos = 50 + 38 * Math.sin((elapsed * Math.PI * 2) / 4.5);
+      setBaPosition(pos);
+      baAutoScanRaf = requestAnimationFrame(scanStep);
+    }
+    baAutoScanRaf = requestAnimationFrame(scanStep);
+  }
+}
+
 function initBeforeAfterSlider() {
   const container = document.getElementById("ba-slider-box");
-  const overlay = document.getElementById("ba-overlay");
-  const handle = document.getElementById("ba-handle");
-  if (!container || !overlay || !handle) return;
+  if (!container) return;
 
-  let isDragging = false;
+  let isPointerDown = false;
 
-  function updateSlider(clientX) {
+  function handlePointer(clientX) {
     const rect = container.getBoundingClientRect();
     let offsetX = clientX - rect.left;
     let percentage = (offsetX / rect.width) * 100;
-    percentage = Math.max(2, Math.min(98, percentage));
-    
-    state.sliderPosition = percentage;
-    overlay.style.width = `${percentage}%`;
-    handle.style.left = `${percentage}%`;
+    setBaPosition(percentage);
   }
 
-  handle.addEventListener("mousedown", (e) => {
-    isDragging = true;
+  // Pointer Events (Unified Mouse, Touch & Pen with hardware tracking)
+  container.addEventListener("pointerdown", (e) => {
+    isPointerDown = true;
+    container.classList.add("is-dragging");
+    if (baAutoScanActive) toggleBaAutoScan();
+    try {
+      container.setPointerCapture(e.pointerId);
+    } catch (err) {}
+    handlePointer(e.clientX);
     e.preventDefault();
   });
 
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
+  container.addEventListener("pointermove", (e) => {
+    if (!isPointerDown) return;
+    handlePointer(e.clientX);
   });
 
-  window.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    updateSlider(e.clientX);
+  function stopDrag(e) {
+    if (!isPointerDown) return;
+    isPointerDown = false;
+    container.classList.remove("is-dragging");
+    try {
+      container.releasePointerCapture(e.pointerId);
+    } catch (err) {}
+  }
+
+  container.addEventListener("pointerup", stopDrag);
+  container.addEventListener("pointercancel", stopDrag);
+
+  // Keyboard accessibility on container focus
+  container.setAttribute("tabindex", "0");
+  container.setAttribute("role", "slider");
+  container.setAttribute("aria-valuemin", "0");
+  container.setAttribute("aria-valuemax", "100");
+  container.setAttribute("aria-valuenow", "50");
+  container.setAttribute("aria-label", "Before and after transformation slider");
+
+  container.addEventListener("keydown", (e) => {
+    if (baAutoScanActive) toggleBaAutoScan();
+    let current = state.sliderPosition || 50;
+    if (e.key === "ArrowLeft") {
+      setBaPosition(current - 5);
+      e.preventDefault();
+    } else if (e.key === "ArrowRight") {
+      setBaPosition(current + 5);
+      e.preventDefault();
+    } else if (e.key === "Home") {
+      setBaPosition(0);
+      e.preventDefault();
+    } else if (e.key === "End") {
+      setBaPosition(100);
+      e.preventDefault();
+    }
   });
 
-  handle.addEventListener("touchstart", () => {
-    isDragging = true;
-  }, { passive: true });
-
-  window.addEventListener("touchend", () => {
-    isDragging = false;
-  });
-
-  window.addEventListener("touchmove", (e) => {
-    if (!isDragging || !e.touches[0]) return;
-    updateSlider(e.touches[0].clientX);
-  }, { passive: true });
-
-  container.addEventListener("click", (e) => {
-    updateSlider(e.clientX);
-  });
+  // Set initial 50% position
+  setBaPosition(50);
 }
 
 // ----------------------------------------------------
@@ -935,7 +1136,7 @@ function renderHighlightCard() {
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="bg-white p-0.5 rounded border border-[#d4af37]/60 h-5 w-6 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <img src="assets/mak-logo-hd.png" alt="MAK BUILD" class="h-full w-full object-contain" />
+            <img src="${window.MAK_BRAND_LOGO || 'assets/mak-logo-hd-clean.png'}" data-brand-logo onerror="this.onerror=null;this.src=window.MAK_BRAND_LOGO;" alt="MAK BUILD" class="h-full w-full object-contain" />
           </div>
           <span class="inline-block ${h.tagColor} px-2.5 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase">
             ${h.tag}
@@ -1057,4 +1258,7 @@ window.applyForDraftsman = applyForDraftsman;
 window.setHeroSlide = setHeroSlide;
 window.nextHeroSlide = nextHeroSlide;
 window.prevHeroSlide = prevHeroSlide;
+window.switchBaProject = switchBaProject;
+window.setBaPosition = setBaPosition;
+window.toggleBaAutoScan = toggleBaAutoScan;
 

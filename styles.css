@@ -287,63 +287,185 @@ input[type="tel"],
 }
 
 /* ========================================================
-   BEFORE & AFTER RENOVATION SLIDER
+   BEFORE & AFTER ARCHITECTURAL TRANSFORMATION SHOWCASE
    ======================================================== */
+.ba-showcase-card {
+  border-radius: 28px;
+  background: rgba(10, 13, 20, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ba-showcase-card:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), 0 0 30px -5px rgba(212, 175, 55, 0.2);
+}
+
 .ba-container {
   position: relative;
   overflow: hidden;
   user-select: none;
+  -webkit-user-select: none;
   touch-action: pan-y;
+  cursor: ew-resize;
+  border-radius: 24px;
+  background: #080b11;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --ba-pos: 50%;
 }
 
-.ba-overlay {
+.ba-image-after {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 50%;
-  overflow: hidden;
-  will-change: width;
-}
-
-.ba-overlay img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  inset: 0;
   width: 100%;
-  max-width: none;
+  height: 100%;
   object-fit: cover;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-.ba-handle {
+.ba-overlay-clipped {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: clip-path;
+  clip-path: inset(0 calc(100% - var(--ba-pos, 50%)) 0 0);
+  -webkit-clip-path: inset(0 calc(100% - var(--ba-pos, 50%)) 0 0);
+}
+
+.ba-image-before {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Golden Vertical Laser Line */
+.ba-handle-line {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 50%;
-  width: 4px;
-  background: #d4af37;
-  cursor: ew-resize;
+  left: var(--ba-pos, 50%);
+  width: 3px;
   transform: translateX(-50%);
-  z-index: 20;
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.9);
+  z-index: 25;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(252, 237, 162, 0.95) 0%,
+    rgba(212, 175, 55, 1) 35%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(212, 175, 55, 1) 65%,
+    rgba(252, 237, 162, 0.95) 100%
+  );
+  box-shadow: 0 0 14px 2px rgba(212, 175, 55, 0.95), 0 0 30px 6px rgba(212, 175, 55, 0.45);
 }
 
-.ba-handle-button {
+/* Luxury Circular Handle Badge */
+.ba-handle-orb {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: var(--ba-pos, 50%);
   transform: translate(-50%, -50%);
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: #d4af37;
+  background: radial-gradient(circle at 35% 35%, #fff1b8 0%, #d4af37 60%, #917010 100%);
   border: 3px solid #080b11;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5), 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #080b11;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  cursor: ew-resize;
+  z-index: 30;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.ba-handle-orb:hover,
+.ba-container.is-dragging .ba-handle-orb {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.8), 0 14px 32px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.9);
+}
+
+/* Floating Stage Badges */
+.ba-stage-badge {
+  position: absolute;
+  top: 20px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-keyboard);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.ba-badge-before {
+  left: 20px;
+  background: rgba(8, 11, 17, 0.88);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.ba-badge-after {
+  right: 20px;
+  background: rgba(8, 11, 17, 0.88);
+  color: #fceda2;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+}
+
+.ba-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ba-pulse-dot-amber {
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+}
+.ba-pulse-dot-green {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+/* Project Selector Tabs */
+.ba-tab-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ba-tab-btn.active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.08));
+  border-color: #d4af37;
+  color: #ffffff;
+  box-shadow: 0 0 20px -5px rgba(212, 175, 55, 0.4);
+}
+.ba-tab-btn:not(.active) {
+  background: rgba(14, 19, 31, 0.7);
+  border-color: rgba(51, 65, 85, 0.6);
+  color: #94a3b8;
+}
+.ba-tab-btn:not(.active):hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #e2e8f0;
 }
 
 /* Custom Range Slider */
