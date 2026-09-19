@@ -935,7 +935,7 @@ function renderHighlightCard() {
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="bg-white p-0.5 rounded border border-[#d4af37]/60 h-5 w-6 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <img src="assets/mak-logo-hd-clean.png" alt="MAK BUILD" class="h-full w-full object-contain" />
+            <img src="assets/mak-logo-hd.png" alt="MAK BUILD" class="h-full w-full object-contain" />
           </div>
           <span class="inline-block ${h.tagColor} px-2.5 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase">
             ${h.tag}
