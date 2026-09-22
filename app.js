@@ -328,18 +328,18 @@ Please contact me for site visit and consultation.`;
 const BA_PROJECTS = {
   "living-room": {
     id: "living-room",
-    title: "Luxury Villa Residence",
+    title: "Luxury Penthouse Residence",
     tabId: "ba-tab-living",
     beforeImg: "assets/renovation-before-web.jpg",
     beforeFallback: window.MAK_BA_BEFORE || "assets/renovation-before.jpg",
     beforeLabel: "BEFORE: RAW RCC & MASONRY SHELL",
     afterImg: "assets/renovation-after-web.jpg",
     afterFallback: window.MAK_BA_AFTER || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80",
-    afterLabel: "AFTER: BESPOKE TURNKEY LUXURY",
+    afterLabel: "AFTER: BESPOKE PENTHOUSE LUXURY",
     structuralTitle: "Grade-A RCC & Steel",
     structuralDesc: "Engineered with UltraTech M25/M30 concrete mix and Tata Tiscon Fe 550D rebar. Integrated anti-termite plinth injection and 100% Vasthu beam alignment.",
-    finishingTitle: "Bespoke Interior Craftsmanship",
-    finishingDesc: "Italian Bottochino / Glazed Vitrified flooring, teakwood paneling, concealed copper MEP conduits, and warm 3000K recessed ambient LED illumination.",
+    finishingTitle: "Dual Halo Chandelier & Symmetrical Triptych Gallery",
+    finishingDesc: "Curated museum-grade triptych feature wall with Leonardo da Vinci's masterpiece, dual-tier warm gold circular halo chandeliers, custom cove ambient ceiling illumination, and floor-to-ceiling panoramic sunset fenestrations.",
     timelineTitle: "Guaranteed Delivery & Warranty",
     timelineDesc: "Handed over in 180 days with zero cost escalation guarantee. Includes a 10-Year structural engineering warranty and 1-Year complimentary MEP care."
   },
@@ -390,6 +390,29 @@ function setBaPosition(percentage) {
   const clamped = Math.max(0, Math.min(100, percentage));
   container.style.setProperty("--ba-pos", `${clamped}%`);
   state.sliderPosition = clamped;
+
+  // Intelligent proximity dimming for badges so they don't collide with the dial
+  const badgeBefore = document.getElementById("ba-badge-before");
+  const badgeAfter = document.getElementById("ba-badge-after");
+  if (badgeBefore) {
+    if (clamped < 22) {
+      badgeBefore.style.opacity = Math.max(0.12, clamped / 22).toString();
+      badgeBefore.style.transform = `scale(${0.92 + 0.08 * (clamped / 22)})`;
+    } else {
+      badgeBefore.style.opacity = "1";
+      badgeBefore.style.transform = "scale(1)";
+    }
+  }
+  if (badgeAfter) {
+    if (clamped > 78) {
+      const factor = (100 - clamped) / 22;
+      badgeAfter.style.opacity = Math.max(0.12, factor).toString();
+      badgeAfter.style.transform = `scale(${0.92 + 0.08 * factor})`;
+    } else {
+      badgeAfter.style.opacity = "1";
+      badgeAfter.style.transform = "scale(1)";
+    }
+  }
 }
 
 function switchBaProject(projectId) {

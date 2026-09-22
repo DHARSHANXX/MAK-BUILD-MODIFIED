@@ -87,17 +87,17 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .font-logo-bold {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
 }
 .font-logo-light {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.04em;
 }
 .font-logo-subtitle {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.12em;
 }
 
 .font-script {
@@ -163,6 +163,22 @@ input[type="tel"],
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.glass-nav nav {
+  letter-spacing: 0.025em;
+}
+
+.glass-nav nav a {
+  white-space: nowrap !important;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.glass-nav nav a:hover {
+  transform: translateY(-0.5px);
 }
 
 .glass-card {
@@ -291,17 +307,17 @@ input[type="tel"],
    ======================================================== */
 .ba-showcase-card {
   border-radius: 28px;
-  background: rgba(10, 13, 20, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  background: rgba(8, 11, 17, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 15px -3px rgba(212, 175, 55, 0.08);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .ba-showcase-card:hover {
-  border-color: rgba(212, 175, 55, 0.55);
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), 0 0 30px -5px rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.32);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 20px -3px rgba(212, 175, 55, 0.12);
 }
 
 .ba-container {
@@ -311,9 +327,11 @@ input[type="tel"],
   -webkit-user-select: none;
   touch-action: pan-y;
   cursor: ew-resize;
-  border-radius: 24px;
-  background: #080b11;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  background: #06090e;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
   --ba-pos: 50%;
 }
 
@@ -325,6 +343,7 @@ input[type="tel"],
   object-fit: cover;
   pointer-events: none;
   transition: opacity 0.4s ease;
+  filter: brightness(1.05) contrast(1.02) saturate(0.95);
 }
 
 .ba-overlay-clipped {
@@ -349,123 +368,222 @@ input[type="tel"],
   transition: opacity 0.4s ease;
 }
 
-/* Golden Vertical Laser Line */
+/* Elegant Thin Dividing Line with Subtle Gold Glow */
 .ba-handle-line {
   position: absolute;
   top: 0;
   bottom: 0;
   left: var(--ba-pos, 50%);
-  width: 3px;
+  width: 2px;
   transform: translateX(-50%);
   z-index: 25;
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(252, 237, 162, 0.95) 0%,
-    rgba(212, 175, 55, 1) 35%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(212, 175, 55, 1) 65%,
-    rgba(252, 237, 162, 0.95) 100%
+    rgba(212, 175, 55, 0.25) 0%,
+    rgba(212, 175, 55, 0.9) 20%,
+    #ffffff 50%,
+    rgba(212, 175, 55, 0.9) 80%,
+    rgba(212, 175, 55, 0.25) 100%
   );
-  box-shadow: 0 0 14px 2px rgba(212, 175, 55, 0.95), 0 0 30px 6px rgba(212, 175, 55, 0.45);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.35);
 }
 
-/* Luxury Circular Handle Badge */
+/* Luxury Architectural Dial Orb with Reduced Glow */
 .ba-handle-orb {
   position: absolute;
   top: 50%;
   left: var(--ba-pos, 50%);
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff1b8 0%, #d4af37 60%, #917010 100%);
-  border: 3px solid #080b11;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5), 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.6);
+  background: radial-gradient(circle at 35% 35%, #fff6cc 0%, #d4af37 60%, #8c6806 100%);
+  border: 2px solid #06090e;
+  box-shadow: 
+    0 0 0 1.5px rgba(212, 175, 55, 0.5),
+    0 4px 14px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: ew-resize;
   z-index: 30;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .ba-handle-orb:hover,
 .ba-container.is-dragging .ba-handle-orb {
-  transform: translate(-50%, -50%) scale(1.15);
-  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.8), 0 14px 32px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.9);
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 
+    0 0 0 2px rgba(212, 175, 55, 0.8),
+    0 0 14px rgba(212, 175, 55, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.7);
 }
 
-/* Floating Stage Badges */
+.ba-dial-center {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.ba-dial-notch {
+  position: absolute;
+  background: #06090e;
+}
+.ba-dial-notch-top { top: 2px; left: 50%; width: 2px; height: 4px; transform: translateX(-50%); }
+.ba-dial-notch-bottom { bottom: 2px; left: 50%; width: 2px; height: 4px; transform: translateX(-50%); }
+.ba-dial-notch-left { left: 2px; top: 50%; height: 2px; width: 4px; transform: translateY(-50%); }
+.ba-dial-notch-right { right: 2px; top: 50%; height: 2px; width: 4px; transform: translateY(-50%); }
+
+/* Floating Stage Badges with Balanced & Non-Obstructive Positioning (10-15% Scaled) */
 .ba-stage-badge {
   position: absolute;
-  top: 20px;
+  top: 16px;
   z-index: 20;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
+  gap: 7px;
+  padding: 5px 12px;
   border-radius: 9999px;
   font-family: var(--font-keyboard);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 9.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
+@media (max-width: 640px) {
+  .ba-stage-badge {
+    top: 12px;
+    padding: 3.5px 9px;
+    font-size: 8px;
+    gap: 5px;
+  }
+}
+
 .ba-badge-before {
-  left: 20px;
-  background: rgba(8, 11, 17, 0.88);
-  color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  left: 16px;
+  background: rgba(6, 9, 14, 0.90);
+  color: #f1f5f9;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(245, 158, 11, 0.1);
+}
+
+@media (max-width: 640px) {
+  .ba-badge-before {
+    left: 10px;
+  }
 }
 
 .ba-badge-after {
-  right: 20px;
-  background: rgba(8, 11, 17, 0.88);
+  right: 16px;
+  background: rgba(6, 9, 14, 0.90);
   color: #fceda2;
-  border: 1px solid rgba(212, 175, 55, 0.6);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(212, 175, 55, 0.15);
 }
 
+@media (max-width: 640px) {
+  .ba-badge-after {
+    right: 10px;
+  }
+}
+
+.ba-badge-pill-amber {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.5px 6px;
+  border-radius: 5px;
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.ba-badge-pill-gold {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.5px 6px;
+  border-radius: 5px;
+  background: rgba(212, 175, 55, 0.2);
+  color: #fceda2;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.ba-badge-title {
+  font-weight: 600;
+}
+
+/* Subtle Pulsing Beacon Dots */
 .ba-pulse-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
+  position: relative;
 }
 .ba-pulse-dot-amber {
   background: #f59e0b;
   box-shadow: 0 0 10px #f59e0b;
 }
-.ba-pulse-dot-green {
-  background: #10b981;
-  box-shadow: 0 0 10px #10b981;
+.ba-pulse-dot-amber::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 158, 11, 0.7);
+  animation: radarPing 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
+}
+.ba-pulse-dot-gold {
+  background: #d4af37;
+  box-shadow: 0 0 12px #d4af37;
+}
+.ba-pulse-dot-gold::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.7);
+  animation: radarPing 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* Project Selector Tabs */
+@keyframes radarPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Project Selector Tabs with Dim Gold Highlights */
 .ba-tab-btn {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ba-tab-btn.active {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.08));
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.06));
   border-color: #d4af37;
   color: #ffffff;
-  box-shadow: 0 0 20px -5px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.35);
 }
 .ba-tab-btn:not(.active) {
-  background: rgba(14, 19, 31, 0.7);
-  border-color: rgba(51, 65, 85, 0.6);
+  background: rgba(10, 13, 20, 0.75);
+  border-color: rgba(51, 65, 85, 0.5);
   color: #94a3b8;
 }
 .ba-tab-btn:not(.active):hover {
-  border-color: rgba(212, 175, 55, 0.4);
+  border-color: rgba(212, 175, 55, 0.35);
   color: #e2e8f0;
+  background: rgba(14, 19, 31, 0.9);
 }
 
 /* Custom Range Slider */
@@ -641,7 +759,7 @@ input[type=range]::-webkit-slider-thumb:hover {
   bottom: 24px;
   left: 24px;
   z-index: 45;
-  max-width: 420px;
+  max-width: 380px;
   width: calc(100% - 48px);
   background: rgba(10, 13, 20, 0.95);
   backdrop-filter: blur(16px);
@@ -655,7 +773,17 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 @media (min-width: 640px) {
   .floating-highlight-card {
-    width: 400px;
+    bottom: 24px;
+    left: 24px;
+    width: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .floating-highlight-card {
+    bottom: 20px;
+    left: 20px;
+    width: calc(100vw - 40px);
   }
 }
 
