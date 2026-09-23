@@ -28,6 +28,9 @@ html {
   background-color: #080b11;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ========================================================
@@ -38,6 +41,18 @@ body {
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: 0.012em;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+img, picture, video, canvas, svg {
+  max-width: 100%;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
@@ -586,6 +601,18 @@ input[type="tel"],
   background: rgba(14, 19, 31, 0.9);
 }
 
+@media (max-width: 639px) {
+  .ba-tab-btn {
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.75rem;
+  }
+}
+
 /* Custom Range Slider */
 input[type=range] {
   -webkit-appearance: none;
@@ -624,6 +651,62 @@ input[type=range]::-webkit-slider-thumb:hover {
   transform-style: preserve-3d;
   perspective: 800px;
   background-color: #ffffff !important;
+  height: 30px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  min-height: 30px !important;
+  max-height: 30px !important;
+  flex: 0 0 40px !important;
+  border-radius: 8px !important;
+}
+
+@media (min-width: 640px) {
+  .logo-badge-container {
+    height: 36px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    flex: 0 0 48px !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo-badge-container {
+    height: 40px !important;
+    width: 53px !important;
+    min-width: 53px !important;
+    max-width: 53px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    flex: 0 0 53px !important;
+    border-radius: 12px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .logo-badge-container {
+    height: 48px !important;
+    width: 63px !important;
+    min-width: 63px !important;
+    max-width: 63px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    flex: 0 0 63px !important;
+    border-radius: 14px !important;
+  }
+}
+
+.logo-badge-container img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
 }
 
 .logo-badge-container:hover {
@@ -779,11 +862,33 @@ input[type=range]::-webkit-slider-thumb:hover {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   .floating-highlight-card {
-    bottom: 20px;
-    left: 20px;
-    width: calc(100vw - 40px);
+    bottom: 74px !important;
+    left: 16px !important;
+    right: 16px !important;
+    width: calc(100% - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    margin: 0 auto !important;
+  }
+
+  /* Force main mobile content containers to use full available width with 16px padding */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl,
+  .max-w-2xl,
+  .max-w-xl,
+  .max-w-lg,
+  .max-w-md {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Compact hero container */
+  .hero-slider-container {
+    min-height: 560px !important;
   }
 }
 
@@ -827,6 +932,31 @@ input[type=range]::-webkit-slider-thumb:hover {
   }
 }
 
+/* Fluid Typography Utilities */
+.fluid-h1 {
+  font-size: clamp(1.875rem, 5.5vw + 0.5rem, 4.5rem);
+  line-height: 1.05;
+}
+
+.fluid-h2 {
+  font-size: clamp(1.6rem, 3.5vw + 0.5rem, 3rem);
+  line-height: 1.15;
+}
+
+.fluid-sub {
+  font-size: clamp(0.875rem, 1.2vw + 0.5rem, 1.25rem);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Print Styles */
 @media print {
   body {
@@ -851,3 +981,4 @@ input[type=range]::-webkit-slider-thumb:hover {
     color: #000 !important;
   }
 }
+

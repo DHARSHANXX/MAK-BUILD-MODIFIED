@@ -887,7 +887,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mobile Drawer
   const mobileToggle = document.getElementById("mobile-menu-toggle");
-  const mobileDrawer = document.getElementById("mobile-menu-drawer");
+  const mobileDrawer = document.getElementById("mobile-menu") || document.getElementById("mobile-menu-drawer");
   if (mobileToggle && mobileDrawer) {
     mobileToggle.addEventListener("click", () => {
       mobileDrawer.classList.toggle("hidden");
@@ -896,6 +896,13 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener("click", () => mobileDrawer.classList.add("hidden"));
     });
   }
+
+  window.toggleMobileMenu = function() {
+    const menu = document.getElementById("mobile-menu") || document.getElementById("mobile-menu-drawer");
+    if (menu) {
+      menu.classList.toggle("hidden");
+    }
+  };
 
   // FAQ Accordions
   const faqItems = document.querySelectorAll(".faq-item");
@@ -1216,6 +1223,11 @@ function initFloatingHighlightsWidget() {
   }
 
   resetHighlightTimer();
+
+  // On small mobile screens, start in compact pill mode to keep the hero clear
+  if (window.innerWidth < 640) {
+    minimizeHighlightsWidget();
+  }
 
   // Pause on hover
   if (widget) {
