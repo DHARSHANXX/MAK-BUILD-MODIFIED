@@ -396,21 +396,32 @@ header, section, footer, main {
 }
 
 .pull-quote-card {
-  background: linear-gradient(135deg, rgba(16, 22, 34, 0.9) 0%, rgba(11, 15, 24, 0.95) 100%);
-  border-left: 4px solid #d4af37 !important;
-  border-top: 1px solid rgba(212, 175, 55, 0.25);
-  border-right: 1px solid rgba(212, 175, 55, 0.15);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  background: linear-gradient(135deg, rgba(16, 22, 34, 0.92) 0%, rgba(11, 15, 24, 0.96) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   backdrop-filter: blur(18px);
   box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.75), 0 0 25px -5px rgba(212, 175, 55, 0.15);
   position: relative;
   overflow: hidden;
 }
 
+.pull-quote-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #fceda2 0%, #d4af37 50%, #aa820a 100%);
+  border-radius: 4px 0 0 4px;
+}
+
 .pull-quote-text {
-  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
-  font-style: italic;
-  letter-spacing: 0.01em;
+  font-family: var(--font-keyboard);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.75;
+  color: #f1f5f9;
 }
 
 .safe-bottom-buffer {

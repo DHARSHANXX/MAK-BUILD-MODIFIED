@@ -105,37 +105,16 @@
   </div>
 
   <!-- ========================================================
-       TOP CORPORATE ANNOUNCEMENT BAR
-       ======================================================== -->
-  <div class="bg-gradient-to-r from-[#05070c] via-[#101726] to-[#05070c] border-b border-[#d4af37]/25 text-xs py-2 px-3 sm:px-4 tracking-wide flex flex-wrap items-center justify-between gap-2 sm:gap-3 text-slate-200">
-    <div class="flex items-center gap-3 mx-auto lg:mx-0">
-      <span class="inline-flex items-center gap-1.5 bg-[#d4af37] text-slate-950 px-2.5 py-0.5 rounded-full font-semibold uppercase text-[9.5px] tracking-widest animate-pulse">
-        <i data-lucide="sparkles" class="w-3 h-3"></i> Career Drive
-      </span>
-      <span class="font-medium text-xs">
-      <span class="font-medium text-[11px] sm:text-xs text-center sm:text-left">MAK BUILD is hiring <strong>DRAFTSMAN</strong> in <strong>SIRKAZHI</strong> <span class="hidden md:inline">(AutoCAD &bull; Excel &bull; Civil &bull; Freshers &bull; Inclusive Workplace)</span></span>
-      </span>
-      <a href="#hiring" class="text-[#d4af37] font-semibold hover:underline hover:text-white transition-colors">Apply Now &rarr;</a>
-    </div>
-
-    <div class="hidden lg:flex items-center gap-5 text-xs text-slate-400">
-      <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#d4af37]"></i> ISO 9001:2015 Compliant Systems</span>
-      <span class="text-slate-600">|</span>
-      <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#d4af37]"></i> Sirkazhi, Mayiladuthurai District</span>
-    </div>
-  </div>
-
-  <!-- ========================================================
-       STICKY HEADER / NAVIGATION
+       STICKY HEADER / NAVIGATION (SINGLE CLEAN LINE INSIDE COLUMN)
        ======================================================== -->
   <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
     <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between gap-3 lg:gap-4 xl:gap-8 h-14 sm:h-16 lg:h-20 w-full">
+      <div class="flex items-center justify-between gap-2 lg:gap-3 xl:gap-6 h-16 sm:h-18 lg:h-20 w-full">
         
         <!-- Exact MAK BUILD Brand Lockup (Standard Placement, Perfectly Inset) -->
         <a href="#" class="flex items-center gap-2 lg:gap-2.5 xl:gap-3 group py-1 flex-shrink-0" id="main-brand-logo">
           <!-- Official Emblem & Logo Badge with Bold Sparkle HD Clear Animation -->
-          <div class="logo-badge-container pulse-gold-halo bg-white p-0.5 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-md border border-[#d4af37] flex items-center justify-center relative overflow-hidden cursor-pointer flex-shrink-0">
+          <div class="logo-badge-container pulse-gold-halo bg-white p-0.5 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-md border border-[#d4af37] flex items-center justify-center relative overflow-hidden cursor-pointer flex-shrink-0 h-11 w-11 sm:h-12 sm:w-12 lg:h-14 lg:w-14">
             <img 
               src="assets/mak-logo-hd-clean.png" data-brand-logo onerror="this.onerror=null;this.src=window.MAK_BRAND_LOGO;" 
               alt="MAK BUILD Construction &amp; Design Logo" 
@@ -185,17 +164,20 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Links (Evenly Spaced, Completely Free of Overlap) -->
-        <nav class="hidden lg:flex items-center gap-1.5 lg:gap-2 xl:gap-3 2xl:gap-5 text-[10.5px] lg:text-[11px] xl:text-[12px] 2xl:text-[13px] font-medium text-slate-300 whitespace-nowrap flex-shrink-0">
+        <!-- Desktop Navigation Links (Evenly Spaced, Strictly Single Line) -->
+        <nav class="hidden lg:flex items-center gap-2 xl:gap-3.5 2xl:gap-5 text-[11px] xl:text-[12px] 2xl:text-[13px] font-medium text-slate-300 whitespace-nowrap flex-shrink-0">
           <a href="#services" class="whitespace-nowrap hover:text-[#d4af37] transition-colors py-1">Building Systems</a>
           <a href="#cost-estimator" class="whitespace-nowrap hover:text-[#d4af37] transition-colors flex items-center gap-1 xl:gap-1.5 py-1">
             <span>Cost Calculator</span>
-            <span class="bg-[#d4af37] text-slate-950 text-[6px] lg:text-[6.5px] xl:text-[7.5px] font-semibold px-1.5 xl:px-2 py-0.5 rounded-full uppercase tracking-wider font-keyboard">Instant</span>
+            <span class="bg-[#d4af37] text-slate-950 text-[6.5px] xl:text-[7.5px] font-bold px-1.5 xl:px-2 py-0.5 rounded-full uppercase tracking-wider font-keyboard">Instant</span>
           </a>
           <a href="#portfolio" class="whitespace-nowrap hover:text-[#d4af37] transition-colors py-1">Projects</a>
           <a href="#transformation" class="whitespace-nowrap hover:text-[#d4af37] transition-colors py-1">Before &amp; After</a>
           <a href="#hiring" class="whitespace-nowrap text-amber-400 font-semibold hover:text-white transition-colors flex items-center gap-1 xl:gap-1.5 py-1">
-            <i data-lucide="briefcase" class="w-3 h-3 xl:w-3.5 xl:h-3.5"></i>
+            <svg class="w-3 h-3 xl:w-3.5 xl:h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
             <span>Careers</span>
             <span class="relative flex h-1.5 w-1.5 xl:h-2 xl:w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -205,10 +187,12 @@
           <a href="#contact" class="whitespace-nowrap hover:text-[#d4af37] transition-colors py-1">Contact</a>
         </nav>
 
-        <!-- Right Quick Actions & Phone Call (Safely Inset with Generous Right Margin) -->
-        <div class="hidden sm:flex items-center gap-2 xl:gap-2.5 flex-shrink-0 mr-1 sm:mr-2">
+        <!-- Right Quick Actions & Phone Call (Safely Inset on a Single Line) -->
+        <div class="hidden sm:flex items-center gap-2 xl:gap-2.5 flex-shrink-0">
           <div class="hidden 2xl:flex items-center gap-2 bg-slate-900/95 px-2.5 py-1.5 rounded-xl border border-slate-800 whitespace-nowrap shadow-sm">
-            <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0"></i>
+            <svg class="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
             <div class="text-[10px] xl:text-[11px] font-medium font-keyboard tracking-tight flex items-center gap-1.5 whitespace-nowrap">
               <a href="tel:8144166022" class="text-slate-100 hover:text-[#d4af37] transition-colors whitespace-nowrap">81441 66022</a>
               <span class="text-slate-600 font-normal">|</span>
@@ -218,17 +202,32 @@
 
           <a 
             href="#cost-estimator" 
-            class="bg-gradient-to-r from-[#b5451b] to-[#9c3914] hover:from-[#c94d1f] hover:to-[#b5451b] text-white font-bold text-[9.5px] sm:text-[10px] xl:text-[10.5px] uppercase tracking-wider px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-xl shadow-lg shadow-red-950/30 transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0"
+            class="bg-gradient-to-r from-[#b5451b] to-[#9c3914] hover:from-[#c94d1f] hover:to-[#b5451b] text-white font-bold text-[9.5px] sm:text-[10px] xl:text-[11px] uppercase tracking-wider px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-xl shadow-lg shadow-red-950/30 transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0"
           >
-            <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#d4af37]"></i>
+            <svg class="w-3.5 h-3.5 text-[#d4af37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="16" height="20" x="4" y="2" rx="2"/>
+              <line x1="8" x2="16" y1="6" y2="6"/>
+              <line x1="16" x2="16" y1="14" y2="18"/>
+              <path d="M16 10h.01"/>
+              <path d="M12 10h.01"/>
+              <path d="M8 10h.01"/>
+              <path d="M12 14h.01"/>
+              <path d="M8 14h.01"/>
+              <path d="M12 18h.01"/>
+              <path d="M8 18h.01"/>
+            </svg>
             <span>Estimate Cost</span>
           </a>
         </div>
 
         <!-- Mobile Menu Toggle Button -->
-        <div class="flex items-center lg:hidden mr-1">
+        <div class="flex items-center lg:hidden">
           <button id="mobile-menu-toggle" onclick="toggleMobileMenu()" type="button" class="text-slate-300 hover:text-white p-2" aria-label="Toggle Menu">
-            <i data-lucide="menu" class="w-6 h-6"></i>
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="12" y2="12"/>
+              <line x1="4" x2="20" y1="6" y2="6"/>
+              <line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
           </button>
         </div>
 
@@ -551,27 +550,37 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
-      <!-- Distinct Pull-Quote Card with Left Gold Accent -->
-      <div class="pull-quote-card p-6 sm:p-10 lg:p-12 rounded-3xl shadow-2xl text-left max-w-4xl mx-auto relative overflow-hidden backdrop-blur-xl">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="logo-badge-container bg-white p-1 rounded-xl shadow-md border border-[#d4af37] h-10 w-12 flex items-center justify-center overflow-hidden flex-shrink-0">
+      <!-- Distinct Pull-Quote Card with Straight Left Gold Accent & Even Alignment -->
+      <div class="pull-quote-card p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl text-left max-w-4xl mx-auto relative overflow-hidden backdrop-blur-xl pl-7 sm:pl-10">
+        
+        <!-- Header: Centered Logo Badge, Title & Location with Even Spacing -->
+        <div class="flex items-center gap-3.5 sm:gap-4 mb-5">
+          <div class="logo-badge-container bg-white p-1 rounded-xl shadow-md border border-[#d4af37]/60 h-11 w-11 sm:h-12 sm:w-12 flex items-center justify-center overflow-hidden flex-shrink-0">
             <img src="assets/mak-logo-hd-clean.png" data-brand-logo onerror="this.onerror=null;this.src=window.MAK_BRAND_LOGO;" alt="MAK BUILD" class="w-full h-full object-contain" />
           </div>
           <div>
-            <div class="inline-flex items-center gap-1.5 text-[#d4af37] text-xs font-bold uppercase tracking-widest">
-              <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i> A Warm Welcome from MAK BUILD
+            <div class="inline-flex items-center gap-2 text-[#d4af37] text-xs sm:text-[13px] font-bold uppercase tracking-widest">
+              <svg class="w-3.5 h-3.5 text-[#d4af37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+              <span>A Warm Welcome from MAK BUILD</span>
             </div>
-            <p class="text-[11px] text-slate-400 font-keyboard">Plan &bull; Design &bull; Build &bull; Sirkazhi, Tamil Nadu</p>
+            <p class="text-[11px] sm:text-xs text-slate-400 font-sans mt-0.5">Plan &bull; Design &bull; Build &bull; Sirkazhi, Tamil Nadu</p>
           </div>
         </div>
         
-        <blockquote class="pull-quote-text text-base sm:text-xl lg:text-2xl font-light text-slate-100 leading-relaxed max-w-3xl">
+        <!-- Quote Content with Professional Architectural Sans-Serif -->
+        <blockquote class="pull-quote-text text-base sm:text-lg lg:text-xl text-slate-100 leading-relaxed font-normal my-5 sm:my-6">
           &ldquo;A house is made of bricks and beams, but a home is crafted with love and dreams. At MAK BUILD, our greatest privilege is walking beside you from your very first sketch to the proud moment you turn the key to your forever sanctuary.&rdquo;
         </blockquote>
         
-        <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-keyboard">
-          <span class="text-white font-semibold tracking-wider">MAK BUILD CONSTRUCTION &amp; DESIGN</span>
-          <span class="text-[#f3e5ab] hidden sm:inline">Crafted for Generations</span>
+        <!-- Footer Signoff with Balanced Margin -->
+        <div class="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-sans">
+          <span class="text-white font-semibold tracking-wider text-xs sm:text-[13px]">MAK BUILD CONSTRUCTION &amp; DESIGN</span>
+          <span class="text-[#f3e5ab] text-[11px] sm:text-xs flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#d4af37]"></span>
+            <span>Crafted for Generations</span>
+          </span>
         </div>
       </div>
 
@@ -1607,9 +1616,12 @@
               <textarea name="client_notes" rows="3" placeholder="Plot dimensions (e.g. 30x40, 2400 sq.ft), number of floors, preferred architectural style or industrial PEB specifications..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-[#d4af37] focus:outline-none placeholder-slate-600 font-medium"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-[#d4af37] to-[#aa820a] hover:from-[#f0c946] hover:to-[#c59b27] text-slate-950 font-semibold uppercase tracking-wider py-3.5 rounded-xl shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center gap-2">
-              <i data-lucide="send" class="w-5 h-5"></i>
-              <span>Send Inquiry to MAK BUILD Engineering</span>
+            <button type="submit" class="w-full bg-gradient-to-r from-[#d4af37] to-[#aa820a] hover:from-[#f0c946] hover:to-[#c59b27] text-slate-950 font-bold uppercase tracking-wider py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center gap-2.5 sm:gap-3 group">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 text-slate-950 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+                <path d="m21.854 2.147-10.94 10.939"/>
+              </svg>
+              <span class="text-xs sm:text-sm font-bold tracking-wider leading-tight text-center">Send Inquiry to MAK BUILD Engineering</span>
             </button>
           </form>
         </div>
