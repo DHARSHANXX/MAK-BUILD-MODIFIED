@@ -1,14 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
 
 :root {
   --gold-primary: #d4af37;
-  --gold-light: #f3e5ab;
+  --gold-light: #fceda2;
   --gold-dark: #aa820a;
+  --temple-gold: #c9982d;
+  --terracotta-accent: #b5451b;
   --dark-bg: #080b11;
   --dark-surface: #0e131f;
   --dark-card: #131a2a;
   --dark-border: rgba(212, 175, 55, 0.18);
   --font-keyboard: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Cinzel', 'Playfair Display', Georgia, serif;
 }
 
 *, *::before, *::after {
@@ -23,7 +26,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #f1f5f9;
   background-color: #080b11;
   -webkit-font-smoothing: antialiased;
@@ -34,10 +37,10 @@ html {
 }
 
 /* ========================================================
-   TYPOGRAPHIC HIERARCHY & KEYBOARD LINING NUMBERS
+   TYPOGRAPHIC HIERARCHY: HERITAGE DISPLAY & MODERN SANS
    ======================================================== */
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: 0.012em;
@@ -56,8 +59,8 @@ button, a, input, select, textarea {
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Raleway', sans-serif;
-  letter-spacing: -0.012em;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.02em;
   font-weight: 700;
 }
 
@@ -269,6 +272,100 @@ input[type="tel"],
 }
 
 /* ========================================================
+   KOLAM REPEATING DIAMOND GEOMETRIC MOTIF SECTION DIVIDER
+   Temple-gold (#c9982d) at subtle 30-35% opacity
+   ======================================================== */
+.kolam-divider {
+  width: 100%;
+  height: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg width='36' height='18' viewBox='0 0 36 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 2L34 9L18 16L2 9Z' stroke='%23c9982d' stroke-width='1.2' stroke-opacity='0.35' fill='none'/%3E%3Ccircle cx='18' cy='9' r='1.8' fill='%23c9982d' fill-opacity='0.35'/%3E%3Cpath d='M0 9H2M34 9H36' stroke='%23c9982d' stroke-width='1.2' stroke-opacity='0.35'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.95;
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ========================================================
+   LIVELY SUBTLE ANIMATED BACKGROUND (GPU Accelerated)
+   Slow gentle ambient drift, low-opacity floating light
+   ======================================================== */
+.lively-ambient-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-glow-orb-1 {
+  position: absolute;
+  top: -15%;
+  left: 8%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 650px;
+  max-height: 650px;
+  background: radial-gradient(circle, rgba(201, 152, 45, 0.055) 0%, rgba(8, 11, 17, 0) 70%);
+  border-radius: 50%;
+  filter: blur(65px);
+  animation: floatAmbientSlow 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.ambient-glow-orb-2 {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(181, 69, 27, 0.045) 0%, rgba(8, 11, 17, 0) 70%);
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: floatAmbientSlowReverse 32s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.ambient-glow-orb-3 {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, rgba(201, 152, 45, 0.035) 0%, rgba(8, 11, 17, 0) 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: floatAmbientSlow 20s ease-in-out infinite alternate-reverse;
+  will-change: transform;
+}
+
+@keyframes floatAmbientSlow {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, 30px, 0) scale(1.08); }
+  100% { transform: translate3d(-20px, 50px, 0) scale(0.95); }
+}
+
+@keyframes floatAmbientSlowReverse {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-35px, -25px, 0) scale(1.06); }
+  100% { transform: translate3d(25px, -40px, 0) scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow-orb-1,
+  .ambient-glow-orb-2,
+  .ambient-glow-orb-3 {
+    animation: none !important;
+  }
+}
+
+
+/* ========================================================
    HERO SLIDER ANIMATION & TRANSITIONS
    ======================================================== */
 .hero-slider-container {
@@ -406,8 +503,8 @@ input[type="tel"],
   height: 100%;
   object-fit: cover;
   pointer-events: none;
-  transition: opacity 0.4s ease;
-  filter: brightness(1.05) contrast(1.02) saturate(0.95);
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.04) brightness(1.02);
 }
 
 .ba-overlay-clipped {
