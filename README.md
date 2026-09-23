@@ -7,7 +7,7 @@ Tailored directly according to the company branding flyer:
 - **Services:** Construction, Interiors, Design, Consultation, Planning
 - **Location:** Sirkazhi, Tamil Nadu
 - **Contact Numbers:** `81441 66022` & `93857 47544`
-- **Active Careers Section:** We're Hiring — **DRAFTSMAN** (AutoCAD, MS Excel, Civil Knowledge, Freshers Welcome, Female Candidates Preferable).
+- **Active Careers Section:** We're Hiring — **DRAFTSMAN** (AutoCAD, MS Excel, Civil Knowledge, Freshers Welcome, Inclusive Workplace).
 
 ---
 
@@ -19,8 +19,8 @@ Tailored directly according to the company branding flyer:
 
 2. **Dedicated "We're Hiring: DRAFTSMAN" Section**:
    - Embedded showcase of the official recruitment flyer.
-   - Skill cards: AutoCAD, MS Excel, Civil Engineering Knowledge, Freshers Welcome, Female Candidates Preferable.
-   - 1-Click "Send Resume via WhatsApp" buttons directly linked to `81441 66022` and `93857 47544`.
+   - Skill cards: AutoCAD, MS Excel, Civil Engineering Knowledge, Freshers Welcome, Inclusive & Welcoming Workplace.
+   - 1-Click "Apply via WhatsApp" action directly linked to `81441 66022` and General Enquiries to `93857 47544`.
 
 3. **Interactive Construction Cost Estimator (Sirkazhi Regional Rates)**:
    - Area slider from 600 sq.ft to 10,000+ sq.ft.

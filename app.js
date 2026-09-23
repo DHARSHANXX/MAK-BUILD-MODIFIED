@@ -272,7 +272,7 @@ function applyForDraftsman(phone = COMPANY_PHONE_1) {
 ━━━━━━━━━━━━━━━━━━━━━━━━
 🏢 *Role:* DRAFTSMAN
 📍 *Location:* Sirkazhi
-👩‍💼 *Preference:* Female Candidates Preferable / Freshers Welcome
+💼 *Workplace:* Inclusive & Welcoming / Open to All Qualified Candidates & Freshers
 
 Hello MAK BUILD Team,
 I am interested in applying for the *Draftsman* position at your Sirkazhi office.
@@ -1117,7 +1117,7 @@ const COMPANY_HIGHLIGHTS = [
     tag: "WE'RE HIRING",
     tagColor: "bg-[#d4af37] text-slate-950",
     title: "Draftsman Wanted in Sirkazhi",
-    desc: "AutoCAD & MS Excel &bull; Female Candidates Preferable &bull; Freshers are welcome.",
+    desc: "AutoCAD & MS Excel &bull; Inclusive Workplace &bull; Open to all qualified candidates.",
     actionText: "Quick Apply via WhatsApp &rarr;",
     action: () => openDraftsmanModal()
   },
@@ -1142,7 +1142,7 @@ const COMPANY_HIGHLIGHTS = [
     }
   },
   {
-    tag: "DIRECT HOTLINE",
+    tag: "CONSULTATION",
     tagColor: "bg-blue-500 text-white",
     title: "Free On-Site Soil & Plot Audit",
     desc: "Call resident civil engineers: 81441 66022 or 93857 47544 for immediate consultation.",
@@ -1258,6 +1258,16 @@ function restoreHighlightsWidget() {
   if (pill) pill.classList.add("hidden");
   resetHighlightTimer();
 }
+
+function dismissHighlights() {
+  clearInterval(highlightTimer);
+  const widget = document.getElementById("floating-highlights-widget");
+  const pill = document.getElementById("highlights-minimized-pill");
+  if (widget) widget.classList.add("hidden");
+  if (pill) pill.classList.add("hidden");
+}
+
+window.dismissHighlights = dismissHighlights;
 
 // ----------------------------------------------------
 // 10. Draftsman Hiring Modal
