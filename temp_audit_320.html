@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -1735,5 +1735,14 @@
   </div>
 
   <script src="app.js"></script>
-</body>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const sw = document.documentElement.scrollWidth;
+        const cw = document.documentElement.clientWidth;
+        const diff = sw - cw;
+        console.log('AUDIT_RESULT: w=' + 320 + ', sw=' + sw + ', cw=' + cw + ', diff=' + diff);
+    }, 400);
+});
+</script></body>
 </html>

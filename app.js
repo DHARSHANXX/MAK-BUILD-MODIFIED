@@ -333,13 +333,13 @@ const BA_PROJECTS = {
     beforeImg: "assets/renovation-before-web.jpg",
     beforeFallback: window.MAK_BA_BEFORE || "assets/renovation-before.jpg",
     beforeLabel: "BEFORE: RAW RCC & MASONRY SHELL",
-    afterImg: "assets/penthouse-after-hd.jpg?v=4",
+    afterImg: "assets/penthouse-after-hd.jpg?v=5",
     afterFallback: window.MAK_BA_AFTER || "assets/penthouse-after-hd.jpg",
     afterLabel: "AFTER: BESPOKE LUXURY RESIDENCE",
     structuralTitle: "Grade-A RCC & Steel",
     structuralDesc: "Engineered with UltraTech M25/M30 concrete mix and Tata Tiscon Fe 550D rebar. Integrated anti-termite plinth injection and 100% Vasthu beam alignment.",
-    finishingTitle: "Acoustic Wood Slat Feature Wall & Ambient Cove Lighting",
-    finishingDesc: "Custom backlit fluted timber acoustic media wall with Italian marble cladding, concealed warm LED cove illumination, floor-to-ceiling panoramic fenestrations, and mirror-finish Italian marble flooring.",
+    finishingTitle: "Fluted Teak Wood Slat & Bookmatched Marble Wall",
+    finishingDesc: "Custom backlit fluted teak wood slat feature wall with bookmatched Italian beige marble, concealed warm LED cove illumination, full-height black aluminum grid windows, and mirror-finish polished marble flooring.",
     timelineTitle: "Guaranteed Delivery & Warranty",
     timelineDesc: "Handed over in 180 days with zero cost escalation guarantee. Includes a 10-Year structural engineering warranty and 1-Year complimentary MEP care."
   },
@@ -358,7 +358,7 @@ const BA_PROJECTS = {
     finishingTitle: "Weather-Shield Facade & Glazing",
     finishingDesc: "High-grade textured silicon emulsion, Saint-Gobain acoustic double-glazed glass railings, exterior pergolas, and landscape lighting.",
     timelineTitle: "Turnkey Civil & Facade Handover",
-    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification."
+    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification.",
   },
   "commercial-peb": {
     id: "commercial-peb",
@@ -391,21 +391,44 @@ function setBaPosition(percentage) {
   container.style.setProperty("--ba-pos", `${clamped}%`);
   state.sliderPosition = clamped;
 
+  // Dynamically update preset buttons active highlight
+  const btnBefore = document.getElementById("ba-btn-before");
+  const btnSplit = document.getElementById("ba-btn-split");
+  const btnAfter = document.getElementById("ba-btn-after");
+
+  const activeClasses = ["bg-[#d4af37]/20", "text-[#fceda2]", "border-[#d4af37]/40"];
+  const inactiveClasses = ["bg-slate-800/80", "text-slate-300", "border-slate-700"];
+
+  function setBtnStyle(btn, isActive) {
+    if (!btn) return;
+    if (isActive) {
+      btn.classList.add(...activeClasses);
+      btn.classList.remove(...inactiveClasses);
+    } else {
+      btn.classList.remove(...activeClasses);
+      btn.classList.add(...inactiveClasses);
+    }
+  }
+
+  setBtnStyle(btnBefore, clamped >= 95);
+  setBtnStyle(btnSplit, clamped >= 45 && clamped <= 55);
+  setBtnStyle(btnAfter, clamped <= 5);
+
   // Intelligent proximity dimming for badges so they don't collide with the dial
   const badgeBefore = document.getElementById("ba-badge-before");
   const badgeAfter = document.getElementById("ba-badge-after");
   if (badgeBefore) {
-    if (clamped < 22) {
-      badgeBefore.style.opacity = Math.max(0.12, clamped / 22).toString();
-      badgeBefore.style.transform = `scale(${0.92 + 0.08 * (clamped / 22)})`;
+    if (clamped < 25) {
+      badgeBefore.style.opacity = Math.max(0.12, clamped / 25).toString();
+      badgeBefore.style.transform = `scale(${0.92 + 0.08 * (clamped / 25)})`;
     } else {
       badgeBefore.style.opacity = "1";
       badgeBefore.style.transform = "scale(1)";
     }
   }
   if (badgeAfter) {
-    if (clamped > 78) {
-      const factor = (100 - clamped) / 22;
+    if (clamped > 75) {
+      const factor = (100 - clamped) / 25;
       badgeAfter.style.opacity = Math.max(0.12, factor).toString();
       badgeAfter.style.transform = `scale(${0.92 + 0.08 * factor})`;
     } else {
@@ -598,6 +621,41 @@ function initBeforeAfterSlider() {
 
   // Set initial 50% position
   setBaPosition(50);
+
+  // Auto-hide floating widgets (highlights and whatsapp) when Before/After section is in view
+  const transSection = document.getElementById("transformation");
+  function checkBaOverlap() {
+    if (!transSection) return;
+    const rect = transSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const inView = (rect.top < windowHeight - 40) && (rect.bottom > 40);
+    if (inView) {
+      document.body.classList.add("hide-floating-on-ba");
+    } else {
+      document.body.classList.remove("hide-floating-on-ba");
+    }
+  }
+
+  window.addEventListener("scroll", checkBaOverlap, { passive: true });
+  window.addEventListener("resize", checkBaOverlap, { passive: true });
+  setTimeout(checkBaOverlap, 100);
+  setTimeout(checkBaOverlap, 400);
+  setTimeout(checkBaOverlap, 1000);
+
+  if (transSection && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.body.classList.add("hide-floating-on-ba");
+        } else {
+          checkBaOverlap();
+        }
+      });
+    }, {
+      threshold: [0, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+    });
+    observer.observe(transSection);
+  }
 }
 
 // ----------------------------------------------------
@@ -1206,12 +1264,14 @@ function prevHighlight() {
 }
 
 function initFloatingHighlightsWidget() {
+  const widget = document.getElementById("floating-highlights-widget");
+  if (!widget) return;
+
   renderHighlightCard();
 
   const prevBtn = document.getElementById("highlight-prev-btn");
   const nextBtn = document.getElementById("highlight-next-btn");
   const closeBtn = document.getElementById("highlight-close-btn");
-  const widget = document.getElementById("floating-highlights-widget");
 
   if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prevHighlight(); resetHighlightTimer(); });
   if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); nextHighlight(); resetHighlightTimer(); });
