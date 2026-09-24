@@ -1445,3 +1445,312 @@ body.hide-floating-on-ba .floating-whatsapp-container {
   }
 }
 
+/* ============================================================================
+   MAK BUILD — ARCHITECTURAL WHITE / IVORY / CHAMPAGNE GOLD LUXURY THEME
+   & InteractiveNebulaShader Layering System
+   Visual Balance: 90% Clean White/Ivory | 7% Soft Champagne Gold | 3% Charcoal
+   ============================================================================ */
+
+:root {
+  --mak-white: #ffffff;
+  --mak-ivory: #faf8f3;
+  --mak-beige: #f3efe6;
+  --mak-gold-soft: #c5a059;
+  --mak-gold-deep: #9c782b;
+  --mak-gold-glow: rgba(212, 175, 55, 0.16);
+  --mak-charcoal: #141821;
+  --mak-slate-dark: #2c3444;
+  --mak-slate-muted: #525d6f;
+  --mak-border-subtle: rgba(197, 160, 89, 0.22);
+}
+
+html, body {
+  background-color: var(--mak-ivory) !important;
+  color: var(--mak-charcoal) !important;
+  overflow-x: hidden;
+}
+
+/* Layer 4 & 5: Global InteractiveNebulaShader over White/Ivory Base */
+#mak-global-nebula-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0 !important;
+  pointer-events: none;
+  background: linear-gradient(180deg, #ffffff 0%, #faf8f3 55%, #f4efe6 100%);
+}
+
+/* Hide legacy dark-theme orbs so the WebGL shader remains pure and uncluttered */
+.ambient-motion-wrapper {
+  opacity: 0.12 !important;
+  mix-blend-mode: multiply;
+}
+
+/* Ensure all sections sit cleanly above the global Nebula Shader */
+header, section, footer, main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section Backgrounds: Translucent White/Ivory so InteractiveNebulaShader shimmers through */
+section.bg-slate-950,
+section.bg-slate-900,
+section.bg-slate-950\/80,
+section.bg-\[\#080b11\],
+section.bg-\[\#05070c\],
+#services,
+#cost-estimator,
+#portfolio,
+#transformation,
+#hiring,
+#contact {
+  background: rgba(252, 250, 246, 0.72) !important;
+  border-color: rgba(197, 160, 89, 0.18) !important;
+}
+
+.kolam-divider {
+  background-color: #f6f2e8 !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.25) !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.25) !important;
+  opacity: 0.8;
+}
+
+footer {
+  background: rgba(246, 243, 236, 0.90) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.28) !important;
+  color: var(--mak-charcoal) !important;
+}
+
+/* ========================================================
+   HEADER & LOGO COMPATIBILITY (Clean White Contrast Area)
+   ======================================================== */
+header#main-header,
+header {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.24) !important;
+  box-shadow: 0 4px 20px rgba(20, 24, 33, 0.04) !important;
+  z-index: 50 !important;
+}
+
+header .font-logo-bold {
+  color: var(--mak-charcoal) !important;
+}
+
+header .font-logo-light {
+  color: var(--mak-slate-dark) !important;
+}
+
+header .font-logo-subtitle {
+  color: var(--mak-gold-deep) !important;
+}
+
+header nav a,
+header nav a span:not(.bg-\[\#d4af37\]):not(.bg-amber-400) {
+  color: var(--mak-slate-dark) !important;
+  font-weight: 500;
+}
+
+header nav a:hover,
+header nav a:hover span:not(.bg-\[\#d4af37\]) {
+  color: var(--mak-gold-deep) !important;
+}
+
+header .bg-slate-900\/95 {
+  background: #faf8f3 !important;
+  border-color: rgba(197, 160, 89, 0.32) !important;
+}
+
+header .bg-slate-900\/95 a {
+  color: var(--mak-charcoal) !important;
+  font-weight: 600;
+}
+
+#mobile-menu-toggle {
+  color: var(--mak-charcoal) !important;
+}
+
+#mobile-menu {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.28) !important;
+}
+
+/* ========================================================
+   HERO SECTION: Architectural Presentation + Shader Focus
+   ======================================================== */
+.hero-slider-container {
+  background: #faf8f3 !important;
+}
+
+/* Keep the architectural render crisp on the right while creating a calm ivory reading zone on the left */
+.hero-slide .bg-gradient-to-r {
+  background: linear-gradient(
+    90deg,
+    rgba(253, 252, 249, 0.96) 0%,
+    rgba(251, 249, 244, 0.88) 44%,
+    rgba(250, 248, 243, 0.28) 78%,
+    rgba(250, 248, 243, 0.08) 100%
+  ) !important;
+}
+
+.hero-slide .bg-gradient-to-t {
+  background: linear-gradient(
+    0deg,
+    rgba(250, 248, 243, 0.96) 0%,
+    rgba(250, 248, 243, 0.22) 26%,
+    rgba(255, 255, 255, 0.12) 100%
+  ) !important;
+}
+
+.hero-animate-title {
+  color: var(--mak-charcoal) !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0px transparent !important;
+}
+
+.gold-gradient-text {
+  color: #9a7018 !important;
+  -webkit-text-fill-color: #9a7018 !important;
+  background: none !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0px transparent !important;
+}
+
+.hero-animate-sub {
+  color: var(--mak-slate-dark) !important;
+  font-weight: 400 !important;
+  text-shadow: none !important;
+}
+
+/* Refined Architectural Buttons (Charcoal + Champagne Gold Accent, No Gaudy Full-Gold Blocks) */
+.btn-gold-primary {
+  background: var(--mak-charcoal) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--mak-gold-soft) !important;
+  box-shadow: 0 8px 22px rgba(20, 24, 33, 0.12), 0 0 0 1px rgba(197, 160, 89, 0.2) !important;
+}
+
+.btn-gold-primary i,
+.btn-gold-primary svg {
+  color: #e5c168 !important;
+}
+
+.btn-gold-primary:hover {
+  background: #222938 !important;
+  border-color: #d4af37 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(20, 24, 33, 0.18), 0 0 14px rgba(212, 175, 55, 0.28) !important;
+}
+
+.btn-arch-secondary {
+  background: rgba(255, 255, 255, 0.90) !important;
+  color: var(--mak-charcoal) !important;
+  border: 1px solid rgba(20, 24, 33, 0.22) !important;
+  backdrop-filter: blur(12px);
+}
+
+.btn-arch-secondary:hover {
+  background: #ffffff !important;
+  border-color: var(--mak-gold-soft) !important;
+  color: var(--mak-gold-deep) !important;
+}
+
+/* Hero Bottom Control Bar */
+.hero-slider-container .bg-slate-950\/90 {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(197, 160, 89, 0.30) !important;
+  box-shadow: 0 12px 32px rgba(20, 24, 33, 0.08) !important;
+}
+
+.hero-dot-btn {
+  color: var(--mak-slate-muted) !important;
+}
+
+.hero-dot-btn.text-white {
+  background: #faf6ed !important;
+  color: var(--mak-charcoal) !important;
+  border-color: var(--mak-gold-soft) !important;
+}
+
+/* ========================================================
+   CARDS & SURFACES (rgba(255,255,255,0.84 - 0.92))
+   ======================================================== */
+.glass-card,
+.stat-card-highlight,
+.bg-slate-900\/90,
+.bg-slate-900\/80,
+.bg-slate-900\/70,
+.bg-slate-900\/60,
+.bg-slate-900\/50,
+.bg-slate-950\/90,
+.bg-slate-950\/80,
+.bg-slate-900 {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(197, 160, 89, 0.24) !important;
+  color: var(--mak-charcoal) !important;
+  box-shadow: 0 10px 28px -6px rgba(20, 24, 33, 0.05), 0 2px 6px rgba(197, 160, 89, 0.06) !important;
+}
+
+.stat-card-highlight .text-\[\#f3e5ab\] {
+  color: var(--mak-slate-muted) !important;
+}
+
+/* Typography Hierarchy in Sections & Cards */
+section h1, section h2, section h3, section h4,
+footer h3, footer h4,
+.text-white {
+  color: var(--mak-charcoal) !important;
+}
+
+.text-slate-200, .text-slate-300 {
+  color: var(--mak-slate-dark) !important;
+}
+
+.text-slate-400, .text-slate-500 {
+  color: var(--mak-slate-muted) !important;
+}
+
+/* Preserve White Text specifically on Dark/Accent Badges, Photo Overlays, and Primary Buttons */
+.btn-gold-primary, .btn-gold-primary span,
+header a[href="#cost-estimator"], header a[href="#cost-estimator"] span,
+#portfolio-grid .relative.h-64 h3,
+#portfolio-grid .relative.h-64 p,
+#modal-project-content .relative h2,
+#modal-project-content .relative p,
+#modal-project-content .relative strong,
+.ba-badge, #ba-text-before, #ba-text-after,
+a.bg-green-600, a.bg-green-600 span {
+  color: #ffffff !important;
+}
+
+/* Keep Portfolio Card Photo Overlay Dark at Bottom so White Project Titles Pop */
+#portfolio-grid .relative.h-64 .bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(12, 16, 23, 0.88) 0%, rgba(12, 16, 23, 0.35) 55%, transparent 100%) !important;
+}
+
+#portfolio-grid .relative.h-64 .bg-slate-900\/80 {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: var(--mak-gold-deep) !important;
+  border-color: rgba(197, 160, 89, 0.4) !important;
+}
+
+/* Form Inputs & Calculators */
+input, select, textarea {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: var(--mak-charcoal) !important;
+  border-color: rgba(197, 160, 89, 0.32) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--mak-gold-deep) !important;
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15) !important;
+}
+
+/* Gold Accents Refinement */
+.text-\[\#d4af37\], .text-amber-400, .text-amber-300 {
+  color: var(--mak-gold-deep) !important;
+}
+
+
