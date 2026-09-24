@@ -719,7 +719,8 @@ header, section, footer, main {
   -webkit-clip-path: inset(0 calc(100% - var(--ba-pos, 50%)) 0 0);
 }
 
-.ba-image-before {
+.ba-image-before,
+.ba-image-after {
   position: absolute;
   inset: 0;
   width: 100%;

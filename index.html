@@ -295,8 +295,12 @@
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" 
-          alt="MAK BUILD Turnkey Architecture" 
+          src="assets/villa-facade-after-1920.jpg" 
+          srcset="assets/villa-facade-after-1920.jpg 1920w, assets/villa-facade-after-2560.jpg 2560w"
+          sizes="100vw"
+          width="2560"
+          height="1440"
+          alt="MAK BUILD Turnkey Architecture - Contemporary Luxury Villa" 
           class="hero-slide-bg w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-gradient-to-r from-[#05070c] via-[#080b11]/85 to-[#080b11]/60"></div>
@@ -340,7 +344,12 @@
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1541888946425-d0fbb186c5f6?auto=format&fit=crop&w=1920&q=80" 
+          src="assets/peb-facility-after-1920.jpg" 
+          srcset="assets/peb-facility-after-1920.jpg 1920w, assets/peb-facility-after-2560.jpg 2560w"
+          sizes="100vw"
+          width="2560"
+          height="1440"
+          loading="lazy"
           alt="Pre-Engineered Buildings and Steel Structures" 
           class="hero-slide-bg w-full h-full object-cover"
         />
@@ -385,7 +394,12 @@
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80" 
+          src="assets/peb-facility-after-1920.jpg" 
+          srcset="assets/peb-facility-after-1920.jpg 1920w, assets/peb-facility-after-2560.jpg 2560w"
+          sizes="100vw"
+          width="2560"
+          height="1440"
+          loading="lazy"
           alt="Architectural 3D BIM Planning and AutoCAD Drafting" 
           class="hero-slide-bg w-full h-full object-cover"
         />
@@ -1278,6 +1292,10 @@
             onerror="this.onerror=null;if(window.MAK_BA_AFTER)this.src=window.MAK_BA_AFTER;else this.src='assets/penthouse-after-hd.jpg';"
             alt="After: Finished Luxury Residence by MAK BUILD" 
             class="ba-image-after select-none"
+            width="1920"
+            height="1080"
+            loading="lazy"
+            style="object-fit: cover;"
           />
 
           <!-- Clipped Layer: BEFORE IMAGE -->
@@ -1289,6 +1307,10 @@
               onerror="this.onerror=null;if(window.MAK_BA_BEFORE)this.src=window.MAK_BA_BEFORE;"
               alt="Before: Raw RCC Brickwork Construction Phase" 
               class="ba-image-before select-none"
+              width="1920"
+              height="1080"
+              loading="lazy"
+              style="object-fit: cover;"
             />
           </div>
 
@@ -1830,6 +1852,7 @@
     </div>
   </div>
 
+  <script src="ba-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

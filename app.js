@@ -18,8 +18,8 @@ const PORTFOLIO_PROJECTS = [
     location: "Sirkazhi Main Town",
     area: "3,800 sq.ft",
     duration: "10 Months",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-    description: "A luxury contemporary residence combining modern geometric elevations with traditional courtyard ventilation, custom teakwood joinery, and double-height living hall.",
+    image: "assets/portfolio-residential-villa.jpg",
+    description: "A luxury contemporary residence combining modern geometric elevations with traditional Chettinad-inspired teakwood portico pillars, glass railings, and double-height living hall.",
     features: ["Vasthu-compliant layout", "Double-height living space", "Teak main entrance door", "GVT large format tiles", "Rainwater recharge pit"],
     materials: "Ultratech Super Cement, Tata Tiscon 550D Steel, Asian Paints Royale, Jaquar Sanitaryware",
     client: "Er. S. Murugesan"
@@ -32,24 +32,24 @@ const PORTFOLIO_PROJECTS = [
     location: "Kacheri Road, Mayiladuthurai",
     area: "8,500 sq.ft",
     duration: "12 Months",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-    description: "Multi-storey commercial shopping complex and corporate office building with heavy-duty structural steel glazing, basement parking, and fire compliance.",
+    image: "assets/portfolio-commercial-architecture.jpg",
+    description: "Multi-storey commercial shopping complex and corporate office building with heavy-duty structural steel glazing, retail storefronts, basement parking, and fire compliance.",
     features: ["Structural glass facade", "Elevator & power backup", "Heavy-load flooring", "Municipal approved plan"],
     materials: "RCC M25 grade concrete, Saint-Gobain toughened glass, premium commercial vitrified tiles",
     client: "Sri Balaji Commercial Syndicate"
   },
   {
     id: 3,
-    title: "The Scandinavian Interior Villa",
+    title: "The Contemporary Luxury Interior Villa",
     category: "interior",
     categoryLabel: "Interior Design",
     location: "Chidambaram Highway, Sirkazhi",
     area: "2,600 sq.ft",
     duration: "3.5 Months",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
-    description: "Bespoke interior fit-out featuring seamless acrylic modular kitchen, cove ambient lighting, customized TV unit with fluted charcoal louvers, and master bedroom walk-in wardrobe.",
-    features: ["Modular kitchen with quartz top", "Hafele soft-close hardware", "False ceiling with warm LED coves", "Custom pooja mandir wood carvings"],
-    materials: "Marine grade BWP plywood, Merino laminates, Hafele hinges, Philips ambient LEDs",
+    image: "assets/portfolio-interior-design.jpg",
+    description: "Bespoke interior fit-out featuring fluted teakwood slat wall, bookmatched backlit marble TV feature wall, warm LED cove false ceiling, brass accents, and seamless quartz island kitchen.",
+    features: ["Modular kitchen with quartz top", "Bookmatched marble TV wall", "False ceiling with warm LED coves", "Custom pooja mandir wood carvings"],
+    materials: "Marine grade BWP plywood, Italian Statuario marble, Merino laminates, Philips ambient LEDs",
     client: "Mr. K. Anbarasan"
   },
   {
@@ -60,10 +60,10 @@ const PORTFOLIO_PROJECTS = [
     location: "Vaitheeswaran Koil, Sirkazhi Taluk",
     area: "2,950 sq.ft",
     duration: "8 Months",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-    description: "Modern duplex combining traditional Tamil architectural aesthetics with modern comforts, pillared front portico, open terrace garden, and solar water heater.",
-    features: ["Traditional portico arches", "Covered terrace sit-out", "Borewell & underground sump", "Vastu master bedroom"],
-    materials: "First-class table moulded red bricks, Dalmia cement, Jindal Panther steel",
+    image: "assets/portfolio-duplex-home.jpg",
+    description: "Modern duplex combining traditional Tamil architectural aesthetics with front Thinnai sit-out, carved teakwood pillars, terracotta Mangalore roof eaves, and glass balcony.",
+    features: ["Traditional portico Thinnai", "Carved teakwood pillars", "Covered terrace sit-out", "Vastu master bedroom"],
+    materials: "First-class table moulded red bricks, Dalmia cement, Jindal Panther steel, Mangalore tiles",
     client: "Dr. R. Senthamilselvan"
   },
   {
@@ -74,8 +74,8 @@ const PORTFOLIO_PROJECTS = [
     location: "Old Bus Stand, Sirkazhi",
     area: "1,800 sq.ft",
     duration: "2.5 Months",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80",
-    description: "Trendy aesthetic cafe design featuring exposed brick styling, industrial black track lights, custom wooden booth seating, and modern service counter.",
+    image: "assets/portfolio-commercial-retail.jpg",
+    description: "Trendy aesthetic cafe and bakery design featuring exposed brick styling, industrial track lights, custom wooden booth seating, and modern glass display counter.",
     features: ["Exposed rustic brick wall", "Custom granite billing counter", "Acoustic ceiling treatment", "Commercial kitchen MEP"],
     materials: "Reclaimed bricks, treated solid pinewood, black metal framing, warm Edison fixtures",
     client: "Aroma Cafe & Bakers"
@@ -88,9 +88,9 @@ const PORTFOLIO_PROJECTS = [
     location: "Poompuhar Coastal Road",
     area: "4,200 sq.ft",
     duration: "11 Months",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
-    description: "Anti-corrosive coastal architectural bungalow with anti-saline waterproofing, cantilever balconies facing greenery, and rooftop party gazebo.",
-    features: ["Coastal corrosion-resistant concrete", "UPVC acoustic sliding windows", "Rooftop gazebo", "Landscaped courtyard"],
+    image: "assets/portfolio-luxury-bungalow.jpg",
+    description: "Anti-corrosive coastal architectural bungalow with anti-saline waterproofing, cantilever balconies facing greenery, infinity plunge pool, and rooftop party gazebo.",
+    features: ["Coastal corrosion-resistant concrete", "UPVC acoustic sliding windows", "Rooftop pergola gazebo", "Infinity water feature"],
     materials: "Sulphate-resistant cement, epoxy coated TMT rebar, UPVC weather-proof windows",
     client: "Mr. T. Vigneshwaran"
   }
@@ -347,29 +347,33 @@ const BA_PROJECTS = {
     id: "villa-exterior",
     title: "Contemporary Villa Facade",
     tabId: "ba-tab-villa",
-    beforeImg: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
-    beforeFallback: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
-    beforeLabel: "BEFORE: STRUCTURAL COLUMN SCAFFOLDING",
-    afterImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
-    afterFallback: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
-    afterLabel: "AFTER: MODERN ARCHITECTURAL VILLA",
+    beforeImg: "assets/villa-facade-before-1920.jpg",
+    beforeSrcset: "assets/villa-facade-before-1920.jpg 1920w, assets/villa-facade-before-2560.jpg 2560w",
+    beforeFallback: (typeof window !== "undefined" && window.MAK_BA_VILLA_BEFORE) ? window.MAK_BA_VILLA_BEFORE : "assets/villa-facade-before-hd.jpg",
+    beforeLabel: "BEFORE: RAW BRICKWORK & RCC STRUCTURE",
+    afterImg: "assets/villa-facade-after-1920.jpg",
+    afterSrcset: "assets/villa-facade-after-1920.jpg 1920w, assets/villa-facade-after-2560.jpg 2560w",
+    afterFallback: (typeof window !== "undefined" && window.MAK_BA_VILLA_AFTER) ? window.MAK_BA_VILLA_AFTER : "assets/villa-facade-after-hd.jpg",
+    afterLabel: "AFTER: INDIAN CONTEMPORARY VILLA FACADE",
     structuralTitle: "Deep Pile & Anti-Seismic Columns",
     structuralDesc: "Designed for coastal delta soil bearing capacity with corrosion-resistant epoxy-coated rebars and monolithic slab castings.",
     finishingTitle: "Weather-Shield Facade & Glazing",
     finishingDesc: "High-grade textured silicon emulsion, Saint-Gobain acoustic double-glazed glass railings, exterior pergolas, and landscape lighting.",
     timelineTitle: "Turnkey Civil & Facade Handover",
-    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification.",
+    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification."
   },
   "commercial-peb": {
     id: "commercial-peb",
     title: "PEB Industrial Facility",
     tabId: "ba-tab-peb",
-    beforeImg: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
-    beforeFallback: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
-    beforeLabel: "BEFORE: HEAVY STEEL TRUSS ASSEMBLY",
-    afterImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
-    afterFallback: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
-    afterLabel: "AFTER: ARCHITECTURAL COMMERCIAL FACILITY",
+    beforeImg: "assets/peb-facility-before-1920.jpg",
+    beforeSrcset: "assets/peb-facility-before-1920.jpg 1920w, assets/peb-facility-before-2560.jpg 2560w",
+    beforeFallback: (typeof window !== "undefined" && window.MAK_BA_PEB_BEFORE) ? window.MAK_BA_PEB_BEFORE : "assets/peb-facility-before-hd.jpg",
+    beforeLabel: "BEFORE: UNFINISHED STEEL SHED STRUCTURE",
+    afterImg: "assets/peb-facility-after-1920.jpg",
+    afterSrcset: "assets/peb-facility-after-1920.jpg 1920w, assets/peb-facility-after-2560.jpg 2560w",
+    afterFallback: (typeof window !== "undefined" && window.MAK_BA_PEB_AFTER) ? window.MAK_BA_PEB_AFTER : "assets/peb-facility-after-hd.jpg",
+    afterLabel: "AFTER: MODERN PEB INDUSTRIAL FACILITY",
     structuralTitle: "Pre-Engineered High-Tensile Steel",
     structuralDesc: "Grade 345 MPa high-tensile steel rafters, cold-formed Z & C purlins, and heavy-duty anchor bolt assemblies designed for wind loads up to 50 m/s.",
     finishingTitle: "Insulated Cladding & MEP Integration",
@@ -468,14 +472,43 @@ function switchBaProject(projectId) {
     imgAfter.style.opacity = "0.4";
 
     setTimeout(() => {
+      var isGitHub = window.location.hostname.indexOf("github.io") !== -1;
       if (projectId === "living-room") {
-        var isGitHub = window.location.hostname.indexOf("github.io") !== -1;
         imgBefore.src = (isGitHub && window.MAK_BA_BEFORE) ? window.MAK_BA_BEFORE : proj.beforeImg;
         imgAfter.src = (isGitHub && window.MAK_BA_AFTER) ? window.MAK_BA_AFTER : proj.afterImg;
+      } else if (projectId === "villa-exterior") {
+        imgBefore.src = (isGitHub && window.MAK_BA_VILLA_BEFORE) ? window.MAK_BA_VILLA_BEFORE : proj.beforeImg;
+        imgAfter.src = (isGitHub && window.MAK_BA_VILLA_AFTER) ? window.MAK_BA_VILLA_AFTER : proj.afterImg;
+      } else if (projectId === "commercial-peb") {
+        imgBefore.src = (isGitHub && window.MAK_BA_PEB_BEFORE) ? window.MAK_BA_PEB_BEFORE : proj.beforeImg;
+        imgAfter.src = (isGitHub && window.MAK_BA_PEB_AFTER) ? window.MAK_BA_PEB_AFTER : proj.afterImg;
       } else {
         imgBefore.src = proj.beforeImg;
         imgAfter.src = proj.afterImg;
       }
+
+      if (proj.beforeSrcset && (!isGitHub || !window.MAK_BA_VILLA_BEFORE)) {
+        imgBefore.srcset = proj.beforeSrcset;
+        imgBefore.sizes = "(max-width: 1024px) 100vw, 1920px";
+      } else {
+        imgBefore.removeAttribute("srcset");
+        imgBefore.removeAttribute("sizes");
+      }
+
+      if (proj.afterSrcset && (!isGitHub || !window.MAK_BA_VILLA_AFTER)) {
+        imgAfter.srcset = proj.afterSrcset;
+        imgAfter.sizes = "(max-width: 1024px) 100vw, 1920px";
+      } else {
+        imgAfter.removeAttribute("srcset");
+        imgAfter.removeAttribute("sizes");
+      }
+
+      imgBefore.width = 1920;
+      imgBefore.height = 1080;
+      imgAfter.width = 1920;
+      imgAfter.height = 1080;
+      imgBefore.loading = "lazy";
+      imgAfter.loading = "lazy";
 
       imgBefore.onerror = function() {
         this.onerror = null;
@@ -675,6 +708,8 @@ function renderPortfolio(filter = "all") {
         <img 
           src="${p.image}" 
           alt="${p.title}" 
+          width="1376"
+          height="768"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
           loading="lazy"
         />
@@ -732,7 +767,7 @@ function openProjectModal(projectId) {
 
   modalContent.innerHTML = `
     <div class="relative">
-      <img src="${project.image}" alt="${project.title}" class="w-full h-72 md:h-96 object-cover rounded-t-2xl" />
+      <img src="${project.image}" alt="${project.title}" width="1376" height="768" class="w-full h-72 md:h-96 object-cover rounded-t-2xl" />
       <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
       <button onclick="closeProjectModal()" class="absolute top-4 right-4 bg-slate-900/80 hover:bg-slate-800 text-white p-2.5 rounded-full backdrop-blur-md transition-colors border border-white/10">
         <i data-lucide="x" class="w-5 h-5"></i>
