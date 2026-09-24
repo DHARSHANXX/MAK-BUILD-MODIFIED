@@ -41,6 +41,19 @@
               800: '#141b2b',
               700: '#1e293b'
             }
+          },
+          animation: {
+            aurora: "aurora 60s linear infinite"
+          },
+          keyframes: {
+            aurora: {
+              from: {
+                backgroundPosition: "50% 50%, 50% 50%"
+              },
+              to: {
+                backgroundPosition: "350% 50%, 350% 50%"
+              }
+            }
           }
         }
       }
@@ -95,6 +108,11 @@
   </script>
 </head>
 <body class="bg-[#080b11] text-slate-100 antialiased selection:bg-[#d4af37] selection:text-slate-950 font-sans relative">
+
+  <!-- MAK BUILD — Global Architectural Aurora Background (src/components/ui/aurora-background.tsx) -->
+  <div id="mak-aurora-bg" class="mak-aurora-wrapper" aria-hidden="true">
+    <div class="mak-aurora-layer"></div>
+  </div>
 
   <!-- Lively Subtle Ambient Animated Background Layer -->
   <div class="lively-ambient-bg" aria-hidden="true">
@@ -1853,8 +1871,6 @@
   </div>
 
   <script src="ba-data.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="nebula-shader.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

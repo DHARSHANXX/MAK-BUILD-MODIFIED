@@ -1446,87 +1446,163 @@ body.hide-floating-on-ba .floating-whatsapp-container {
 }
 
 /* ============================================================================
-   MAK BUILD — InteractiveNebulaShader (src/components/ui/liquid-shader.tsx)
-   Deliberate Z-Index Hierarchy & Translucent Atmospheric Layering
+   MAK BUILD — AuroraBackground (src/components/ui/aurora-background.tsx)
+   Background-Only Layering, MAK BUILD Palette & Balanced Intensity
    ============================================================================ */
 
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
 html, body {
-  background-color: #05070c !important;
+  background-color: #080b11 !important;
   overflow-x: hidden;
 }
 
-/* 1. Background Shader (z-index: 0, pointer-events: none) */
-#mak-global-nebula-bg {
+/* 1. Global Aurora Background Layer (z-index: 0, pointer-events: none) */
+#mak-aurora-bg.mak-aurora-wrapper {
   position: fixed !important;
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
   z-index: 0 !important;
   pointer-events: none !important;
-  opacity: 0.94 !important;
+  overflow: hidden !important;
+  background-color: #080b11;
 }
 
-/* Make legacy ambient wrapper transparent so it never blocks the WebGL shader */
-.lively-ambient-bg,
-.ambient-motion-wrapper {
+#mak-aurora-bg .mak-aurora-layer {
+  --white: #faf8f2;
+  --black: #080b11;
+  --transparent: transparent;
+  --mak-gold-champagne: rgba(252, 237, 162, 0.56);
+  --mak-ivory: rgba(248, 245, 236, 0.44);
+  --mak-gold-muted: rgba(212, 175, 55, 0.52);
+  --mak-warm-beige: rgba(230, 222, 200, 0.40);
+  --mak-gold-soft: rgba(201, 152, 45, 0.48);
+
+  --white-gradient: repeating-linear-gradient(
+    100deg,
+    var(--white) 0%,
+    var(--white) 7%,
+    var(--transparent) 10%,
+    var(--transparent) 12%,
+    var(--white) 16%
+  );
+  --dark-gradient: repeating-linear-gradient(
+    100deg,
+    var(--black) 0%,
+    var(--black) 7%,
+    var(--transparent) 10%,
+    var(--transparent) 12%,
+    var(--black) 16%
+  );
+  --aurora: repeating-linear-gradient(
+    100deg,
+    var(--mak-gold-champagne) 10%,
+    var(--mak-ivory) 15%,
+    var(--mak-gold-muted) 20%,
+    var(--mak-warm-beige) 25%,
+    var(--mak-gold-soft) 30%
+  );
+
+  position: absolute;
+  inset: -10px;
+  pointer-events: none;
+  background-image: var(--dark-gradient), var(--aurora);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(12px);
+  opacity: 0.68;
+  will-change: transform, background-position;
+  animation: aurora 60s linear infinite;
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 85% 15%, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.62) 60%, rgba(0, 0, 0, 0.42) 100%);
+  mask-image: radial-gradient(ellipse 95% 85% at 85% 15%, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.62) 60%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+#mak-aurora-bg .mak-aurora-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--dark-gradient), var(--aurora);
+  background-size: 200%, 100%;
+  background-attachment: fixed;
+  mix-blend-mode: screen;
+  animation: aurora 60s linear infinite reverse;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  #mak-aurora-bg .mak-aurora-layer {
+    filter: blur(9px);
+    opacity: 0.58;
+  }
+  #mak-aurora-bg .mak-aurora-layer::after {
+    background-attachment: scroll;
+  }
+}
+
+/* Keep legacy ambient grid transparent so it does not hide the Aurora layer */
+.lively-ambient-bg {
   background-color: transparent !important;
   background: transparent !important;
   z-index: 1 !important;
 }
 
-/* 2. Main Content (z-index: 10) */
+/* 2. Existing Website Content (z-index: 10) */
 main, section, footer, .kolam-divider {
   position: relative;
   z-index: 10;
 }
 
-/* 3. Navigation (z-index: 40+) */
+/* 3. Navigation (z-index: 45) */
 header#main-header, header {
   position: sticky;
   top: 0;
   z-index: 45 !important;
 }
 
-/* 4. Floating WhatsApp & Quick Controls (z-index: 50+) */
+/* 4. Floating WhatsApp & Contact Buttons (z-index: 55) */
 .floating-whatsapp-container {
   z-index: 55 !important;
 }
 
-/* 5. Modals & Notifications (z-index: 100+) */
+/* 5. Modals & Notifications (z-index: 110) */
 #project-modal, #toast-notification {
   z-index: 110 !important;
 }
 
-/* Hero Section Blending: Allow the live Champagne Gold & Ivory Nebula Shader
-   to shimmer visibly around the edges and through the architectural atmosphere */
+/* Hero Section: Keep all existing Hero images 100% untouched (opacity: 1),
+   while allowing the dark empty left/bottom atmosphere to softly reveal the Aurora */
 .hero-slider-container {
   background: transparent !important;
-}
-
-.hero-slide-bg {
-  opacity: 0.48 !important;
 }
 
 .hero-slide .bg-gradient-to-r {
   background: linear-gradient(
     90deg,
-    rgba(5, 7, 12, 0.64) 0%,
-    rgba(8, 11, 17, 0.42) 48%,
-    rgba(8, 11, 17, 0.14) 100%
+    rgba(8, 11, 17, 0.72) 0%,
+    rgba(8, 11, 17, 0.54) 50%,
+    rgba(8, 11, 17, 0.24) 100%
   ) !important;
 }
 
 .hero-slide .bg-gradient-to-t {
   background: linear-gradient(
     0deg,
-    rgba(5, 7, 12, 0.68) 0%,
-    rgba(5, 7, 12, 0.12) 40%,
-    rgba(5, 7, 12, 0.18) 100%
+    rgba(8, 11, 17, 0.74) 0%,
+    rgba(8, 11, 17, 0.12) 40%,
+    rgba(8, 11, 17, 0.22) 100%
   ) !important;
 }
 
-/* Section Backgrounds: Subtle translucent dark navy/charcoal (rgba(5, 8, 15, 0.44))
-   so the flowing InteractiveNebulaShader remains clearly visible while scrolling */
+/* Page-Level Empty Black Spaces: Subtle translucency on dark section wrappers
+   so the Aurora background softly fills empty black areas without altering cards or images */
 #services,
 #cost-estimator,
 #portfolio,
@@ -1539,15 +1615,17 @@ section.bg-slate-900,
 section.bg-\[\#080b11\],
 section.bg-\[\#05070c\],
 footer {
-  background-color: rgba(5, 8, 15, 0.44) !important;
+  background-color: rgba(8, 11, 17, 0.52) !important;
 }
 
-/* Cards remain structured and readable with subtle glass translucency */
+/* Cards & Content Containers Remain Opaque/Structured for Clean Readability */
 .glass-card,
-.stat-card-highlight {
-  background-color: rgba(12, 17, 28, 0.80) !important;
-  backdrop-filter: blur(12px);
+.stat-card-highlight,
+.ba-showcase-card {
+  background-color: rgba(13, 18, 30, 0.88) !important;
+  backdrop-filter: blur(14px);
 }
+
 
 
 
