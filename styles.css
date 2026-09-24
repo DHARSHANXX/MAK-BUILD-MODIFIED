@@ -1446,9 +1446,8 @@ body.hide-floating-on-ba .floating-whatsapp-container {
 }
 
 /* ============================================================================
-   MAK BUILD — InteractiveNebulaShader (liquid-shader.tsx) Background Layering
-   Strictly placed in the black unused background space.
-   Does NOT alter or overlap existing website cards, hero slides, or styling.
+   MAK BUILD — InteractiveNebulaShader (src/components/ui/liquid-shader.tsx)
+   Deliberate Z-Index Hierarchy & Translucent Atmospheric Layering
    ============================================================================ */
 
 html, body {
@@ -1456,28 +1455,78 @@ html, body {
   overflow-x: hidden;
 }
 
+/* 1. Background Shader (z-index: 0, pointer-events: none) */
 #mak-global-nebula-bg {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   z-index: 0 !important;
-  pointer-events: none;
-  opacity: 0.42;
+  pointer-events: none !important;
+  opacity: 0.94 !important;
 }
 
-/* Keep all website sections above the background shader, allowing the black unused space to reveal the nebula shader */
-header {
+/* Make legacy ambient wrapper transparent so it never blocks the WebGL shader */
+.lively-ambient-bg,
+.ambient-motion-wrapper {
+  background-color: transparent !important;
+  background: transparent !important;
+  z-index: 1 !important;
+}
+
+/* 2. Main Content (z-index: 10) */
+main, section, footer, .kolam-divider {
   position: relative;
-  z-index: 50;
+  z-index: 10;
 }
 
-section, footer, main {
-  position: relative;
-  z-index: 1;
+/* 3. Navigation (z-index: 40+) */
+header#main-header, header {
+  position: sticky;
+  top: 0;
+  z-index: 45 !important;
 }
 
-/* Let the black unused background of sections be slightly translucent so the background shader shows in the empty black space while all cards (.glass-card, .stat-card-highlight) and hero slides stay 100% unchanged */
+/* 4. Floating WhatsApp & Quick Controls (z-index: 50+) */
+.floating-whatsapp-container {
+  z-index: 55 !important;
+}
+
+/* 5. Modals & Notifications (z-index: 100+) */
+#project-modal, #toast-notification {
+  z-index: 110 !important;
+}
+
+/* Hero Section Blending: Allow the live Champagne Gold & Ivory Nebula Shader
+   to shimmer visibly around the edges and through the architectural atmosphere */
+.hero-slider-container {
+  background: transparent !important;
+}
+
+.hero-slide-bg {
+  opacity: 0.48 !important;
+}
+
+.hero-slide .bg-gradient-to-r {
+  background: linear-gradient(
+    90deg,
+    rgba(5, 7, 12, 0.64) 0%,
+    rgba(8, 11, 17, 0.42) 48%,
+    rgba(8, 11, 17, 0.14) 100%
+  ) !important;
+}
+
+.hero-slide .bg-gradient-to-t {
+  background: linear-gradient(
+    0deg,
+    rgba(5, 7, 12, 0.68) 0%,
+    rgba(5, 7, 12, 0.12) 40%,
+    rgba(5, 7, 12, 0.18) 100%
+  ) !important;
+}
+
+/* Section Backgrounds: Subtle translucent dark navy/charcoal (rgba(5, 8, 15, 0.44))
+   so the flowing InteractiveNebulaShader remains clearly visible while scrolling */
 #services,
 #cost-estimator,
 #portfolio,
@@ -1486,10 +1535,20 @@ section, footer, main {
 #contact,
 section.bg-slate-950,
 section.bg-slate-950\/80,
+section.bg-slate-900,
 section.bg-\[\#080b11\],
-section.bg-\[\#05070c\] {
-  background-color: rgba(5, 7, 12, 0.68) !important;
+section.bg-\[\#05070c\],
+footer {
+  background-color: rgba(5, 8, 15, 0.44) !important;
 }
+
+/* Cards remain structured and readable with subtle glass translucency */
+.glass-card,
+.stat-card-highlight {
+  background-color: rgba(12, 17, 28, 0.80) !important;
+  backdrop-filter: blur(12px);
+}
+
 
 
 
