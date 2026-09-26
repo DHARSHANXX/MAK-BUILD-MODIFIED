@@ -1,840 +1,747 @@
 /**
- * MAK BUILD - CONSTRUCTION & DESIGN
- * Location: Sirkazhi | Contact: 81441 66022 / 93857 47544
- * Interactive Core Application Logic
+ * MAK BUILD — CONSTRUCTION & DESIGN
+ * Location: Pidari S St, Thenpathi, Sirkali (Sirkazhi), Tamil Nadu 609109
+ * Verified Contact: 81441 66022 (WhatsApp) / 93857 47544 (Phone)
+ * Instagram: https://www.instagram.com/mak_build_construction (@mak_build_construction)
+ * 
+ * Production Application Logic (Conversion-Focused, Zero Backend Required)
  */
 
-// Primary Contact Numbers
-const COMPANY_PHONE_1 = "8144166022";
-const COMPANY_PHONE_2 = "9385747544";
+// Verified Company Contacts
+const COMPANY_WHATSAPP = "8144166022";
+const COMPANY_PHONE = "9385747544";
 
-// Signature Portfolio Projects (Sirkazhi & Tamil Nadu Coastal Region)
-const PORTFOLIO_PROJECTS = [
+// ----------------------------------------------------
+// 1. ALL 10 REAL PROJECTS (Unified Before & After Gallery)
+// ----------------------------------------------------
+const ALL_PROJECTS = [
   {
     id: 1,
-    title: "Sirkazhi Royal Heritage Villa",
-    category: "residential",
-    categoryLabel: "Residential Villa",
-    location: "Sirkazhi Main Town",
-    area: "3,800 sq.ft",
-    duration: "10 Months",
-    image: "assets/portfolio-residential-villa.jpg",
-    description: "A luxury contemporary residence combining modern geometric elevations with traditional Chettinad-inspired teakwood portico pillars, glass railings, and double-height living hall.",
-    features: ["Vasthu-compliant layout", "Double-height living space", "Teak main entrance door", "GVT large format tiles", "Rainwater recharge pit"],
-    materials: "Ultratech Super Cement, Tata Tiscon 550D Steel, Asian Paints Royale, Jaquar Sanitaryware",
-    client: "Er. S. Murugesan"
+    title: "Luxury Penthouse Residence",
+    category: "interior",
+    categoryLabel: "Interiors",
+    location: "Chidambaram Highway, Sirkazhi",
+    area: "2,400 sq.ft",
+    beforeImg: "assets/renovation-before-web.jpg",
+    afterImg: "assets/penthouse-after-hd.jpg?v=6",
+    beforeLabel: "RAW RCC SHELL",
+    afterLabel: "FINISHED PENTHOUSE",
+    specs: "Ultratech M25 concrete, Fluted teakwood slat wall, Bookmatched Italian beige marble, Warm LED cove false ceiling."
   },
   {
     id: 2,
-    title: "Mayiladuthurai Commercial Plaza",
-    category: "commercial",
-    categoryLabel: "Commercial Architecture",
-    location: "Kacheri Road, Mayiladuthurai",
-    area: "8,500 sq.ft",
-    duration: "12 Months",
-    image: "assets/portfolio-commercial-architecture.jpg",
-    description: "Multi-storey commercial shopping complex and corporate office building with heavy-duty structural steel glazing, retail storefronts, basement parking, and fire compliance.",
-    features: ["Structural glass facade", "Elevator & power backup", "Heavy-load flooring", "Municipal approved plan"],
-    materials: "RCC M25 grade concrete, Saint-Gobain toughened glass, premium commercial vitrified tiles",
-    client: "Sri Balaji Commercial Syndicate"
+    title: "Contemporary Villa Facade",
+    category: "villas",
+    categoryLabel: "Villas",
+    location: "Sirkazhi Main Town",
+    area: "3,800 sq.ft",
+    beforeImg: "assets/villa-facade-before-1920.jpg",
+    afterImg: "assets/villa-facade-after-1920.jpg",
+    beforeLabel: "BRICKWORK & RCC FRAME",
+    afterLabel: "CONTEMPORARY FACADE",
+    specs: "Tata Tiscon Fe 550D rebar, Weather-Shield silicon texture, Saint-Gobain toughened glass balcony railings."
   },
   {
     id: 3,
-    title: "The Contemporary Luxury Interior Villa",
-    category: "interior",
-    categoryLabel: "Interior Design",
-    location: "Chidambaram Highway, Sirkazhi",
-    area: "2,600 sq.ft",
-    duration: "3.5 Months",
-    image: "assets/portfolio-interior-design.jpg",
-    description: "Bespoke interior fit-out featuring fluted teakwood slat wall, bookmatched backlit marble TV feature wall, warm LED cove false ceiling, brass accents, and seamless quartz island kitchen.",
-    features: ["Modular kitchen with quartz top", "Bookmatched marble TV wall", "False ceiling with warm LED coves", "Custom pooja mandir wood carvings"],
-    materials: "Marine grade BWP plywood, Italian Statuario marble, Merino laminates, Philips ambient LEDs",
-    client: "Mr. K. Anbarasan"
+    title: "PEB Industrial Facility",
+    category: "commercial",
+    categoryLabel: "Commercial & PEB",
+    location: "Sirkazhi Industrial Belt",
+    area: "18,500 sq.ft",
+    beforeImg: "assets/peb-facility-before-1920.jpg",
+    afterImg: "assets/peb-facility-after-1920.jpg",
+    beforeLabel: "STEEL RAFTER ASSEMBLY",
+    afterLabel: "OPERATIONAL PEB SHED",
+    specs: "Grade 345 MPa high-tensile steel rafters, Standing seam color-coated roof sheets with rockwool insulation."
   },
   {
     id: 4,
-    title: "Vaitheeswaran Koil Traditional Duplex",
-    category: "residential",
-    categoryLabel: "Duplex Home",
-    location: "Vaitheeswaran Koil, Sirkazhi Taluk",
-    area: "2,950 sq.ft",
-    duration: "8 Months",
-    image: "assets/portfolio-duplex-home.jpg",
-    description: "Modern duplex combining traditional Tamil architectural aesthetics with front Thinnai sit-out, carved teakwood pillars, terracotta Mangalore roof eaves, and glass balcony.",
-    features: ["Traditional portico Thinnai", "Carved teakwood pillars", "Covered terrace sit-out", "Vastu master bedroom"],
-    materials: "First-class table moulded red bricks, Dalmia cement, Jindal Panther steel, Mangalore tiles",
-    client: "Dr. R. Senthamilselvan"
+    title: "Sirkazhi Royal Heritage Villa",
+    category: "villas",
+    categoryLabel: "Villas",
+    location: "Sirkazhi Main Town",
+    area: "3,800 sq.ft",
+    beforeImg: "assets/villa-facade-before-hd.jpg",
+    afterImg: "assets/portfolio-residential-villa.jpg",
+    beforeLabel: "STRUCTURAL FRAME PHASE",
+    afterLabel: "HERITAGE LUXURY VILLA",
+    specs: "Vasthu-compliant double-height living hall, Teakwood portico pillars, GVT large format flooring, Asian Paints Royale."
   },
   {
     id: 5,
-    title: "Modern Cafe & Bakery Studio",
+    title: "Commercial Shopping Plaza",
     category: "commercial",
-    categoryLabel: "Commercial Retail",
-    location: "Old Bus Stand, Sirkazhi",
-    area: "1,800 sq.ft",
-    duration: "2.5 Months",
-    image: "assets/portfolio-commercial-retail.jpg",
-    description: "Trendy aesthetic cafe and bakery design featuring exposed brick styling, industrial track lights, custom wooden booth seating, and modern glass display counter.",
-    features: ["Exposed rustic brick wall", "Custom granite billing counter", "Acoustic ceiling treatment", "Commercial kitchen MEP"],
-    materials: "Reclaimed bricks, treated solid pinewood, black metal framing, warm Edison fixtures",
-    client: "Aroma Cafe & Bakers"
+    categoryLabel: "Commercial & PEB",
+    location: "Kacheri Road, Mayiladuthurai",
+    area: "8,500 sq.ft",
+    beforeImg: "assets/peb-facility-before-hd.jpg",
+    afterImg: "assets/portfolio-commercial-architecture.jpg",
+    beforeLabel: "RCC FRAMING & FOUNDATION",
+    afterLabel: "RETAIL PLAZA ARCHITECTURE",
+    specs: "Multi-storey commercial complex, Structural glass facade, Commercial vitrified flooring, Fire safety compliance."
   },
   {
     id: 6,
-    title: "Coastal Modern Beachside Bungalow",
-    category: "residential",
-    categoryLabel: "Luxury Bungalow",
+    title: "Bespoke Living & Kitchen Interior",
+    category: "interior",
+    categoryLabel: "Interiors",
+    location: "Sirkazhi",
+    area: "2,600 sq.ft",
+    beforeImg: "assets/renovation-before.jpg",
+    afterImg: "assets/portfolio-interior-design.jpg",
+    beforeLabel: "RAW PLYWOOD FITOUT",
+    afterLabel: "FINISHED INTERIOR FITOUT",
+    specs: "BWP Marine plywood modular kitchen, Quartz stone countertops, Hafele soft-close hardware, Custom pooja woodwork."
+  },
+  {
+    id: 7,
+    title: "Traditional Tamil Duplex Home",
+    category: "villas",
+    categoryLabel: "Villas",
+    location: "Vaitheeswaran Koil, Sirkazhi",
+    area: "2,950 sq.ft",
+    beforeImg: "assets/villa-facade-before-1920.jpg",
+    afterImg: "assets/portfolio-duplex-home.jpg",
+    beforeLabel: "BRICKWORK & COLUMN STAGE",
+    afterLabel: "COMPLETED DUPLEX RESIDENCE",
+    specs: "Traditional portico Thinnai sit-out, Carved solid teakwood pillars, First-class table moulded red bricks, Dalmia cement."
+  },
+  {
+    id: 8,
+    title: "Modern Commercial Retail Studio",
+    category: "commercial",
+    categoryLabel: "Commercial & PEB",
+    location: "Old Bus Stand, Sirkazhi",
+    area: "1,800 sq.ft",
+    beforeImg: "assets/peb-facility-before-1920.jpg",
+    afterImg: "assets/portfolio-commercial-retail.jpg",
+    beforeLabel: "CIVIL SHELL PHASE",
+    afterLabel: "COMMERCIAL RETAIL STUDIO",
+    specs: "Exposed rustic brick wall styling, Industrial track lights, Custom solid wood counters, Acoustic ceiling treatment."
+  },
+  {
+    id: 9,
+    title: "Coastal Modern Bungalow",
+    category: "villas",
+    categoryLabel: "Villas",
     location: "Poompuhar Coastal Road",
     area: "4,200 sq.ft",
-    duration: "11 Months",
-    image: "assets/portfolio-luxury-bungalow.jpg",
-    description: "Anti-corrosive coastal architectural bungalow with anti-saline waterproofing, cantilever balconies facing greenery, infinity plunge pool, and rooftop party gazebo.",
-    features: ["Coastal corrosion-resistant concrete", "UPVC acoustic sliding windows", "Rooftop pergola gazebo", "Infinity water feature"],
-    materials: "Sulphate-resistant cement, epoxy coated TMT rebar, UPVC weather-proof windows",
-    client: "Mr. T. Vigneshwaran"
+    beforeImg: "assets/villa-facade-before-2560.jpg",
+    afterImg: "assets/portfolio-luxury-bungalow.jpg",
+    beforeLabel: "REBAR REINFORCEMENT PHASE",
+    afterLabel: "COASTAL BUNGALOW RESIDENCE",
+    specs: "Sulphate-resistant cement, Epoxy-coated anti-corrosive rebar, UPVC weather-proof acoustic sliding windows."
+  },
+  {
+    id: 10,
+    title: "Turnkey 3D BIM & Architectural Residence",
+    category: "interior",
+    categoryLabel: "Interiors",
+    location: "Sirkazhi",
+    area: "2,400 sq.ft",
+    beforeImg: "assets/renovation-before-web.jpg",
+    afterImg: "assets/interior-design-hero-1920.jpg",
+    beforeLabel: "CAD DRAFTING & MASONRY",
+    afterLabel: "COMPLETED LIVING INTERIOR",
+    specs: "Photorealistic 3D elevations, Panchayat sanction blueprints, Precision MEP line diagrams, Turnkey execution."
   }
 ];
 
-// Package Rates per sq.ft (Tailored for Sirkazhi & Tamil Nadu region)
+// ----------------------------------------------------
+// 2. ESTIMATOR LOGIC & VALIDATION
+// ----------------------------------------------------
 const PACKAGE_RATES = {
   essential: {
     rate: 1750,
     name: "Classic Construction",
-    subtext: "Solid RCC frame, first-class bricks, vitrified tiles, and reliable standard fittings."
+    desc: "Solid RCC frame, first-class bricks, vitrified tiles, and branded standard fittings."
   },
   premium: {
     rate: 2350,
     name: "Architectural Premium",
-    subtext: "Designer 3D elevation, GVT large tiles, Teakwood main door, Jaquar/Kohler, Royale paint."
+    desc: "3D elevation design, GVT large format tiles, Teakwood main door, Jaquar sanitaryware, Asian Paints Royale."
   },
   luxury: {
     rate: 3250,
     name: "Ultra-Luxury Villa",
-    subtext: "Bespoke architectural layout, Italian marble, smart home fixtures, and landscaping."
+    desc: "Bespoke architectural layout, Italian marble, double-height spaces, acoustic glass, and premium automation."
   }
 };
 
 const PROJECT_TYPE_MULTIPLIERS = {
-  villa: 1.0,
-  house: 0.95,
-  commercial: 1.15,
-  interior: 0.65
+  villa: { label: "Independent Residential Villa", mult: 1.0 },
+  house: { label: "Modern Duplex / Town House", mult: 0.95 },
+  commercial: { label: "Commercial Building & PEB Shed", mult: 1.15 },
+  interior: { label: "Turnkey Interiors & Modular Kitchen", mult: 0.65 }
 };
 
 const ADDONS_PRICING = {
-  kitchen: 275000,
-  elevation3d: 45000,
-  vasthu: 35000,
-  automation: 150000,
-  solar: 195000,
-  sump: 120000
+  kitchen: { name: "Modular Kitchen & Wardrobes", cost: 275000 },
+  elevation3d: { name: "3D Elevation & CAD Floor Plan", cost: 45000 },
+  vasthu: { name: "Vasthu Planning & Sanction Blueprints", cost: 35000 },
+  sump: { name: "Borewell & Underground Water Sump", cost: 120000 },
+  solar: { name: "Rooftop Solar Plant (3kW)", cost: 195000 }
 };
 
-// Application State
-const state = {
-  area: 2200,
+// Estimator State
+const estimatorState = {
+  area: 2000,
   packageType: "premium",
   projectType: "villa",
   addons: {
     kitchen: true,
     elevation3d: true,
     vasthu: true,
-    automation: false,
-    solar: false,
-    sump: true
-  },
-  sliderPosition: 50,
-  activeFilter: "all"
+    sump: true,
+    solar: false
+  }
 };
 
-// Currency Formatter
-function formatINR(amount) {
+function formatLakhs(amount) {
   if (amount >= 10000000) {
-    const cr = (amount / 10000000).toFixed(2);
-    return `₹ ${cr} Cr`;
+    return `₹ ${(amount / 10000000).toFixed(2)} Cr`;
   } else if (amount >= 100000) {
-    const lakhs = (amount / 100000).toFixed(2);
-    return `₹ ${lakhs} Lakhs`;
+    return `₹ ${(amount / 100000).toFixed(2)} Lakhs`;
   } else {
-    return `₹ ${Math.round(amount).toLocaleString('en-IN')}`;
+    return `₹ ${Math.round(amount).toLocaleString("en-IN")}`;
   }
 }
 
-function formatRawAmount(amount) {
-  return "₹ " + Math.round(amount).toLocaleString("en-IN");
-}
-
-// ----------------------------------------------------
-// 1. Cost Estimator Engine
-// ----------------------------------------------------
 function calculateCost() {
-  const baseRate = PACKAGE_RATES[state.packageType].rate;
-  const multiplier = PROJECT_TYPE_MULTIPLIERS[state.projectType];
-  const effectiveRate = baseRate * multiplier;
-  const baseConstructionCost = state.area * effectiveRate;
+  // Validate Area between 300 and 50,000 sq.ft
+  let area = estimatorState.area;
+  if (isNaN(area) || area < 300) area = 300;
+  if (area > 50000) area = 50000;
+  estimatorState.area = area;
+
+  const pkg = PACKAGE_RATES[estimatorState.packageType];
+  const typeInfo = PROJECT_TYPE_MULTIPLIERS[estimatorState.projectType];
+  const effectiveRate = pkg.rate * typeInfo.mult;
+  const baseCost = area * effectiveRate;
 
   let addonsTotal = 0;
-  for (const [key, isSelected] of Object.entries(state.addons)) {
+  for (const [key, isSelected] of Object.entries(estimatorState.addons)) {
     if (isSelected && ADDONS_PRICING[key]) {
-      addonsTotal += ADDONS_PRICING[key];
+      addonsTotal += ADDONS_PRICING[key].cost;
     }
   }
 
-  const grandTotal = baseConstructionCost + addonsTotal;
+  const calculatedTotal = baseCost + addonsTotal;
 
-  // Breakdown Calculations
-  const civilCost = Math.round(baseConstructionCost * 0.52);
-  const finishingCost = Math.round(baseConstructionCost * 0.28);
-  const mepCost = Math.round(baseConstructionCost * 0.12);
-  const architecturalFee = Math.round(baseConstructionCost * 0.08);
+  // Always show an estimate RANGE (₹X - ₹Y), never a single figure
+  const minEstimate = Math.round(calculatedTotal * 0.95);
+  const maxEstimate = Math.round(calculatedTotal * 1.05);
 
-  // Update UI Elements
-  const totalDisplay = document.getElementById("est-total-cost");
+  const rangeDisplay = document.getElementById("est-total-range");
   const baseRateDisplay = document.getElementById("est-rate-persqft");
   const areaValueDisplay = document.getElementById("est-area-value");
   const civilDisplay = document.getElementById("breakdown-civil");
   const finishingDisplay = document.getElementById("breakdown-finishing");
   const mepDisplay = document.getElementById("breakdown-mep");
-  const designDisplay = document.getElementById("breakdown-design");
   const addonsDisplay = document.getElementById("breakdown-addons");
 
-  if (totalDisplay) totalDisplay.textContent = formatINR(grandTotal);
-  if (baseRateDisplay) {
-    baseRateDisplay.textContent = `${formatRawAmount(effectiveRate)} / sq.ft`;
+  if (rangeDisplay) {
+    rangeDisplay.textContent = `${formatLakhs(minEstimate)} – ${formatLakhs(maxEstimate)}`;
   }
-  if (areaValueDisplay) areaValueDisplay.textContent = `${state.area.toLocaleString()} sq.ft`;
-  
-  if (civilDisplay) civilDisplay.textContent = formatRawAmount(civilCost);
-  if (finishingDisplay) finishingDisplay.textContent = formatRawAmount(finishingCost);
-  if (mepDisplay) mepDisplay.textContent = formatRawAmount(mepCost);
-  if (designDisplay) designDisplay.textContent = formatRawAmount(architecturalFee);
-  if (addonsDisplay) addonsDisplay.textContent = formatRawAmount(addonsTotal);
+  if (baseRateDisplay) {
+    baseRateDisplay.textContent = `₹ ${Math.round(effectiveRate).toLocaleString("en-IN")} / sq.ft`;
+  }
+  if (areaValueDisplay) {
+    areaValueDisplay.textContent = `${area.toLocaleString("en-IN")} sq.ft`;
+  }
+  if (civilDisplay) {
+    civilDisplay.textContent = formatLakhs(Math.round(baseCost * 0.52));
+  }
+  if (finishingDisplay) {
+    finishingDisplay.textContent = formatLakhs(Math.round(baseCost * 0.28));
+  }
+  if (mepDisplay) {
+    mepDisplay.textContent = formatLakhs(Math.round(baseCost * 0.12));
+  }
+  if (addonsDisplay) {
+    addonsDisplay.textContent = formatLakhs(addonsTotal);
+  }
 
   return {
-    grandTotal,
-    baseConstructionCost,
-    addonsTotal,
-    civilCost,
-    finishingCost,
-    mepCost,
-    architecturalFee
+    area,
+    calculatedTotal,
+    minEstimate,
+    maxEstimate,
+    effectiveRate,
+    pkgName: pkg.name,
+    projectLabel: typeInfo.label
   };
 }
 
-// ----------------------------------------------------
-// 2. WhatsApp Quote Sender
-// ----------------------------------------------------
-function sendEstimateToWhatsApp(phone = COMPANY_PHONE_1) {
-  const calc = calculateCost();
-  const pkg = PACKAGE_RATES[state.packageType];
-  
-  const activeAddonsList = Object.entries(state.addons)
+function sendEstimateToWhatsApp() {
+  const est = calculateCost();
+  const activeAddons = Object.entries(estimatorState.addons)
     .filter(([_, active]) => active)
-    .map(([key, _]) => {
-      const names = {
-        kitchen: "Modular Kitchen & Wardrobes",
-        elevation3d: "3D Elevation & CAD Floor Plan",
-        vasthu: "Vasthu Planning & Structural Sanctions",
-        automation: "Smart Home Lighting & Security",
-        solar: "Rooftop Solar Plant (3kW/5kW)",
-        sump: "Borewell & Underground Water Sump"
-      };
-      return `• ${names[key] || key}`;
-    });
+    .map(([key, _]) => `• ${ADDONS_PRICING[key]?.name || key}`)
+    .join("\n");
 
   const msg = 
-`🏗️ *MAK BUILD - CONSTRUCTION & DESIGN (SIRKAZHI)*
+`🏗️ *MAK BUILD - PROJECT ESTIMATE INQUIRY*
 ━━━━━━━━━━━━━━━━━━━━━━━━
-📍 *Location:* Sirkazhi / Nearby Region
-📐 *Built-Up Area:* ${state.area.toLocaleString()} sq.ft
-🏡 *Project Scope:* ${state.projectType.toUpperCase()}
-⭐ *Package:* ${pkg.name} (${formatRawAmount(pkg.rate)}/sq.ft)
+📍 *Location:* Sirkazhi / Nearby Tamil Nadu Region
+📐 *Built-Up Area:* ${est.area.toLocaleString("en-IN")} sq.ft
+🏡 *Project Scope:* ${est.projectLabel}
+⭐ *Package:* ${est.pkgName} (~₹${Math.round(est.effectiveRate)}/sq.ft)
 
 📋 *Selected Add-Ons:*
-${activeAddonsList.length > 0 ? activeAddonsList.join("\n") : "• None"}
+${activeAddons || "• None"}
 
-💰 *Estimated Investment:* ${formatINR(calc.grandTotal)}
-(Civil/RCC: ${formatINR(calc.civilCost)}, Finishing: ${formatINR(calc.finishingCost)}, MEP: ${formatINR(calc.mepCost)})
+💰 *Indicative Investment Range:*
+${formatLakhs(est.minEstimate)} – ${formatLakhs(est.maxEstimate)}
+
+*(Indicative estimate only — final quotation depends on site conditions and discussion.)*
 ━━━━━━━━━━━━━━━━━━━━━━━━
-I would like to schedule a direct site consultation with MAK BUILD engineers.`;
+Hello MAK BUILD team, I calculated this estimate on your website and would like to discuss next steps.`;
 
-  const waUrl = `https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, "_blank");
+  window.open(`https://wa.me/91${COMPANY_WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 // ----------------------------------------------------
-// 3. Draftsman Hiring / Resume WhatsApp Sender
+// 3. CONTACT FORM ENQUIRY (Prefilled WhatsApp Submission)
 // ----------------------------------------------------
-function applyForDraftsman(phone = COMPANY_PHONE_1) {
-  const msg = 
-`📐 *MAK BUILD - JOB APPLICATION (DRAFTSMAN)*
-━━━━━━━━━━━━━━━━━━━━━━━━
-🏢 *Role:* DRAFTSMAN
-📍 *Location:* Sirkazhi
-💼 *Workplace:* Inclusive & Welcoming / Open to All Qualified Candidates & Freshers
-
-Hello MAK BUILD Team,
-I am interested in applying for the *Draftsman* position at your Sirkazhi office.
-
-My Details:
-• *Name:* 
-• *Qualification:* (Diploma / BE Civil / Architecture / Other)
-• *Skills:* AutoCAD, Excel, Civil Engineering Knowledge
-• *Experience:* (Fresher / Years)
-• *Current Location:* 
-
-I am attaching my Resume / Portfolio in this chat. Thank you!`;
-
-  const waUrl = `https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, "_blank");
-}
-
-// ----------------------------------------------------
-// 4. Consultation Booking Form Submission
-// ----------------------------------------------------
-function handleConsultationSubmit(e) {
+function handleContactSubmit(e) {
   e.preventDefault();
   const form = e.target;
-  const name = form.elements["client_name"]?.value || "Client";
-  const phone = form.elements["client_phone"]?.value || "";
-  const location = form.elements["client_location"]?.value || "Sirkazhi";
-  const projectType = form.elements["client_project_type"]?.value || "Residential Villa";
-  const budget = form.elements["client_budget"]?.value || "Standard";
-  const message = form.elements["client_notes"]?.value || "";
+  const feedback = document.getElementById("contact-form-feedback");
+  const name = form.elements["client_name"]?.value.trim() || "";
+  const phone = form.elements["client_phone"]?.value.trim() || "";
+  const location = form.elements["client_location"]?.value.trim() || "";
+  const projectType = form.elements["client_project_type"]?.value || "Villas & Homes (Turnkey Civil)";
+  const message = form.elements["client_message"]?.value.trim() || "Plot inspection and architectural consultation.";
 
-  const text = `👋 *NEW INQUIRY - MAK BUILD (SIRKAZHI)*
+  // Clear any existing feedback state
+  if (feedback) {
+    feedback.className = "hidden p-3.5 rounded-xl text-xs font-semibold";
+    feedback.textContent = "";
+  }
+
+  // Validate required fields
+  if (!name) {
+    if (feedback) {
+      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      feedback.textContent = "Please enter your name so our engineers know who they are speaking with.";
+    }
+    form.elements["client_name"]?.focus();
+    return;
+  }
+
+  // Clean phone to check digits
+  const digitsOnly = phone.replace(/[^0-9]/g, "");
+  if (!phone || digitsOnly.length < 10) {
+    if (feedback) {
+      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      feedback.textContent = "Please provide a valid 10-digit WhatsApp phone number so we can reach you.";
+    }
+    form.elements["client_phone"]?.focus();
+    return;
+  }
+
+  if (!location) {
+    if (feedback) {
+      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      feedback.textContent = "Please provide your site or plot location (e.g. Sirkazhi, Thenpathi, etc.).";
+    }
+    form.elements["client_location"]?.focus();
+    return;
+  }
+
+  // Valid submission: show brief positive feedback and open WhatsApp
+  if (feedback) {
+    feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/40";
+    feedback.textContent = "Connecting you directly to MAK BUILD engineers on WhatsApp...";
+  }
+
+  const text = 
+`👋 *NEW PROJECT ENQUIRY — MAK BUILD (SIRKAZHI)*
 ━━━━━━━━━━━━━━━━━━━━━━━━
 👤 *Name:* ${name}
 📞 *Phone:* ${phone}
 📍 *Site Location:* ${location}
-🏗️ *Project Scope:* ${projectType}
-💵 *Budget Range:* ${budget}
-📝 *Notes:* ${message}
+🏗️ *Project Type:* ${projectType}
+📝 *Message / Requirements:*
+${message}
 ━━━━━━━━━━━━━━━━━━━━━━━━
-Please contact me for site visit and consultation.`;
+I would like to schedule a direct site consultation with MAK BUILD.`;
 
-  showToast("Inquiry recorded! Opening WhatsApp to connect with MAK BUILD team...");
-
-  setTimeout(() => {
-    window.open(`https://wa.me/91${COMPANY_PHONE_1}?text=${encodeURIComponent(text)}`, "_blank");
-    form.reset();
-  }, 1000);
+  window.open(`https://wa.me/91${COMPANY_WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank");
+  form.reset();
 }
 
 // ----------------------------------------------------
-// 5. Interactive Before & After Transformation Engine
+// 4. OUR WORK GRID — INTERACTIVE BEFORE & AFTER SLIDERS
 // ----------------------------------------------------
-const BA_PROJECTS = {
-  "living-room": {
-    id: "living-room",
-    title: "Luxury Penthouse Residence",
-    tabId: "ba-tab-living",
-    beforeImg: "assets/renovation-before-web.jpg",
-    beforeFallback: window.MAK_BA_BEFORE || "assets/renovation-before.jpg",
-    beforeLabel: "BEFORE: RAW RCC & MASONRY SHELL",
-    afterImg: "assets/penthouse-after-hd.jpg?v=6",
-    afterFallback: window.MAK_BA_AFTER || "assets/penthouse-after-hd.jpg",
-    afterLabel: "AFTER: BESPOKE LUXURY RESIDENCE",
-    structuralTitle: "Grade-A RCC & Steel",
-    structuralDesc: "Engineered with UltraTech M25/M30 concrete mix and Tata Tiscon Fe 550D rebar. Integrated anti-termite plinth injection and 100% Vasthu beam alignment.",
-    finishingTitle: "Fluted Teak Wood Slat & Ambient Backlit TV Wall",
-    finishingDesc: "Custom backlit fluted teak wood slat feature TV wall with imported Italian marble paneling, concealed warm LED cove illumination, grid windows with panoramic views, and mirror-finish polished marble flooring.",
-    timelineTitle: "Guaranteed Delivery & Warranty",
-    timelineDesc: "Handed over in 180 days with zero cost escalation guarantee. Includes a 10-Year structural engineering warranty and 1-Year complimentary MEP care."
-  },
-  "villa-exterior": {
-    id: "villa-exterior",
-    title: "Contemporary Villa Facade",
-    tabId: "ba-tab-villa",
-    beforeImg: "assets/villa-facade-before-1920.jpg",
-    beforeSrcset: "assets/villa-facade-before-1920.jpg 1920w, assets/villa-facade-before-2560.jpg 2560w",
-    beforeFallback: (typeof window !== "undefined" && window.MAK_BA_VILLA_BEFORE) ? window.MAK_BA_VILLA_BEFORE : "assets/villa-facade-before-hd.jpg",
-    beforeLabel: "BEFORE: RAW BRICKWORK & RCC STRUCTURE",
-    afterImg: "assets/villa-facade-after-1920.jpg",
-    afterSrcset: "assets/villa-facade-after-1920.jpg 1920w, assets/villa-facade-after-2560.jpg 2560w",
-    afterFallback: (typeof window !== "undefined" && window.MAK_BA_VILLA_AFTER) ? window.MAK_BA_VILLA_AFTER : "assets/villa-facade-after-hd.jpg",
-    afterLabel: "AFTER: INDIAN CONTEMPORARY VILLA FACADE",
-    structuralTitle: "Deep Pile & Anti-Seismic Columns",
-    structuralDesc: "Designed for coastal delta soil bearing capacity with corrosion-resistant epoxy-coated rebars and monolithic slab castings.",
-    finishingTitle: "Weather-Shield Facade & Glazing",
-    finishingDesc: "High-grade textured silicon emulsion, Saint-Gobain acoustic double-glazed glass railings, exterior pergolas, and landscape lighting.",
-    timelineTitle: "Turnkey Civil & Facade Handover",
-    timelineDesc: "Delivered in 240 days with scheduled milestone inspections, BIS compliant materials, and comprehensive foundation certification."
-  },
-  "commercial-peb": {
-    id: "commercial-peb",
-    title: "PEB Industrial Facility",
-    tabId: "ba-tab-peb",
-    beforeImg: "assets/peb-facility-before-1920.jpg",
-    beforeSrcset: "assets/peb-facility-before-1920.jpg 1920w, assets/peb-facility-before-2560.jpg 2560w",
-    beforeFallback: (typeof window !== "undefined" && window.MAK_BA_PEB_BEFORE) ? window.MAK_BA_PEB_BEFORE : "assets/peb-facility-before-hd.jpg",
-    beforeLabel: "BEFORE: UNFINISHED STEEL SHED STRUCTURE",
-    afterImg: "assets/peb-facility-after-1920.jpg",
-    afterSrcset: "assets/peb-facility-after-1920.jpg 1920w, assets/peb-facility-after-2560.jpg 2560w",
-    afterFallback: (typeof window !== "undefined" && window.MAK_BA_PEB_AFTER) ? window.MAK_BA_PEB_AFTER : "assets/peb-facility-after-hd.jpg",
-    afterLabel: "AFTER: MODERN PEB INDUSTRIAL FACILITY",
-    structuralTitle: "Pre-Engineered High-Tensile Steel",
-    structuralDesc: "Grade 345 MPa high-tensile steel rafters, cold-formed Z & C purlins, and heavy-duty anchor bolt assemblies designed for wind loads up to 50 m/s.",
-    finishingTitle: "Insulated Cladding & MEP Integration",
-    finishingDesc: "Standing seam color-coated roofing sheets with rockwool insulation, polycarbonate daylight panels, and industrial epoxy flooring.",
-    timelineTitle: "90-Day Rapid Commissioning",
-    timelineDesc: "Precision factory fabrication with rapid on-site bolt assembly, fire safety compliance, and ISO 9001:2015 quality assurance."
-  }
-};
+let activeFilter = "all";
 
-let currentBaProject = "living-room";
-let baAutoScanActive = false;
-let baAutoScanRaf = null;
-let baAutoScanStartTime = null;
-
-function setBaPosition(percentage) {
-  const container = document.getElementById("ba-slider-box");
-  if (!container) return;
-  const clamped = Math.max(0, Math.min(100, percentage));
-  container.style.setProperty("--ba-pos", `${clamped}%`);
-  state.sliderPosition = clamped;
-
-  // Dynamically update preset buttons active highlight
-  const btnBefore = document.getElementById("ba-btn-before");
-  const btnSplit = document.getElementById("ba-btn-split");
-  const btnAfter = document.getElementById("ba-btn-after");
-
-  const activeClasses = ["bg-[#d4af37]/20", "text-[#fceda2]", "border-[#d4af37]/40"];
-  const inactiveClasses = ["bg-slate-800/80", "text-slate-300", "border-slate-700"];
-
-  function setBtnStyle(btn, isActive) {
-    if (!btn) return;
-    if (isActive) {
-      btn.classList.add(...activeClasses);
-      btn.classList.remove(...inactiveClasses);
-    } else {
-      btn.classList.remove(...activeClasses);
-      btn.classList.add(...inactiveClasses);
-    }
-  }
-
-  setBtnStyle(btnBefore, clamped >= 95);
-  setBtnStyle(btnSplit, clamped >= 45 && clamped <= 55);
-  setBtnStyle(btnAfter, clamped <= 5);
-
-  // Intelligent proximity dimming for badges so they don't collide with the dial
-  const badgeBefore = document.getElementById("ba-badge-before");
-  const badgeAfter = document.getElementById("ba-badge-after");
-  if (badgeBefore) {
-    if (clamped < 25) {
-      badgeBefore.style.opacity = Math.max(0.12, clamped / 25).toString();
-      badgeBefore.style.transform = `scale(${0.92 + 0.08 * (clamped / 25)})`;
-    } else {
-      badgeBefore.style.opacity = "1";
-      badgeBefore.style.transform = "scale(1)";
-    }
-  }
-  if (badgeAfter) {
-    if (clamped > 75) {
-      const factor = (100 - clamped) / 25;
-      badgeAfter.style.opacity = Math.max(0.12, factor).toString();
-      badgeAfter.style.transform = `scale(${0.92 + 0.08 * factor})`;
-    } else {
-      badgeAfter.style.opacity = "1";
-      badgeAfter.style.transform = "scale(1)";
-    }
-  }
-}
-
-function switchBaProject(projectId) {
-  const proj = BA_PROJECTS[projectId];
-  if (!proj) return;
-  currentBaProject = projectId;
-
-  // Stop auto scan on switch
-  if (baAutoScanActive) toggleBaAutoScan();
-
-  // Update tabs
-  ["ba-tab-living", "ba-tab-villa", "ba-tab-peb"].forEach(tabId => {
-    const tab = document.getElementById(tabId);
-    if (!tab) return;
-    if (tabId === proj.tabId) {
-      tab.classList.add("active");
-    } else {
-      tab.classList.remove("active");
-    }
-  });
-
-  // Fade out slightly and swap images
-  const imgBefore = document.getElementById("ba-img-before");
-  const imgAfter = document.getElementById("ba-img-after");
-  const textBefore = document.getElementById("ba-text-before");
-  const textAfter = document.getElementById("ba-text-after");
-
-  if (imgBefore && imgAfter) {
-    imgBefore.style.opacity = "0.4";
-    imgAfter.style.opacity = "0.4";
-
-    setTimeout(() => {
-      var isGitHub = window.location.hostname.indexOf("github.io") !== -1;
-      if (projectId === "living-room") {
-        imgBefore.src = (isGitHub && window.MAK_BA_BEFORE) ? window.MAK_BA_BEFORE : proj.beforeImg;
-        imgAfter.src = (isGitHub && window.MAK_BA_AFTER) ? window.MAK_BA_AFTER : proj.afterImg;
-      } else if (projectId === "villa-exterior") {
-        imgBefore.src = (isGitHub && window.MAK_BA_VILLA_BEFORE) ? window.MAK_BA_VILLA_BEFORE : proj.beforeImg;
-        imgAfter.src = (isGitHub && window.MAK_BA_VILLA_AFTER) ? window.MAK_BA_VILLA_AFTER : proj.afterImg;
-      } else if (projectId === "commercial-peb") {
-        imgBefore.src = (isGitHub && window.MAK_BA_PEB_BEFORE) ? window.MAK_BA_PEB_BEFORE : proj.beforeImg;
-        imgAfter.src = (isGitHub && window.MAK_BA_PEB_AFTER) ? window.MAK_BA_PEB_AFTER : proj.afterImg;
-      } else {
-        imgBefore.src = proj.beforeImg;
-        imgAfter.src = proj.afterImg;
-      }
-
-      if (proj.beforeSrcset && (!isGitHub || !window.MAK_BA_VILLA_BEFORE)) {
-        imgBefore.srcset = proj.beforeSrcset;
-        imgBefore.sizes = "(max-width: 1024px) 100vw, 1920px";
-      } else {
-        imgBefore.removeAttribute("srcset");
-        imgBefore.removeAttribute("sizes");
-      }
-
-      if (proj.afterSrcset && (!isGitHub || !window.MAK_BA_VILLA_AFTER)) {
-        imgAfter.srcset = proj.afterSrcset;
-        imgAfter.sizes = "(max-width: 1024px) 100vw, 1920px";
-      } else {
-        imgAfter.removeAttribute("srcset");
-        imgAfter.removeAttribute("sizes");
-      }
-
-      imgBefore.width = 1920;
-      imgBefore.height = 1080;
-      imgAfter.width = 1920;
-      imgAfter.height = 1080;
-      imgBefore.loading = "lazy";
-      imgAfter.loading = "lazy";
-
-      imgBefore.onerror = function() {
-        this.onerror = null;
-        if (proj.beforeFallback) this.src = proj.beforeFallback;
-      };
-      imgAfter.onerror = function() {
-        this.onerror = null;
-        if (proj.afterFallback) this.src = proj.afterFallback;
-      };
-
-      if (textBefore) textBefore.textContent = proj.beforeLabel;
-      if (textAfter) textAfter.textContent = proj.afterLabel;
-
-      imgBefore.style.opacity = "1";
-      imgAfter.style.opacity = "1";
-    }, 150);
-  }
-
-  // Update Spec Cards
-  const structTitle = document.getElementById("ba-spec-structural-title");
-  const structDesc = document.getElementById("ba-spec-structural-desc");
-  const finishTitle = document.getElementById("ba-spec-finishing-title");
-  const finishDesc = document.getElementById("ba-spec-finishing-desc");
-  const timeTitle = document.getElementById("ba-spec-timeline-title");
-  const timeDesc = document.getElementById("ba-spec-timeline-desc");
-
-  if (structTitle) structTitle.textContent = proj.structuralTitle;
-  if (structDesc) structDesc.textContent = proj.structuralDesc;
-  if (finishTitle) finishTitle.textContent = proj.finishingTitle;
-  if (finishDesc) finishDesc.textContent = proj.finishingDesc;
-  if (timeTitle) timeTitle.textContent = proj.timelineTitle;
-  if (timeDesc) timeDesc.textContent = proj.timelineDesc;
-
-  // Reset slider to 50%
-  setBaPosition(50);
-}
-
-function toggleBaAutoScan() {
-  const btn = document.getElementById("ba-autoscan-btn");
-  const label = document.getElementById("ba-autoscan-label");
-  const icon = document.getElementById("ba-autoscan-icon");
-
-  if (baAutoScanActive) {
-    baAutoScanActive = false;
-    if (baAutoScanRaf) cancelAnimationFrame(baAutoScanRaf);
-    baAutoScanRaf = null;
-    if (label) label.textContent = "Auto Reveal";
-    if (btn) btn.classList.remove("ring-2", "ring-[#d4af37]");
-    if (icon && window.lucide) {
-      icon.setAttribute("data-lucide", "play");
-      window.lucide.createIcons();
-    }
-  } else {
-    baAutoScanActive = true;
-    baAutoScanStartTime = null;
-    if (label) label.textContent = "Pause Reveal";
-    if (btn) btn.classList.add("ring-2", "ring-[#d4af37]");
-    if (icon && window.lucide) {
-      icon.setAttribute("data-lucide", "pause");
-      window.lucide.createIcons();
-    }
-
-    function scanStep(timestamp) {
-      if (!baAutoScanActive) return;
-      if (!baAutoScanStartTime) baAutoScanStartTime = timestamp;
-      const elapsed = (timestamp - baAutoScanStartTime) / 1000;
-      // Oscillate smoothly between 12% and 88% over 4.5 seconds
-      const pos = 50 + 38 * Math.sin((elapsed * Math.PI * 2) / 4.5);
-      setBaPosition(pos);
-      baAutoScanRaf = requestAnimationFrame(scanStep);
-    }
-    baAutoScanRaf = requestAnimationFrame(scanStep);
-  }
-}
-
-function initBeforeAfterSlider() {
-  const container = document.getElementById("ba-slider-box");
-  if (!container) return;
-
-  let isPointerDown = false;
-
-  function handlePointer(clientX) {
-    const rect = container.getBoundingClientRect();
-    let offsetX = clientX - rect.left;
-    let percentage = (offsetX / rect.width) * 100;
-    setBaPosition(percentage);
-  }
-
-  // Pointer Events (Unified Mouse, Touch & Pen with hardware tracking)
-  container.addEventListener("pointerdown", (e) => {
-    isPointerDown = true;
-    container.classList.add("is-dragging");
-    if (baAutoScanActive) toggleBaAutoScan();
-    try {
-      container.setPointerCapture(e.pointerId);
-    } catch (err) {}
-    handlePointer(e.clientX);
-    e.preventDefault();
-  });
-
-  container.addEventListener("pointermove", (e) => {
-    if (!isPointerDown) return;
-    handlePointer(e.clientX);
-  });
-
-  function stopDrag(e) {
-    if (!isPointerDown) return;
-    isPointerDown = false;
-    container.classList.remove("is-dragging");
-    try {
-      container.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-  }
-
-  container.addEventListener("pointerup", stopDrag);
-  container.addEventListener("pointercancel", stopDrag);
-
-  // Keyboard accessibility on container focus
-  container.setAttribute("tabindex", "0");
-  container.setAttribute("role", "slider");
-  container.setAttribute("aria-valuemin", "0");
-  container.setAttribute("aria-valuemax", "100");
-  container.setAttribute("aria-valuenow", "50");
-  container.setAttribute("aria-label", "Before and after transformation slider");
-
-  container.addEventListener("keydown", (e) => {
-    if (baAutoScanActive) toggleBaAutoScan();
-    let current = state.sliderPosition || 50;
-    if (e.key === "ArrowLeft") {
-      setBaPosition(current - 5);
-      e.preventDefault();
-    } else if (e.key === "ArrowRight") {
-      setBaPosition(current + 5);
-      e.preventDefault();
-    } else if (e.key === "Home") {
-      setBaPosition(0);
-      e.preventDefault();
-    } else if (e.key === "End") {
-      setBaPosition(100);
-      e.preventDefault();
-    }
-  });
-
-  // Set initial 50% position
-  setBaPosition(50);
-
-  // Auto-hide floating widgets (highlights and whatsapp) when Before/After section is in view
-  const transSection = document.getElementById("transformation");
-  function checkBaOverlap() {
-    if (!transSection) return;
-    const rect = transSection.getBoundingClientRect();
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-    const inView = (rect.top < windowHeight - 40) && (rect.bottom > 40);
-    if (inView) {
-      document.body.classList.add("hide-floating-on-ba");
-    } else {
-      document.body.classList.remove("hide-floating-on-ba");
-    }
-  }
-
-  window.addEventListener("scroll", checkBaOverlap, { passive: true });
-  window.addEventListener("resize", checkBaOverlap, { passive: true });
-  setTimeout(checkBaOverlap, 100);
-  setTimeout(checkBaOverlap, 400);
-  setTimeout(checkBaOverlap, 1000);
-
-  if (transSection && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          document.body.classList.add("hide-floating-on-ba");
-        } else {
-          checkBaOverlap();
-        }
-      });
-    }, {
-      threshold: [0, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
-    });
-    observer.observe(transSection);
-  }
-}
-
-// ----------------------------------------------------
-// 6. Portfolio Grid & Modal
-// ----------------------------------------------------
-function renderPortfolio(filter = "all") {
-  const grid = document.getElementById("portfolio-grid");
+function renderWorkGrid(filter = "all") {
+  activeFilter = filter;
+  const grid = document.getElementById("work-grid");
   if (!grid) return;
 
   const filtered = filter === "all" 
-    ? PORTFOLIO_PROJECTS 
-    : PORTFOLIO_PROJECTS.filter(p => p.category === filter);
+    ? ALL_PROJECTS 
+    : ALL_PROJECTS.filter(p => p.category === filter);
 
   grid.innerHTML = filtered.map(p => `
-    <div class="glass-card rounded-2xl overflow-hidden group cursor-pointer flex flex-col transition-all duration-300 hover:-translate-y-2 border border-slate-800" onclick="openProjectModal(${p.id})">
-      <div class="relative h-64 overflow-hidden bg-slate-950">
-        <img 
-          src="${p.image}" 
-          alt="${p.title}" 
-          width="1376"
-          height="768"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-          loading="lazy"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent opacity-80"></div>
-        
-        <div class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-[#d4af37] border border-[#d4af37]/30">
-          ${p.categoryLabel}
-        </div>
-        
-        <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-          <div>
-            <p class="text-xs text-slate-300 flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#d4af37]"></i> ${p.location}
-            </p>
-            <h3 class="text-lg font-bold text-white mt-1 group-hover:text-[#d4af37] transition-colors">
-              ${p.title}
-            </h3>
-          </div>
-          <span class="bg-[#d4af37] text-slate-950 p-2 rounded-xl group-hover:bg-[#f0c946] transition-colors shadow-lg">
-            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-          </span>
-        </div>
-      </div>
+    <article class="work-card glass-card rounded-2xl overflow-hidden border border-slate-800/80 hover:border-[#d4af37]/40 transition-all flex flex-col group">
       
-      <div class="p-5 flex-1 flex flex-col justify-between bg-slate-900/60">
-        <p class="text-slate-400 text-sm line-clamp-2 mb-4 leading-relaxed">
-          ${p.description}
-        </p>
-        
-        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300">
-          <span class="flex items-center gap-1 font-keyboard">
-            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#d4af37]"></i> ${p.area}
-          </span>
-          <span class="flex items-center gap-1 font-keyboard">
-            <i data-lucide="clock" class="w-3.5 h-3.5 text-[#d4af37]"></i> ${p.duration}
-          </span>
-          <span class="text-[#d4af37] font-semibold hover:underline flex items-center gap-1">
-            View Specs <i data-lucide="chevron-right" class="w-3 h-3"></i>
-          </span>
+      <!-- Interactive B&A Image Container -->
+      <div 
+        class="work-slider-box relative aspect-[16/10] sm:aspect-[16/10] overflow-hidden bg-slate-950 cursor-ew-resize select-none"
+        data-project-id="${p.id}"
+        tabindex="0"
+        role="slider"
+        aria-label="Before and after comparison for ${p.title}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+        style="--ba-pos: 50%;"
+      >
+        <!-- AFTER Image (Underneath) -->
+        <img 
+          src="${p.afterImg}" 
+          alt="After: ${p.title}" 
+          class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+          loading="lazy"
+          width="800"
+          height="500"
+        />
+
+        <!-- BEFORE Image (Clipped on top with --ba-pos) -->
+        <div 
+          class="absolute inset-0 overflow-hidden pointer-events-none"
+          style="clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%); -webkit-clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%);"
+        >
+          <img 
+            src="${p.beforeImg}" 
+            alt="Before: ${p.title}" 
+            class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            loading="lazy"
+            width="800"
+            height="500"
+          />
         </div>
+
+        <!-- Dividing Line -->
+        <div 
+          class="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#fceda2] via-[#d4af37] to-[#aa820a] pointer-events-none z-10 shadow-[0_0_10px_rgba(212,175,55,0.7)]"
+          style="left: var(--ba-pos); transform: translateX(-50%);"
+        ></div>
+
+        <!-- Draggable Handle Orb -->
+        <div 
+          class="absolute top-1/2 w-8 h-8 rounded-full bg-[#d4af37] text-slate-950 flex items-center justify-center pointer-events-none z-20 shadow-xl border-2 border-white -translate-y-1/2 -translate-x-1/2 active:scale-110 transition-transform"
+          style="left: var(--ba-pos);"
+        >
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-[2.5]" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m8 9-4 3 4 3m8-6 4 3-4 3"/>
+          </svg>
+        </div>
+
+        <!-- Labels -->
+        <div class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[9.5px] font-bold tracking-wider text-amber-300 border border-amber-400/30 pointer-events-none z-10">
+          BEFORE
+        </div>
+        <div class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[9.5px] font-bold tracking-wider text-[#d4af37] border border-[#d4af37]/30 pointer-events-none z-10">
+          AFTER
+        </div>
+
+        <!-- Enlarge Button -->
+        <button 
+          type="button"
+          onclick="openWorkModal(${p.id}); event.stopPropagation();"
+          class="absolute bottom-3 right-3 z-20 w-8 h-8 rounded-lg bg-slate-900/90 hover:bg-[#d4af37] text-slate-300 hover:text-slate-950 border border-slate-700 hover:border-[#d4af37] flex items-center justify-center transition-all shadow-md"
+          title="Click to Enlarge"
+          aria-label="Enlarge ${p.title}"
+        >
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+          </svg>
+        </button>
       </div>
-    </div>
+
+      <!-- Card Metadata: Title, Category, Location, Area ONLY -->
+      <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-slate-900/40">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#d4af37] font-heading">
+              ${p.categoryLabel}
+            </span>
+            <span class="text-xs text-slate-300 font-medium font-keyboard">
+              ${p.area}
+            </span>
+          </div>
+
+          <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-[#fceda2] transition-colors line-clamp-1">
+            ${p.title}
+          </h3>
+        </div>
+
+        <div class="pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <span class="flex items-center gap-1.5 truncate">
+            <svg class="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span class="truncate">${p.location}</span>
+          </span>
+
+          <button 
+            type="button" 
+            onclick="openWorkModal(${p.id})" 
+            class="text-[#d4af37] hover:underline font-semibold flex items-center gap-1 flex-shrink-0 ml-2"
+          >
+            <span>Compare</span> &rarr;
+          </button>
+        </div>
+
+      </div>
+
+    </article>
   `).join("");
 
+  attachCardSliderListeners();
   if (window.lucide) window.lucide.createIcons();
 }
 
-function openProjectModal(projectId) {
-  const project = PORTFOLIO_PROJECTS.find(p => p.id === projectId);
-  if (!project) return;
+function attachCardSliderListeners() {
+  const sliderBoxes = document.querySelectorAll(".work-slider-box");
 
-  const modal = document.getElementById("project-modal");
-  const modalContent = document.getElementById("modal-project-content");
+  sliderBoxes.forEach(box => {
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let isHorizontal = null;
+
+    function updatePos(clientX) {
+      const rect = box.getBoundingClientRect();
+      const offsetX = clientX - rect.left;
+      const pct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+      box.style.setProperty("--ba-pos", `${pct}%`);
+      box.setAttribute("aria-valuenow", Math.round(pct));
+    }
+
+    // Pointer Events (Touch + Mouse unified)
+    box.addEventListener("pointerdown", (e) => {
+      // Don't drag if user clicked enlarge button
+      if (e.target.closest("button")) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      isHorizontal = null;
+      if (e.pointerType === "mouse") {
+        try { box.setPointerCapture(e.pointerId); } catch (_) {}
+        updatePos(e.clientX);
+      }
+    });
+
+    box.addEventListener("pointermove", (e) => {
+      if (!isDragging) return;
+      if (e.pointerType === "touch" && isHorizontal === null) {
+        const dx = Math.abs(e.clientX - startX);
+        const dy = Math.abs(e.clientY - startY);
+        if (dy > dx && dy > 8) {
+          // Vertical scroll: release to native browser scrolling
+          isDragging = false;
+          return;
+        } else if (dx > dy && dx > 8) {
+          isHorizontal = true;
+          try { box.setPointerCapture(e.pointerId); } catch (_) {}
+        } else {
+          return;
+        }
+      }
+      updatePos(e.clientX);
+    });
+
+    const stopDragging = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      isHorizontal = null;
+      try { box.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+
+    box.addEventListener("pointerup", stopDragging);
+    box.addEventListener("pointercancel", stopDragging);
+
+    // Keyboard Accessibility
+    box.addEventListener("keydown", (e) => {
+      let current = parseFloat(box.style.getPropertyValue("--ba-pos")) || 50;
+      if (e.key === "ArrowLeft") {
+        current = Math.max(0, current - 5);
+        box.style.setProperty("--ba-pos", `${current}%`);
+        box.setAttribute("aria-valuenow", Math.round(current));
+        e.preventDefault();
+      } else if (e.key === "ArrowRight") {
+        current = Math.min(100, current + 5);
+        box.style.setProperty("--ba-pos", `${current}%`);
+        box.setAttribute("aria-valuenow", Math.round(current));
+        e.preventDefault();
+      } else if (e.key === "Home") {
+        box.style.setProperty("--ba-pos", "0%");
+        box.setAttribute("aria-valuenow", 0);
+        e.preventDefault();
+      } else if (e.key === "End") {
+        box.style.setProperty("--ba-pos", "100%");
+        box.setAttribute("aria-valuenow", 100);
+        e.preventDefault();
+      }
+    });
+  });
+}
+
+// ----------------------------------------------------
+// 5. CLICK TO ENLARGE BEFORE/AFTER MODAL
+// ----------------------------------------------------
+let activeModalProject = null;
+
+function openWorkModal(projectId) {
+  const p = ALL_PROJECTS.find(item => item.id === projectId);
+  if (!p) return;
+  activeModalProject = p;
+
+  const modal = document.getElementById("work-modal");
+  const modalContent = document.getElementById("work-modal-content");
   if (!modal || !modalContent) return;
 
   modalContent.innerHTML = `
-    <div class="relative">
-      <img src="${project.image}" alt="${project.title}" width="1376" height="768" class="w-full h-72 md:h-96 object-cover rounded-t-2xl" />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-      <button onclick="closeProjectModal()" class="absolute top-4 right-4 bg-slate-900/80 hover:bg-slate-800 text-white p-2.5 rounded-full backdrop-blur-md transition-colors border border-white/10">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-      <div class="absolute bottom-6 left-6 right-6">
-        <span class="inline-block bg-[#d4af37] text-slate-950 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider mb-2">
-          ${project.categoryLabel}
-        </span>
-        <h2 class="text-2xl md:text-3xl font-bold text-white">${project.title}</h2>
-        <p class="text-slate-300 text-sm mt-1 flex items-center gap-1.5">
-          <i data-lucide="map-pin" class="w-4 h-4 text-[#d4af37]"></i> ${project.location} • Client: <strong class="text-white font-semibold">${project.client}</strong>
-        </p>
-      </div>
-    </div>
-
-    <div class="p-6 md:p-8 space-y-6">
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+    <div class="relative flex flex-col bg-slate-900 border border-[#d4af37]/40 rounded-2xl overflow-hidden shadow-2xl max-w-4xl w-[calc(100vw-28px)] max-h-[92vh] my-auto">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-4 bg-slate-950/80">
         <div>
-          <span class="text-xs text-slate-400">Built-Up Area</span>
-          <p class="text-base sm:text-lg font-semibold text-[#d4af37] font-keyboard">${project.area}</p>
+          <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4af37] font-heading">
+            ${p.categoryLabel} &bull; ${p.area}
+          </span>
+          <h3 class="text-base sm:text-xl font-bold text-white mt-0.5">
+            ${p.title}
+          </h3>
+          <p class="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-[#d4af37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>${p.location}</span>
+          </p>
         </div>
-        <div>
-          <span class="text-xs text-slate-400">Timeline</span>
-          <p class="text-base sm:text-lg font-semibold text-[#d4af37] font-keyboard">${project.duration}</p>
-        </div>
-        <div>
-          <span class="text-xs text-slate-400">Location</span>
-          <p class="text-base sm:text-lg font-semibold text-[#d4af37]">${project.location}</p>
-        </div>
-      </div>
 
-      <div>
-        <h4 class="text-base font-semibold text-white mb-2">Project Highlights</h4>
-        <p class="text-slate-300 text-sm leading-relaxed">${project.description}</p>
-      </div>
-
-      <div>
-        <h4 class="text-base font-semibold text-white mb-3">Key Features</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          ${project.features.map(f => `
-            <div class="flex items-center gap-2 text-sm text-slate-300 bg-slate-900/50 p-2.5 rounded-lg border border-slate-800">
-              <i data-lucide="check-circle" class="w-4 h-4 text-[#d4af37] flex-shrink-0"></i>
-              <span>${f}</span>
-            </div>
-          `).join("")}
-        </div>
-      </div>
-
-      <div>
-        <h4 class="text-base font-semibold text-white mb-2">Tested Quality Materials</h4>
-        <p class="text-xs text-slate-300 bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono">
-          ${project.materials}
-        </p>
-      </div>
-
-      <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-4 justify-between items-center">
-        <a 
-          href="https://wa.me/91${COMPANY_PHONE_1}?text=Hi%20MAK%20BUILD%2C%20I%20saw%20your%20project%20${encodeURIComponent(project.title)}%20and%20want%20to%20consult%20for%20my%20site." 
-          target="_blank"
-          class="w-full sm:w-auto bg-[#d4af37] hover:bg-[#f0c946] text-slate-950 font-semibold px-6 py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all"
+        <button 
+          type="button" 
+          onclick="closeWorkModal()" 
+          class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+          aria-label="Close modal"
         >
-          <i data-lucide="message-circle" class="w-4 h-4"></i> Inquire on WhatsApp
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Large Interactive Comparison Canvas -->
+      <div class="p-3 sm:p-5 overflow-y-auto">
+        <div 
+          id="modal-slider-box" 
+          class="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-xl overflow-hidden bg-slate-950 cursor-ew-resize select-none border border-slate-800 shadow-xl"
+          tabindex="0"
+          role="slider"
+          aria-label="Comparison slider"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          style="--ba-pos: 50%;"
+        >
+          <!-- AFTER Image -->
+          <img 
+            src="${p.afterImg}" 
+            alt="After: ${p.title}" 
+            class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            width="1200"
+            height="675"
+          />
+
+          <!-- BEFORE Image (Clipped) -->
+          <div 
+            class="absolute inset-0 overflow-hidden pointer-events-none"
+            style="clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%); -webkit-clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%);"
+          >
+            <img 
+              src="${p.beforeImg}" 
+              alt="Before: ${p.title}" 
+              class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+              width="1200"
+              height="675"
+            />
+          </div>
+
+          <!-- Divider Line -->
+          <div 
+            class="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#fceda2] via-[#d4af37] to-[#aa820a] pointer-events-none z-10 shadow-[0_0_12px_rgba(212,175,55,0.85)]"
+            style="left: var(--ba-pos); transform: translateX(-50%);"
+          ></div>
+
+          <!-- Handle Orb -->
+          <div 
+            class="absolute top-1/2 w-10 h-10 rounded-full bg-[#d4af37] text-slate-950 flex items-center justify-center pointer-events-none z-20 shadow-2xl border-2 border-white -translate-y-1/2 -translate-x-1/2 active:scale-110"
+            style="left: var(--ba-pos);"
+          >
+            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-[2.5]" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m8 9-4 3 4 3m8-6 4 3-4 3"/>
+            </svg>
+          </div>
+
+          <!-- Stage Badges -->
+          <div class="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold tracking-wider text-amber-300 border border-amber-400/40 pointer-events-none z-10">
+            BEFORE: ${p.beforeLabel}
+          </div>
+          <div class="absolute top-3 right-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold tracking-wider text-[#d4af37] border border-[#d4af37]/40 pointer-events-none z-10">
+            AFTER: ${p.afterLabel}
+          </div>
+        </div>
+
+        <!-- Presets & Interaction Bar -->
+        <div class="mt-3 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="text-slate-400 font-medium hidden sm:inline">Reveal:</span>
+            <button type="button" onclick="setModalBaPos(100)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700">100% Before</button>
+            <button type="button" onclick="setModalBaPos(50)" class="px-3 py-1.5 rounded-lg bg-[#d4af37]/20 text-[#fceda2] font-semibold border border-[#d4af37]/40">50/50 Split</button>
+            <button type="button" onclick="setModalBaPos(0)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700">100% After</button>
+          </div>
+
+          <span class="text-slate-400 text-[11px] flex items-center gap-1">
+            <span>Drag slider or swipe on touch screens</span>
+          </span>
+        </div>
+
+        <!-- Specs Line -->
+        <div class="mt-4 p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-300 leading-relaxed font-light">
+          <strong class="text-[#d4af37] font-semibold">Materials &amp; Engineering:</strong> ${p.specs}
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 sm:p-5 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+        <a 
+          href="https://wa.me/91${COMPANY_WHATSAPP}?text=Hi%20MAK%20BUILD%2C%20I%20saw%20your%20project%20${encodeURIComponent(p.title)}%20and%20would%20like%20to%20discuss%20a%20similar%20project." 
+          target="_blank"
+          class="w-full sm:w-auto bg-[#d4af37] hover:bg-[#f0c946] text-slate-950 font-bold px-6 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg transition-all"
+        >
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Discuss This Project on WhatsApp</span>
         </a>
-        <button onclick="closeProjectModal()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-sm font-medium transition-colors">
+
+        <button 
+          type="button" 
+          onclick="closeWorkModal()" 
+          class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-xs font-medium transition-colors"
+        >
           Close
         </button>
       </div>
+
     </div>
   `;
 
@@ -842,63 +749,180 @@ function openProjectModal(projectId) {
   modal.classList.add("flex");
   document.body.style.overflow = "hidden";
 
-  if (window.lucide) window.lucide.createIcons();
+  // Attach drag listeners to modal slider
+  const modalBox = document.getElementById("modal-slider-box");
+  if (modalBox) {
+    let isDraggingModal = false;
+    let startModalX = 0;
+    let startModalY = 0;
+    let isModalHorizontal = null;
+
+    function updateModal(clientX) {
+      const rect = modalBox.getBoundingClientRect();
+      const offsetX = clientX - rect.left;
+      const pct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+      modalBox.style.setProperty("--ba-pos", `${pct}%`);
+      modalBox.setAttribute("aria-valuenow", Math.round(pct));
+    }
+
+    modalBox.addEventListener("pointerdown", (e) => {
+      isDraggingModal = true;
+      startModalX = e.clientX;
+      startModalY = e.clientY;
+      isModalHorizontal = null;
+      if (e.pointerType === "mouse") {
+        try { modalBox.setPointerCapture(e.pointerId); } catch (_) {}
+        updateModal(e.clientX);
+      }
+    });
+
+    modalBox.addEventListener("pointermove", (e) => {
+      if (!isDraggingModal) return;
+      if (e.pointerType === "touch" && isModalHorizontal === null) {
+        const dx = Math.abs(e.clientX - startModalX);
+        const dy = Math.abs(e.clientY - startModalY);
+        if (dy > dx && dy > 8) {
+          isDraggingModal = false;
+          return;
+        } else if (dx > dy && dx > 8) {
+          isModalHorizontal = true;
+          try { modalBox.setPointerCapture(e.pointerId); } catch (_) {}
+        } else {
+          return;
+        }
+      }
+      updateModal(e.clientX);
+    });
+
+    const stopModalDrag = (e) => {
+      if (!isDraggingModal) return;
+      isDraggingModal = false;
+      isModalHorizontal = null;
+      try { modalBox.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+
+    modalBox.addEventListener("pointerup", stopModalDrag);
+    modalBox.addEventListener("pointercancel", stopModalDrag);
+
+    // Keyboard support in modal
+    modalBox.addEventListener("keydown", (e) => {
+      let current = parseFloat(modalBox.style.getPropertyValue("--ba-pos")) || 50;
+      if (e.key === "ArrowLeft") {
+        setModalBaPos(Math.max(0, current - 5));
+        e.preventDefault();
+      } else if (e.key === "ArrowRight") {
+        setModalBaPos(Math.min(100, current + 5));
+        e.preventDefault();
+      }
+    });
+  }
 }
 
-function closeProjectModal() {
-  const modal = document.getElementById("project-modal");
+function setModalBaPos(percentage) {
+  const modalBox = document.getElementById("modal-slider-box");
+  if (!modalBox) return;
+  const clamped = Math.max(0, Math.min(100, percentage));
+  modalBox.style.setProperty("--ba-pos", `${clamped}%`);
+  modalBox.setAttribute("aria-valuenow", Math.round(clamped));
+}
+
+function closeWorkModal() {
+  const modal = document.getElementById("work-modal");
   if (!modal) return;
   modal.classList.add("hidden");
   modal.classList.remove("flex");
   document.body.style.overflow = "";
 }
 
-function showToast(message) {
-  const toast = document.getElementById("toast-notification");
-  const toastMsg = document.getElementById("toast-message");
-  if (!toast || !toastMsg) return;
-
-  toastMsg.textContent = message;
-  toast.classList.remove("translate-y-24", "opacity-0");
-  toast.classList.add("translate-y-0", "opacity-100");
-
-  setTimeout(() => {
-    toast.classList.remove("translate-y-0", "opacity-100");
-    toast.classList.add("translate-y-24", "opacity-0");
-  }, 4000);
-}
-
 // ----------------------------------------------------
-// 7. Initialization & Event Listeners
+// 6. INITIALIZATION & EVENT BINDINGS
 // ----------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  if (window.lucide) window.lucide.createIcons();
+  // Render initial work grid (all 10 projects)
+  renderWorkGrid("all");
 
-  // Area Slider
-  const areaSlider = document.getElementById("area-range-slider");
-  const areaInput = document.getElementById("area-number-input");
-  
+  // Category filter buttons
+  const filterBtns = document.querySelectorAll("[data-work-filter]");
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach(b => {
+        b.classList.remove("bg-[#d4af37]", "text-slate-950", "font-bold", "shadow-md");
+        b.classList.add("bg-slate-800", "text-slate-300");
+        b.setAttribute("aria-selected", "false");
+      });
+      btn.classList.add("bg-[#d4af37]", "text-slate-950", "font-bold", "shadow-md");
+      btn.classList.remove("bg-slate-800", "text-slate-300");
+      btn.setAttribute("aria-selected", "true");
+
+      const filter = btn.dataset.workFilter;
+      renderWorkGrid(filter);
+    });
+  });
+
+  // Modal backdrop click
+  const modal = document.getElementById("work-modal");
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeWorkModal();
+    });
+  }
+
+  // Escape key closes modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeWorkModal();
+  });
+
+  // Estimator Area Controls (Slider + Direct Input)
+  const areaSlider = document.getElementById("est-area-slider");
+  const areaInput = document.getElementById("est-area-input");
+
   if (areaSlider) {
     areaSlider.addEventListener("input", (e) => {
-      state.area = parseInt(e.target.value, 10);
-      if (areaInput) areaInput.value = state.area;
+      const val = parseInt(e.target.value, 10);
+      estimatorState.area = val;
+      if (areaInput) areaInput.value = val;
       calculateCost();
     });
   }
 
   if (areaInput) {
-    areaInput.addEventListener("change", (e) => {
-      let val = parseInt(e.target.value, 10);
-      if (isNaN(val) || val < 500) val = 500;
-      if (val > 25000) val = 25000;
-      state.area = val;
-      if (areaSlider) areaSlider.value = val;
+    // Live update on input without locking keyboard backspace
+    areaInput.addEventListener("input", (e) => {
+      const raw = e.target.value.trim();
+      if (!raw) return;
+      const val = parseInt(raw, 10);
+      if (!isNaN(val) && val >= 300 && val <= 50000) {
+        estimatorState.area = val;
+        if (areaSlider) areaSlider.value = Math.min(10000, val);
+        calculateCost();
+      }
+    });
+
+    const clampAndCalculate = () => {
+      let val = parseInt(areaInput.value, 10);
+      if (isNaN(val) || val < 300) val = 300;
+      if (val > 50000) val = 50000;
+      estimatorState.area = val;
+      areaInput.value = val;
+      if (areaSlider) areaSlider.value = Math.min(10000, val);
+      calculateCost();
+    };
+
+    areaInput.addEventListener("blur", clampAndCalculate);
+    areaInput.addEventListener("change", clampAndCalculate);
+  }
+
+  // Estimator Scope Select
+  const scopeSelect = document.getElementById("est-scope-select");
+  if (scopeSelect) {
+    scopeSelect.addEventListener("change", (e) => {
+      estimatorState.projectType = e.target.value;
       calculateCost();
     });
   }
 
-  // Package Tier buttons
-  const pkgButtons = document.querySelectorAll("[data-package-tier]");
+  // Estimator Package Tier Buttons
+  const pkgButtons = document.querySelectorAll("[data-est-pkg]");
   pkgButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       pkgButtons.forEach(b => {
@@ -907,498 +931,84 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       btn.classList.add("border-[#d4af37]", "bg-[#d4af37]/10", "text-[#d4af37]");
       btn.classList.remove("border-slate-800", "bg-slate-900/60", "text-slate-300");
-      state.packageType = btn.dataset.packageTier;
+      estimatorState.packageType = btn.dataset.estPkg;
       calculateCost();
     });
   });
 
-  // Project Type Select
-  const projectTypeSelect = document.getElementById("est-project-type");
-  if (projectTypeSelect) {
-    projectTypeSelect.addEventListener("change", (e) => {
-      state.projectType = e.target.value;
-      calculateCost();
-    });
-  }
-
-  // Add-on checkboxes
-  const addonCheckboxes = document.querySelectorAll("[data-addon-key]");
+  // Estimator Add-on Checkboxes
+  const addonCheckboxes = document.querySelectorAll("[data-est-addon]");
   addonCheckboxes.forEach(cb => {
     cb.addEventListener("change", (e) => {
-      const key = e.target.dataset.addonKey;
-      state.addons[key] = e.target.checked;
+      const key = e.target.dataset.estAddon;
+      estimatorState.addons[key] = e.target.checked;
       calculateCost();
     });
   });
 
   // WhatsApp Quote Button
-  const waQuoteBtn = document.getElementById("whatsapp-quote-btn");
+  const waQuoteBtn = document.getElementById("est-whatsapp-btn");
   if (waQuoteBtn) {
-    waQuoteBtn.addEventListener("click", () => sendEstimateToWhatsApp(COMPANY_PHONE_1));
+    waQuoteBtn.addEventListener("click", sendEstimateToWhatsApp);
   }
 
-  // Print Quotation Button
-  const printBtn = document.getElementById("print-quote-btn");
-  if (printBtn) {
-    printBtn.addEventListener("click", () => window.print());
-  }
-
-  // Before & After
-  initBeforeAfterSlider();
-
-  // Portfolio
-  renderPortfolio("all");
-  const filterButtons = document.querySelectorAll("[data-filter]");
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filterButtons.forEach(b => {
-        b.classList.remove("bg-[#d4af37]", "text-slate-950", "font-bold");
-        b.classList.add("bg-slate-800", "text-slate-300");
-      });
-      btn.classList.add("bg-[#d4af37]", "text-slate-950", "font-bold");
-      btn.classList.remove("bg-slate-800", "text-slate-300");
-      
-      const filter = btn.dataset.filter;
-      state.activeFilter = filter;
-      renderPortfolio(filter);
-    });
-  });
-
-  // Modal backdrop click
-  const modal = document.getElementById("project-modal");
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeProjectModal();
-    });
-  }
-
-  // Consultation Form
-  const consultationForm = document.getElementById("consultation-form");
-  if (consultationForm) {
-    consultationForm.addEventListener("submit", handleConsultationSubmit);
-  }
-
-  // Mobile Drawer
-  const mobileToggle = document.getElementById("mobile-menu-toggle");
-  const mobileDrawer = document.getElementById("mobile-menu") || document.getElementById("mobile-menu-drawer");
-  if (mobileToggle && mobileDrawer) {
-    mobileToggle.addEventListener("click", () => {
-      mobileDrawer.classList.toggle("hidden");
-    });
-    mobileDrawer.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => mobileDrawer.classList.add("hidden"));
-    });
-  }
-
-  window.toggleMobileMenu = function() {
-    const menu = document.getElementById("mobile-menu") || document.getElementById("mobile-menu-drawer");
-    if (menu) {
-      menu.classList.toggle("hidden");
-    }
-  };
-
-  // FAQ Accordions
-  const faqItems = document.querySelectorAll(".faq-item");
-  faqItems.forEach(item => {
-    const header = item.querySelector(".faq-question");
-    const content = item.querySelector(".faq-answer");
-    const icon = item.querySelector(".faq-icon");
-
-    if (header && content) {
-      header.addEventListener("click", () => {
-        const isCollapsed = content.classList.contains("hidden");
-        faqItems.forEach(other => {
-          const otherContent = other.querySelector(".faq-answer");
-          const otherIcon = other.querySelector(".faq-icon");
-          if (otherContent && other !== item) {
-            otherContent.classList.add("hidden");
-            if (otherIcon) otherIcon.style.transform = "rotate(0deg)";
-          }
-        });
-
-        if (isCollapsed) {
-          content.classList.remove("hidden");
-          if (icon) icon.style.transform = "rotate(180deg)";
-        } else {
-          content.classList.add("hidden");
-          if (icon) icon.style.transform = "rotate(0deg)";
-        }
-      });
-    }
-  });
-
-  // Calculate Initial
+  // Initial Calculation
   calculateCost();
 
-  // Initialize Corporate Hero Slider, Logo Tilt & Floating Highlights
-  initHeroSlider();
-  initLogoTiltGesture();
-  initFloatingHighlightsWidget();
+  // Contact Form Submission
+  const contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", handleContactSubmit);
+  }
+
+  // Accessible Mobile Menu Toggle
+  const mobileToggle = document.getElementById("mobile-menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (mobileToggle && mobileMenu) {
+    const closeMobileMenu = () => {
+      mobileMenu.style.display = "none";
+      mobileMenu.classList.add("hidden");
+      mobileToggle.setAttribute("aria-expanded", "false");
+    };
+
+    const openMobileMenu = () => {
+      mobileMenu.style.display = "block";
+      mobileMenu.classList.remove("hidden");
+      mobileToggle.setAttribute("aria-expanded", "true");
+    };
+
+    mobileToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isClosed = mobileMenu.style.display === "none" || mobileMenu.classList.contains("hidden");
+      if (isClosed) {
+        openMobileMenu();
+      } else {
+        closeMobileMenu();
+      }
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", closeMobileMenu);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+  }
+
+  // Lucide icons trigger
+  if (window.lucide) window.lucide.createIcons();
 });
 
-// ----------------------------------------------------
-// 7.5. Corporate Hero Slider Engine (Animated 3-Slide Carousel)
-// ----------------------------------------------------
-let activeHeroSlide = 0;
-const TOTAL_HERO_SLIDES = 3;
-const HERO_SLIDE_DURATION = 6000; // 6 seconds
-let heroSlideTimer = null;
-let heroProgressAnimId = null;
-let heroSlideStartTime = 0;
-
-function setHeroSlide(index) {
-  activeHeroSlide = (index + TOTAL_HERO_SLIDES) % TOTAL_HERO_SLIDES;
-  
-  // 1. Update Slides Active State
-  const slides = document.querySelectorAll(".hero-slide");
-  slides.forEach((slide) => {
-    const slideIdx = parseInt(slide.dataset.slideIndex, 10);
-    if (slideIdx === activeHeroSlide) {
-      slide.classList.add("active");
-    } else {
-      slide.classList.remove("active");
-    }
-  });
-
-  // 2. Update Dot Indicators
-  const dotBtns = document.querySelectorAll(".hero-dot-btn");
-  dotBtns.forEach((btn) => {
-    const dotIdx = parseInt(btn.dataset.dotIndex, 10);
-    const indicator = btn.querySelector(".dot-indicator");
-    if (dotIdx === activeHeroSlide) {
-      btn.classList.add("text-white", "bg-slate-800/90", "border", "border-[#d4af37]/40");
-      btn.classList.remove("text-slate-400");
-      if (indicator) {
-        indicator.classList.remove("bg-slate-600");
-        indicator.classList.add("bg-[#d4af37]", "shadow-[0_0_8px_#d4af37]");
-      }
-    } else {
-      btn.classList.remove("text-white", "bg-slate-800/90", "border", "border-[#d4af37]/40");
-      btn.classList.add("text-slate-400");
-      if (indicator) {
-        indicator.classList.remove("bg-[#d4af37]", "shadow-[0_0_8px_#d4af37]");
-        indicator.classList.add("bg-slate-600");
-      }
-    }
-  });
-
-  // 3. Reset and Animate Progress Bar
-  startHeroProgress();
-
-  // 4. Reset Timer
-  resetHeroSlideTimer();
-}
-
-function nextHeroSlide() {
-  setHeroSlide(activeHeroSlide + 1);
-}
-
-function prevHeroSlide() {
-  setHeroSlide(activeHeroSlide - 1);
-}
-
-function startHeroProgress() {
-  const progressBar = document.getElementById("hero-progress-fill");
-  if (!progressBar) return;
-
-  if (heroProgressAnimId) {
-    cancelAnimationFrame(heroProgressAnimId);
-  }
-
-  progressBar.style.width = "0%";
-  heroSlideStartTime = performance.now();
-
-  function updateProgress(currentTime) {
-    const elapsed = currentTime - heroSlideStartTime;
-    const percent = Math.min(100, (elapsed / HERO_SLIDE_DURATION) * 100);
-    progressBar.style.width = `${percent}%`;
-
-    if (elapsed < HERO_SLIDE_DURATION) {
-      heroProgressAnimId = requestAnimationFrame(updateProgress);
-    }
-  }
-
-  heroProgressAnimId = requestAnimationFrame(updateProgress);
-}
-
-function resetHeroSlideTimer() {
-  if (heroSlideTimer) clearInterval(heroSlideTimer);
-  heroSlideTimer = setInterval(() => {
-    nextHeroSlide();
-  }, HERO_SLIDE_DURATION);
-}
-
-function initHeroSlider() {
-  const container = document.querySelector(".hero-slider-container");
-  if (!container) return;
-
-  // Initialize first slide
-  setHeroSlide(0);
-
-  // Pause on hover
-  container.addEventListener("mouseenter", () => {
-    if (heroSlideTimer) clearInterval(heroSlideTimer);
-    if (heroProgressAnimId) cancelAnimationFrame(heroProgressAnimId);
-  });
-
-  container.addEventListener("mouseleave", () => {
-    resetHeroSlideTimer();
-    startHeroProgress();
-  });
-
-  // Touch Swipe Gesture for Mobile
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  container.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
-
-  container.addEventListener("touchend", (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 45) {
-      if (diff > 0) {
-        nextHeroSlide(); // Swiped left -> next
-      } else {
-        prevHeroSlide(); // Swiped right -> prev
-      }
-    }
-  }, { passive: true });
-}
-
-// ----------------------------------------------------
-// 8. Logo 3D Tilt Gesture Animation
-// ----------------------------------------------------
-function initLogoTiltGesture() {
-  const logoBadge = document.querySelector(".logo-badge-container");
-  if (!logoBadge) return;
-
-  logoBadge.addEventListener("mousemove", (e) => {
-    const rect = logoBadge.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -12;
-    const rotateY = ((x - centerX) / centerX) * 14;
-
-    logoBadge.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.06)`;
-  });
-
-  logoBadge.addEventListener("mouseleave", () => {
-    logoBadge.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)";
-  });
-}
-
-// ----------------------------------------------------
-// 9. Floating Company Highlights & Ad Ticker Widget
-// ----------------------------------------------------
-const COMPANY_HIGHLIGHTS = [
-  {
-    tag: "WARM WELCOME",
-    tagColor: "bg-[#d4af37] text-slate-950 font-bold",
-    title: "Welcome to MAK BUILD Sirkazhi",
-    desc: "“A house is built with bricks, but a home is crafted with love and dreams.” Start your journey with us.",
-    actionText: "Consult Our Civil Engineers &rarr;",
-    action: () => {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-    }
-  },
-  {
-    tag: "WE'RE HIRING",
-    tagColor: "bg-[#d4af37] text-slate-950",
-    title: "Draftsman Wanted in Sirkazhi",
-    desc: "AutoCAD & MS Excel &bull; Inclusive Workplace &bull; Open to all qualified candidates.",
-    actionText: "Quick Apply via WhatsApp &rarr;",
-    action: () => openDraftsmanModal()
-  },
-  {
-    tag: "STARTUP OFFER",
-    tagColor: "bg-amber-500 text-slate-950",
-    title: "Free 3D Architectural Elevation",
-    desc: "Get photorealistic 4K day/night 3D exterior elevations with every turnkey villa contract.",
-    actionText: "Calculate Construction Cost &rarr;",
-    action: () => {
-      document.getElementById("cost-estimator")?.scrollIntoView({ behavior: "smooth" });
-    }
-  },
-  {
-    tag: "QUALITY GUARANTEE",
-    tagColor: "bg-emerald-500 text-slate-950",
-    title: "10-Year Structural Warranty",
-    desc: "Built with Ultratech M25/M30 concrete & Tata Tiscon Fe 550D rebar &bull; Zero compromises.",
-    actionText: "Explore Our Workmanship &rarr;",
-    action: () => {
-      document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
-    }
-  },
-  {
-    tag: "CONSULTATION",
-    tagColor: "bg-blue-500 text-white",
-    title: "Free On-Site Soil & Plot Audit",
-    desc: "Call resident civil engineers: 81441 66022 or 93857 47544 for immediate consultation.",
-    actionText: "Call 81441 66022 Now &rarr;",
-    action: () => {
-      window.open("tel:8144166022");
-    }
-  }
-];
-
-let activeHighlightIndex = 0;
-let highlightTimer = null;
-
-function renderHighlightCard() {
-  const contentArea = document.getElementById("highlight-content-area");
-  if (!contentArea) return;
-
-  const h = COMPANY_HIGHLIGHTS[activeHighlightIndex];
-  contentArea.innerHTML = `
-    <div class="space-y-2.5">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="bg-white p-0.5 rounded border border-[#d4af37]/60 h-5 w-6 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <img src="${window.MAK_BRAND_LOGO || 'assets/mak-logo-hd-clean.png'}" data-brand-logo onerror="this.onerror=null;this.src=window.MAK_BRAND_LOGO;" alt="MAK BUILD" class="h-full w-full object-contain" />
-          </div>
-          <span class="inline-block ${h.tagColor} px-2.5 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase">
-            ${h.tag}
-          </span>
-        </div>
-        <span class="text-[10px] text-slate-400 font-keyboard">
-          ${activeHighlightIndex + 1} of ${COMPANY_HIGHLIGHTS.length}
-        </span>
-      </div>
-      <h4 class="text-sm font-semibold text-white font-heading">${h.title}</h4>
-      <p class="text-xs text-slate-300 leading-relaxed">${h.desc}</p>
-      <div class="pt-2 flex items-center justify-between text-xs text-[#d4af37] font-medium">
-        <span class="hover:underline flex items-center gap-1">${h.actionText}</span>
-        <span class="text-slate-600 text-[10px]">Click to view</span>
-      </div>
-    </div>
-  `;
-
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function handleHighlightClick() {
-  const h = COMPANY_HIGHLIGHTS[activeHighlightIndex];
-  if (h && typeof h.action === "function") {
-    h.action();
-  }
-}
-
-function nextHighlight() {
-  activeHighlightIndex = (activeHighlightIndex + 1) % COMPANY_HIGHLIGHTS.length;
-  renderHighlightCard();
-}
-
-function prevHighlight() {
-  activeHighlightIndex = (activeHighlightIndex - 1 + COMPANY_HIGHLIGHTS.length) % COMPANY_HIGHLIGHTS.length;
-  renderHighlightCard();
-}
-
-function initFloatingHighlightsWidget() {
-  const widget = document.getElementById("floating-highlights-widget");
-  if (!widget) return;
-
-  renderHighlightCard();
-
-  const prevBtn = document.getElementById("highlight-prev-btn");
-  const nextBtn = document.getElementById("highlight-next-btn");
-  const closeBtn = document.getElementById("highlight-close-btn");
-
-  if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prevHighlight(); resetHighlightTimer(); });
-  if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); nextHighlight(); resetHighlightTimer(); });
-  if (closeBtn) closeBtn.addEventListener("click", (e) => { e.stopPropagation(); minimizeHighlightsWidget(); });
-
-  const contentArea = document.getElementById("highlight-content-area");
-  if (contentArea) {
-    contentArea.addEventListener("click", handleHighlightClick);
-  }
-
-  resetHighlightTimer();
-
-  // On small mobile screens, start in compact pill mode to keep the hero clear
-  if (window.innerWidth < 640) {
-    minimizeHighlightsWidget();
-  }
-
-  // Pause on hover
-  if (widget) {
-    widget.addEventListener("mouseenter", () => clearInterval(highlightTimer));
-    widget.addEventListener("mouseleave", () => resetHighlightTimer());
-  }
-}
-
-function resetHighlightTimer() {
-  clearInterval(highlightTimer);
-  highlightTimer = setInterval(() => {
-    nextHighlight();
-  }, 5000);
-}
-
-function minimizeHighlightsWidget() {
-  clearInterval(highlightTimer);
-  const widget = document.getElementById("floating-highlights-widget");
-  const pill = document.getElementById("highlights-minimized-pill");
-  if (widget) widget.classList.add("hidden");
-  if (pill) pill.classList.remove("hidden");
-}
-
-function restoreHighlightsWidget() {
-  const widget = document.getElementById("floating-highlights-widget");
-  const pill = document.getElementById("highlights-minimized-pill");
-  if (widget) widget.classList.remove("hidden");
-  if (pill) pill.classList.add("hidden");
-  resetHighlightTimer();
-}
-
-function dismissHighlights() {
-  clearInterval(highlightTimer);
-  const widget = document.getElementById("floating-highlights-widget");
-  const pill = document.getElementById("highlights-minimized-pill");
-  if (widget) widget.classList.add("hidden");
-  if (pill) pill.classList.add("hidden");
-}
-
-window.dismissHighlights = dismissHighlights;
-
-// ----------------------------------------------------
-// 10. Draftsman Hiring Modal
-// ----------------------------------------------------
-function openDraftsmanModal() {
-  const modal = document.getElementById("draftsman-modal");
-  if (!modal) return;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  document.body.style.overflow = "hidden";
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function closeDraftsmanModal() {
-  const modal = document.getElementById("draftsman-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-  document.body.style.overflow = "";
-}
-
-// Expose globals
-window.openProjectModal = openProjectModal;
-window.closeProjectModal = closeProjectModal;
-window.openDraftsmanModal = openDraftsmanModal;
-window.closeDraftsmanModal = closeDraftsmanModal;
-window.minimizeHighlightsWidget = minimizeHighlightsWidget;
-window.restoreHighlightsWidget = restoreHighlightsWidget;
-window.handleHighlightClick = handleHighlightClick;
-window.showToast = showToast;
+// Global exports
+window.openWorkModal = openWorkModal;
+window.closeWorkModal = closeWorkModal;
+window.setModalBaPos = setModalBaPos;
 window.sendEstimateToWhatsApp = sendEstimateToWhatsApp;
-window.applyForDraftsman = applyForDraftsman;
-window.setHeroSlide = setHeroSlide;
-window.nextHeroSlide = nextHeroSlide;
-window.prevHeroSlide = prevHeroSlide;
-window.switchBaProject = switchBaProject;
-window.setBaPosition = setBaPosition;
-window.toggleBaAutoScan = toggleBaAutoScan;
-
+window.renderWorkGrid = renderWorkGrid;

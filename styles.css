@@ -54,6 +54,19 @@ img, picture, video, canvas, svg {
   max-width: 100%;
 }
 
+.hidden {
+  display: none !important;
+}
+
+/* Base icon sizing fallback to prevent FOUC */
+svg {
+  flex-shrink: 0;
+}
+svg.w-3\.5 { width: 14px; height: 14px; }
+svg.w-4 { width: 16px; height: 16px; }
+svg.w-5 { width: 20px; height: 20px; }
+svg.w-6 { width: 24px; height: 24px; }
+
 button, a, input, select, textarea {
   touch-action: manipulation;
 }
@@ -1625,6 +1638,65 @@ footer {
   background-color: rgba(13, 18, 30, 0.88) !important;
   backdrop-filter: blur(14px);
 }
+
+/* ========================================================
+   MODAL & WORK COMPARISON SLIDERS (FLUID & TOUCH OPTIMIZED)
+   ======================================================== */
+.modal-backdrop {
+  background-color: rgba(5, 7, 12, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.work-slider-box,
+#modal-slider-box {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ========================================================
+   ACCESSIBILITY: VISIBLE FOCUS RINGS FOR KEYBOARD NAVIGATION
+   ======================================================== */
+:focus-visible {
+  outline: 2px solid var(--gold-primary) !important;
+  outline-offset: 3px !important;
+}
+
+/* ========================================================
+   ACCESSIBILITY: RESPECT PREFERS-REDUCED-MOTION
+   ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .mak-aurora-layer,
+  .ambient-blueprint-grid::after,
+  .ambient-glow-orb-1,
+  .ambient-glow-orb-2,
+  .ambient-glow-orb-3 {
+    animation: none !important;
+  }
+}
+
+/* ========================================================
+   TOUCH & MOBILE EXPERIENCE: COMFORTABLE TOUCH TARGETS
+   ======================================================== */
+@media (pointer: coarse) {
+  button, 
+  a, 
+  input[type="button"], 
+  input[type="submit"], 
+  select, 
+  .btn-gold-primary, 
+  .btn-arch-secondary {
+    min-height: 44px;
+  }
+}
+
 
 
 
