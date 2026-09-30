@@ -85,15 +85,8 @@
     Skip to main content
   </a>
 
-  <!-- MAK BUILD — Global Architectural Aurora Background -->
-  <div id="mak-aurora-bg" class="mak-aurora-wrapper" aria-hidden="true">
-    <div class="mak-aurora-layer"></div>
-  </div>
-
-  <!-- Subtle Architectural Ambient Grid Layer -->
-  <div class="lively-ambient-bg" aria-hidden="true">
-    <div class="ambient-blueprint-grid"></div>
-  </div>
+  <!-- MAK BUILD — full-viewport WebGL background (pointer-events none) -->
+  <canvas id="mak-bg-shader" class="mak-bg-shader" aria-hidden="true"></canvas>
 
   <!-- ========================================================
        SLIM STICKY HEADER / ACCESSIBLE NAVIGATION
@@ -1135,5 +1128,6 @@
   <!-- Application Logic -->
   <script src="ba-data.js"></script>
   <script src="app.js"></script>
+  <script src="liquid-shader.js" defer></script>
 </body>
 </html>
