@@ -12,7 +12,7 @@ const COMPANY_WHATSAPP = "8144166022";
 const COMPANY_PHONE = "9385747544";
 
 // ----------------------------------------------------
-// 1. ALL 10 REAL PROJECTS (Unified Before & After Gallery)
+// 1. ALL REAL PROJECTS (Unified Before & After Gallery)
 // ----------------------------------------------------
 const ALL_PROJECTS = [
   {
@@ -42,45 +42,6 @@ const ALL_PROJECTS = [
     specs: "Tata Tiscon Fe 550D rebar, Weather-Shield silicon texture, Saint-Gobain toughened glass balcony railings."
   },
   {
-    id: 3,
-    title: "PEB Industrial Facility",
-    category: "commercial",
-    categoryLabel: "Commercial & PEB",
-    location: "Sirkazhi Industrial Belt",
-    area: "18,500 sq.ft",
-    beforeImg: "assets/peb-facility-before-1920.jpg",
-    afterImg: "assets/peb-facility-after-1920.jpg",
-    beforeLabel: "STEEL RAFTER ASSEMBLY",
-    afterLabel: "OPERATIONAL PEB SHED",
-    specs: "Grade 345 MPa high-tensile steel rafters, Standing seam color-coated roof sheets with rockwool insulation."
-  },
-  {
-    id: 4,
-    title: "Sirkazhi Royal Heritage Villa",
-    category: "villas",
-    categoryLabel: "Villas",
-    location: "Sirkazhi Main Town",
-    area: "3,800 sq.ft",
-    beforeImg: "assets/villa-facade-before-hd.jpg",
-    afterImg: "assets/portfolio-residential-villa.jpg",
-    beforeLabel: "STRUCTURAL FRAME PHASE",
-    afterLabel: "HERITAGE LUXURY VILLA",
-    specs: "Vasthu-compliant double-height living hall, Teakwood portico pillars, GVT large format flooring, Asian Paints Royale."
-  },
-  {
-    id: 5,
-    title: "Commercial Shopping Plaza",
-    category: "commercial",
-    categoryLabel: "Commercial & PEB",
-    location: "Kacheri Road, Mayiladuthurai",
-    area: "8,500 sq.ft",
-    beforeImg: "assets/peb-facility-before-hd.jpg",
-    afterImg: "assets/portfolio-commercial-architecture.jpg",
-    beforeLabel: "RCC FRAMING & FOUNDATION",
-    afterLabel: "RETAIL PLAZA ARCHITECTURE",
-    specs: "Multi-storey commercial complex, Structural glass facade, Commercial vitrified flooring, Fire safety compliance."
-  },
-  {
     id: 6,
     title: "Bespoke Living & Kitchen Interior",
     category: "interior",
@@ -94,19 +55,6 @@ const ALL_PROJECTS = [
     specs: "BWP Marine plywood modular kitchen, Quartz stone countertops, Hafele soft-close hardware, Custom pooja woodwork."
   },
   {
-    id: 7,
-    title: "Traditional Tamil Duplex Home",
-    category: "villas",
-    categoryLabel: "Villas",
-    location: "Vaitheeswaran Koil, Sirkazhi",
-    area: "2,950 sq.ft",
-    beforeImg: "assets/villa-facade-before-1920.jpg",
-    afterImg: "assets/portfolio-duplex-home.jpg",
-    beforeLabel: "BRICKWORK & COLUMN STAGE",
-    afterLabel: "COMPLETED DUPLEX RESIDENCE",
-    specs: "Traditional portico Thinnai sit-out, Carved solid teakwood pillars, First-class table moulded red bricks, Dalmia cement."
-  },
-  {
     id: 8,
     title: "Modern Commercial Retail Studio",
     category: "commercial",
@@ -118,32 +66,6 @@ const ALL_PROJECTS = [
     beforeLabel: "CIVIL SHELL PHASE",
     afterLabel: "COMMERCIAL RETAIL STUDIO",
     specs: "Exposed rustic brick wall styling, Industrial track lights, Custom solid wood counters, Acoustic ceiling treatment."
-  },
-  {
-    id: 9,
-    title: "Coastal Modern Bungalow",
-    category: "villas",
-    categoryLabel: "Villas",
-    location: "Poompuhar Coastal Road",
-    area: "4,200 sq.ft",
-    beforeImg: "assets/villa-facade-before-2560.jpg",
-    afterImg: "assets/portfolio-luxury-bungalow.jpg",
-    beforeLabel: "REBAR REINFORCEMENT PHASE",
-    afterLabel: "COASTAL BUNGALOW RESIDENCE",
-    specs: "Sulphate-resistant cement, Epoxy-coated anti-corrosive rebar, UPVC weather-proof acoustic sliding windows."
-  },
-  {
-    id: 10,
-    title: "Turnkey 3D BIM & Architectural Residence",
-    category: "interior",
-    categoryLabel: "Interiors",
-    location: "Sirkazhi",
-    area: "2,400 sq.ft",
-    beforeImg: "assets/renovation-before-web.jpg",
-    afterImg: "assets/interior-design-hero-1920.jpg",
-    beforeLabel: "CAD DRAFTING & MASONRY",
-    afterLabel: "COMPLETED LIVING INTERIOR",
-    specs: "Photorealistic 3D elevations, Panchayat sanction blueprints, Precision MEP line diagrams, Turnkey execution."
   }
 ];
 
@@ -838,7 +760,7 @@ function closeWorkModal() {
 // 6. INITIALIZATION & EVENT BINDINGS
 // ----------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  // Render initial work grid (all 10 projects)
+  // Render initial work grid (all projects)
   renderWorkGrid("all");
 
   // Category filter buttons
