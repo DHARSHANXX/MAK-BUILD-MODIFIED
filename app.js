@@ -36,7 +36,7 @@ const ALL_PROJECTS = [
     location: "Sirkazhi Main Town",
     area: "3,800 sq.ft",
     beforeImg: "assets/villa-facade-before-1920.jpg",
-    afterImg: "assets/villa-facade-after-1920.jpg",
+    afterImg: "assets/villa-contemporary-after.jpg",
     beforeLabel: "BRICKWORK & RCC FRAME",
     afterLabel: "CONTEMPORARY FACADE",
     specs: "Tata Tiscon Fe 550D rebar, Weather-Shield silicon texture, Saint-Gobain toughened glass balcony railings."
@@ -404,7 +404,7 @@ function renderWorkGrid(filter = "all") {
         <!-- AFTER Image (Underneath) -->
         <img 
           src="${p.afterImg}" 
-          alt="After: ${p.title}" 
+          alt="${p.id === 2 ? 'Modern contemporary villa designed and built by MAK BUILD' : 'After: ' + p.title}" 
           class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
           loading="lazy"
           width="800"
@@ -657,7 +657,7 @@ function openWorkModal(projectId) {
           <!-- AFTER Image -->
           <img 
             src="${p.afterImg}" 
-            alt="After: ${p.title}" 
+            alt="${p.id === 2 ? 'Modern contemporary villa designed and built by MAK BUILD' : 'After: ' + p.title}" 
             class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             width="1200"
             height="675"
