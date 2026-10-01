@@ -113,8 +113,8 @@ const ALL_PROJECTS = [
     categoryLabel: "Commercial & PEB",
     location: "Old Bus Stand, Sirkazhi",
     area: "1,800 sq.ft",
-    beforeImg: "assets/peb-facility-before-1920.jpg",
-    afterImg: "assets/portfolio-commercial-retail.jpg",
+    beforeImg: "assets/commercial-retail-before.jpg",
+    afterImg: "assets/commercial-retail-after.jpg",
     beforeLabel: "CIVIL SHELL PHASE",
     afterLabel: "COMMERCIAL RETAIL STUDIO",
     specs: "Exposed rustic brick wall styling, Industrial track lights, Custom solid wood counters, Acoustic ceiling treatment."
