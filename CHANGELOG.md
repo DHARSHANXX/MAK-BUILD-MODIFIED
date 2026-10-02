@@ -157,3 +157,35 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
   - Updated `IMAGE_WIDTHS['commercial-retail-before']` in `app.js` and `projects.json` to reference the 1024w master.
   - Verified with automated Puppeteer tests that the 2nd comparison slider displays the high-res raw interior before slide, smoothly transitioning to the completed showroom after slide.
 
+---
+
+## Update: Master Jewellery Showroom Replacement Across Hero, 3D Card & Comparison Slider (October 2, 2026)
+
+### 1. Master Showroom Image Ingestion ("1st Image")
+- **Problem**: The jewellery showroom appeared in three locations across the site using disparate, low-resolution, and awkwardly cropped legacy assets:
+  - Hero Background Slider (Slide 3): stretched a 608px image across full screens with an overly dark overlay that obscured the architecture.
+  - 3D Designs Grid Card ("Jewellery Showroom – 3D Interior Design"): cropped off the right side through the brand name (`Naray...`) and had empty white display frames.
+  - Commercial Retail Showroom Slider ("AFTER" slide): cut off the reception desk through `Narayana Jew...` and lacked the warm lighting and uncropped composition.
+- **Solution**:
+  - Ingested the pristine 1024 × 579 uncompressed master photograph (`media_1790964072762.jpg`) as the single source of truth for both `assets/originals/showroom-interior.jpg` and `assets/originals/commercial-retail-after.jpg`.
+  - Generated full Lanczos3 multi-tier derivatives (480w, 768w, 1024w) in **AVIF**, **WebP**, and **MozJPEG** with light post-scale sharpening (sigma 0.5).
+  - Updated `IMAGE_WIDTHS['showroom-interior']` and `IMAGE_WIDTHS['commercial-retail-after']` in `app.js` and `projects.json` to serve 1024w high-DPI assets.
+
+### 2. Location-by-Location Responsive Optimization
+
+#### A. Hero Background Slider (Slide 3 — "2nd Place")
+- **Proper Implementation**:
+  - Updated `heroSlidesData[2]` in `app.js` with responsive tiers `[480, 768, 1024]` and fallback `assets/img/showroom-interior-1024.webp`.
+  - Added `data-slide="showroom-interior"` attribute for specific CSS targeting.
+  - Re-engineered `.hero-overlay` to use a directional horizontal gradient (`rgba(8, 11, 17, 0.90)` on the left for WCAG AAA text contrast, opening up to translucent `0.32–0.42` on the right) combined with a soft vertical vignette.
+  - Set `object-position: 72% center` so the illuminated "GOLD" & "SILVER" display niches, cove lighting, and glossy marble flooring glow vibrantly behind the headline.
+
+#### B. 3D Designs Project Card ("3rd Place")
+- In `styles.css`, applied `.project-card[data-id="showroom-interior-3d"] .project-cover-img { object-position: 84% center; }`.
+- Preserved the complete "Narayana Jewellers" 3D gold brand emblem, reception desk, green plant vase, and left-side architectural pillar without truncation.
+
+#### C. Commercial Retail Showroom Slider ("4th Place")
+- In `styles.css`, applied `.ba-container[data-ba-id="commercial-retail-showroom"] .ba-layer-after .ba-img { object-position: 86% center; }`.
+- When dragged, the 60fps slider seamlessly compares the raw concrete interior against the completed luxury jewellery showroom in matching 1024px sharpness.
+
+

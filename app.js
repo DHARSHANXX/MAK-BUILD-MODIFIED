@@ -128,7 +128,7 @@
   const heroSlidesData = [
     { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-638.webp', widths: [480, 638], is3d: false },
     { base: 'residence-elevation', src: 'assets/img/residence-elevation-638.webp', widths: [480, 638], is3d: true },
-    { base: 'showroom-interior', src: 'assets/img/showroom-interior-608.webp', widths: [480, 608], is3d: true },
+    { base: 'showroom-interior', src: 'assets/img/showroom-interior-1024.webp', widths: [480, 768, 1024], is3d: true },
     { base: 'living-interior', src: 'assets/img/living-interior-600.webp', widths: [480, 600], is3d: true }
   ];
 
@@ -145,6 +145,7 @@
       // Create slide element with responsive picture set
       const div = document.createElement('div');
       div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+      div.setAttribute('data-slide', slide.base);
       const avifSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.avif ${w}w`).join(', ');
       const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
       div.innerHTML = `
@@ -569,13 +570,13 @@
     'peb-facility-before': [480, 768, 1080, 1600, 2400],
     'peb-facility-after': [480, 768, 1080, 1600, 2400],
     'commercial-retail-before': [480, 768, 1024],
-    'commercial-retail-after': [480, 768, 1080, 1280],
+    'commercial-retail-after': [480, 768, 1024],
     'penthouse-before': [480, 768, 1080, 1376],
     'penthouse-after': [480, 768, 1024],
     'bespoke-living-kitchen': [480, 768, 1080, 1376],
     'villa-contemporary-after': [480, 638],
     'residence-elevation': [480, 638],
-    'showroom-interior': [480, 608],
+    'showroom-interior': [480, 768, 1024],
     'living-interior': [480, 600],
     'office-signboard': [480, 768, 1080, 1600]
   };
@@ -640,12 +641,12 @@
       area: "",
       year: "",
       base: "showroom-interior",
-      cover: "assets/img/showroom-interior-608.webp",
+      cover: "assets/img/showroom-interior-1024.webp",
       coverThumb: "assets/img/showroom-interior-480.webp",
-      coverWidth: 608,
-      coverHeight: 364,
+      coverWidth: 1024,
+      coverHeight: 579,
       hasBeforeAfter: false,
-      renderImage: "assets/img/showroom-interior-608.webp",
+      renderImage: "assets/img/showroom-interior-1024.webp",
       builtImage: "",
       description: "Luxury gold and silver displays with cove lighting in rich walnut and cream.",
       descriptionTa: "தங்கம் மற்றும் வெள்ளி காட்சி அரங்கிற்கான ஆடம்பர உட்புற வடிவமைப்பு.",
@@ -713,15 +714,15 @@
       area: "2,200 sq.ft",
       year: "2025",
       base: "commercial-retail-after",
-      cover: "assets/img/commercial-retail-after-1080.webp",
+      cover: "assets/img/commercial-retail-after-1024.webp",
       coverThumb: "assets/img/commercial-retail-after-480.webp",
-      coverWidth: 1280,
-      coverHeight: 724,
+      coverWidth: 1024,
+      coverHeight: 579,
       hasBeforeAfter: true,
       beforeBase: "commercial-retail-before",
       afterBase: "commercial-retail-after",
       beforeImg: "assets/img/commercial-retail-before-1024.webp",
-      afterImg: "assets/img/commercial-retail-after-1080.webp",
+      afterImg: "assets/img/commercial-retail-after-1024.webp",
       beforeLabel: "UNFINISHED RAW INTERIOR",
       afterLabel: "COMPLETED JEWELLERY SHOWROOM",
       description: "Complete retail transformation from unfinished structural shell to luxury retail showroom.",

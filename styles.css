@@ -503,12 +503,16 @@ img {
   transform: scale(1.06);
 }
 
-/* Hero Overlay Gradients for AA Text Contrast */
+.hero-slide[data-slide="showroom-interior"] .hero-slide-img {
+  object-position: 72% center;
+}
+
+/* Hero Overlay Gradients for AA Text Contrast & Luminous Visuals */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.65) 40%, rgba(8, 11, 17, 0.94) 85%, #080b11 100%),
-              radial-gradient(ellipse at 30% 40%, rgba(13, 20, 35, 0.4) 0%, rgba(8, 11, 17, 0.9) 100%);
+  background: linear-gradient(90deg, rgba(8, 11, 17, 0.90) 0%, rgba(8, 11, 17, 0.74) 42%, rgba(8, 11, 17, 0.32) 75%, rgba(8, 11, 17, 0.42) 100%),
+              linear-gradient(180deg, rgba(8, 11, 17, 0.45) 0%, transparent 25%, rgba(8, 11, 17, 0.65) 85%, #080B11 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -1292,6 +1296,15 @@ img {
   object-fit: cover;
   pointer-events: none;
   image-rendering: auto;
+}
+
+/* Precise Focal Framing to Preserve Complete Showroom Details */
+.project-card[data-id="showroom-interior-3d"] .project-cover-img {
+  object-position: 84% center;
+}
+
+.ba-container[data-ba-id="commercial-retail-showroom"] .ba-layer-after .ba-img {
+  object-position: 86% center;
 }
 
 /* Clear BEFORE & AFTER chips (≥14px on dark glass) */
