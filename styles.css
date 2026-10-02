@@ -507,6 +507,10 @@ img {
   object-position: 72% center;
 }
 
+.hero-slide[data-slide="living-interior"] .hero-slide-img {
+  object-position: center 38%;
+}
+
 /* Hero Overlay Gradients for AA Text Contrast & Luminous Visuals */
 .hero-overlay {
   position: absolute;
@@ -1301,6 +1305,10 @@ img {
 /* Precise Focal Framing to Preserve Complete Showroom Details */
 .project-card[data-id="showroom-interior-3d"] .project-cover-img {
   object-position: 84% center;
+}
+
+.project-card[data-id="living-dining-3d"] .project-cover-img {
+  object-position: center 38%;
 }
 
 .ba-container[data-ba-id="commercial-retail-showroom"] .ba-layer-after .ba-img {

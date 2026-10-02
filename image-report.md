@@ -1,6 +1,6 @@
 # MAK BUILD — Comprehensive Image Asset & Sharpness Report
 
-Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T18:18:35.482Z.
+Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T19:09:10.343Z.
 
 ## 1. Overview & Image Pipeline Rules
 - **Downsampling Kernel**: Lanczos3 (`sharp.kernel.lanczos3`) with `sigma ≈ 0.5` high-frequency recovery.
@@ -17,7 +17,7 @@ Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T18:18:35.48
 | `bespoke-living-kitchen.jpg` | 1376×768 | 859.9 KB | 480, 768, 1080, 1376w | 460px | **2.99×** | ✅ **SHARP & GLOSSY (HD)** | Interiors Showcase Grid Card |
 | `commercial-retail-after.jpg` | 1024×579 | 368.6 KB | 480, 768, 1024w | 680px | **1.51×** | ✅ **SHARP & GLOSSY (HD)** | Commercial Showroom Slider (After) |
 | `commercial-retail-before.jpg` | 1024×526 | 283.6 KB | 480, 768, 1024w | 680px | **1.51×** | ✅ **SHARP & GLOSSY (HD)** | Commercial Showroom Slider (Before) |
-| `living-interior.webp` | 600×318 | 29.9 KB | 480, 600w | 460px | **1.30×** | ⚠️ **TOO SMALL – replace with larger original** | 3D Living & Dining Design Card / Hero Slide 4 |
+| `living-interior.jpg` | 1024×599 | 315.5 KB | 480, 768, 1024w | 460px | **2.23×** | ✅ **SHARP & GLOSSY (HD)** | 3D Living & Dining Design Card / Hero Slide 4 |
 | `mak-logo-hd-clean.png` | 976×744 | 319.3 KB | 480, 768, 976w | 140px | **6.97×** | ✅ **SHARP & GLOSSY (HD)** | Brand Emblem / Header & Studio Card |
 | `office-signboard.webp` | 1600×1000 | 88.5 KB | 480, 768, 1080, 1600w | 500px | **3.20×** | ✅ **SHARP & GLOSSY (HD)** | About Section Studio Signboard Card |
 | `peb-facility-after.jpg` | 2560×1440 | 546.3 KB | 480, 768, 1080, 1600, 2400, 2560w | 680px | **3.76×** | ✅ **SHARP & GLOSSY (HD)** | PEB Industrial Facility Slider (After) |

@@ -188,4 +188,31 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
 - In `styles.css`, applied `.ba-container[data-ba-id="commercial-retail-showroom"] .ba-layer-after .ba-img { object-position: 86% center; }`.
 - When dragged, the 60fps slider seamlessly compares the raw concrete interior against the completed luxury jewellery showroom in matching 1024px sharpness.
 
+---
+
+## Update: Master Living & Dining 3D Interior Replacement Across Project Card & Hero Slider (October 3, 2026)
+
+### 1. Master Living & Dining Image Ingestion ("1st Image")
+- **Problem**: The Living & Dining 3D design appeared in two locations using an old, washed-out, cool-toned 600×318 thumbnail:
+  - 3D Designs Card ("Living & Dining – 3D Interior Design"): low resolution, washed out cove lighting, and flat textures.
+  - Hero Background Slider (Slide 4): stretched 600px image resulting in blur, pixelation, and dull lighting on high-DPI displays.
+- **Solution**:
+  - Ingested the pristine 1024 × 599 master render (`media_1790966579404.jpg`) with warm ambient ceiling cove lights, sparkling crystal chandelier, illuminated arched wall niches, rich wood doors, and crisp marble floor reflections.
+  - Generated multi-tier derivatives (480w, 768w, 1024w) in **AVIF**, **WebP**, and **MozJPEG** using Sharp Lanczos3 resampling and 0.5-sigma sharpening.
+  - Updated `IMAGE_WIDTHS['living-interior']` in `app.js` and `projects.json` to reference the 1024w master.
+
+### 2. Location-by-Location Responsive Optimization
+
+#### A. 3D Designs Project Card ("2nd Place")
+- Updated `cover`, `coverThumb`, and `renderImage` in `DEFAULT_PROJECTS` and `projects.json` to `assets/img/living-interior-1024.webp` (1024 × 599).
+- In `styles.css`, configured `.project-card[data-id="living-dining-3d"] .project-cover-img { object-position: center 38%; }`.
+- Perfectly frames the sparkling chandelier, ceiling cove lighting, arched niches, cream sectional sofa, and round wood coffee table.
+- Upgraded Lightbox modal with high-res 1024px render and instant WhatsApp design request CTA.
+
+#### B. Hero Background Slider (Slide 4 — "3rd Place")
+- Updated `heroSlidesData[3]` in `app.js` with responsive tiers `[480, 768, 1024]` and fallback `assets/img/living-interior-1024.webp`.
+- Added `.hero-slide[data-slide="living-interior"] .hero-slide-img { object-position: center 38%; }` in `styles.css`.
+- The rich warm cove lighting and crystal chandelier glow through the balanced hero overlay while preserving text contrast and readability.
+
+
 

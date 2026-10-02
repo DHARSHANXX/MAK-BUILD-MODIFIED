@@ -129,7 +129,7 @@
     { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-638.webp', widths: [480, 638], is3d: false },
     { base: 'residence-elevation', src: 'assets/img/residence-elevation-638.webp', widths: [480, 638], is3d: true },
     { base: 'showroom-interior', src: 'assets/img/showroom-interior-1024.webp', widths: [480, 768, 1024], is3d: true },
-    { base: 'living-interior', src: 'assets/img/living-interior-600.webp', widths: [480, 600], is3d: true }
+    { base: 'living-interior', src: 'assets/img/living-interior-1024.webp', widths: [480, 768, 1024], is3d: true }
   ];
 
   function initHeroSlider() {
@@ -577,7 +577,7 @@
     'villa-contemporary-after': [480, 638],
     'residence-elevation': [480, 638],
     'showroom-interior': [480, 768, 1024],
-    'living-interior': [480, 600],
+    'living-interior': [480, 768, 1024],
     'office-signboard': [480, 768, 1080, 1600]
   };
 
@@ -664,12 +664,12 @@
       area: "",
       year: "",
       base: "living-interior",
-      cover: "assets/img/living-interior-600.webp",
+      cover: "assets/img/living-interior-1024.webp",
       coverThumb: "assets/img/living-interior-480.webp",
-      coverWidth: 600,
-      coverHeight: 318,
+      coverWidth: 1024,
+      coverHeight: 599,
       hasBeforeAfter: false,
-      renderImage: "assets/img/living-interior-600.webp",
+      renderImage: "assets/img/living-interior-1024.webp",
       builtImage: "",
       description: "Contemporary living layout with cream sectional, arched wall niches and cove lighting.",
       descriptionTa: "வளைவு சுவர் வடிவமைப்புகள் மற்றும் எல்இடி விளக்குகளுடன் கூடிய வரவேற்பறை.",
