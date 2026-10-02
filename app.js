@@ -568,7 +568,7 @@
     'villa-facade-after': [480, 768, 1080, 1600, 2400],
     'peb-facility-before': [480, 768, 1080, 1600, 2400],
     'peb-facility-after': [480, 768, 1080, 1600, 2400],
-    'commercial-retail-before': [480, 768, 1080, 1280],
+    'commercial-retail-before': [480, 768, 1024],
     'commercial-retail-after': [480, 768, 1080, 1280],
     'penthouse-before': [480, 768, 1080, 1376],
     'penthouse-after': [480, 768, 1024],
@@ -577,7 +577,7 @@
     'residence-elevation': [480, 638],
     'showroom-interior': [480, 608],
     'living-interior': [480, 600],
-    'office-signboard': [480, 768, 800]
+    'office-signboard': [480, 768, 1080, 1600]
   };
 
   function buildPicture(base, fallbackSrc, alt, sizes, loading = 'lazy', fetchPriority = false, width = 640, height = 400, imgClass = 'project-cover-img') {
@@ -720,7 +720,7 @@
       hasBeforeAfter: true,
       beforeBase: "commercial-retail-before",
       afterBase: "commercial-retail-after",
-      beforeImg: "assets/img/commercial-retail-before-1080.webp",
+      beforeImg: "assets/img/commercial-retail-before-1024.webp",
       afterImg: "assets/img/commercial-retail-after-1080.webp",
       beforeLabel: "UNFINISHED RAW INTERIOR",
       afterLabel: "COMPLETED JEWELLERY SHOWROOM",

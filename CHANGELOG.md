@@ -131,3 +131,29 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
 | **Color & Contrast** | WCAG AA / AAA Ratios | **PASS** | All text ≥ 4.5:1 (targeting 7:1+) |
 | **Bilingual Toggle** | English ↔ Tamil Toggle | **PASS** | All headings, cards, and UI copy switch instantly |
 | **Console Errors** | Browser Runtime | **PASS** | 0 errors captured in test suite |
+
+---
+
+## Update: Signboard Legibility & Commercial Showroom "Before" Slide (October 2, 2026)
+
+### 1. Studio Signboard Legibility Perfection ("1st Image")
+- **Problem**: In the studio card signboard (`office-signboard.webp`), the text and credentials were tiny, blurry, and low-contrast when scaled down to mobile/laptop viewports.
+- **Root Cause**: The signboard artwork was an old raster export with low-contrast dark gold text and small font sizes (24px–52px on a 1600px plate).
+- **Solution**:
+  - Re-engineered the master artwork using SVG rendering via Sharp (`tools/make-signboard.cjs`) at 1600×1000 with a luxury beveled dark navy plate, gold border, and brass mounting screws.
+  - Rendered the transparent vector MAK BUILD brand emblem at 480×300 with gold drop-glow (0 white box).
+  - Increased typography scale and contrast:
+    - **Er. Manikandan Rajendran**: 64px font-weight 900 in pure white `#FFFFFF` (contrast >17:1).
+    - **Credential Pills** ("Civil & Structural Engineer" & "Registered Engineer"): Expanded to 510×68px pills with gold borders, font-size 30px bold 800 white text.
+    - **Physical Address** ("117C, Pidari South Street, Sirkazhi 609110"): 44px font-weight 700 with a 2x gold map pin icon.
+    - **Action Button** ("VISIT OUR SIRKAZHI STUDIO"): 880×92px gold pill with 34px bold 900 luminous gold text (`#FFF8E0`).
+  - Generated responsive multi-tier derivatives (480w, 768w, 1080w, 1600w) in AVIF, WebP, and MozJPEG; updated `index.html` and `app.js`.
+
+### 2. Commercial Retail Showroom "Before" Slide Replacement ("3rd Image to 2nd Place")
+- **Requirement**: Place the user-provided 3rd image (the sharp, wide-angle raw interior photo, `media_1790959021974.jpg`) into the "BEFORE" slide of the 2nd comparison location on the site ("Commercial Retail Showroom").
+- **Solution**:
+  - Ingested the master image (1024×526 JPEG) as `assets/originals/commercial-retail-before.jpg`.
+  - Processed Lanczos3 derivatives with 0.5-sigma sharpen for 480w, 768w, and 1024w in AVIF, WebP, and MozJPEG.
+  - Updated `IMAGE_WIDTHS['commercial-retail-before']` in `app.js` and `projects.json` to reference the 1024w master.
+  - Verified with automated Puppeteer tests that the 2nd comparison slider displays the high-res raw interior before slide, smoothly transitioning to the completed showroom after slide.
+
