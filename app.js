@@ -126,10 +126,10 @@
   // 3. Hero Background Slider
   // ==========================================
   const heroSlidesData = [
-    { src: 'assets/hero/hero-villa.webp', thumb: 'assets/hero/hero-villa-640.webp', is3d: false },
-    { src: 'assets/hero/hero-residence-elevation.webp', thumb: 'assets/designs/residence-elevation-640.webp', is3d: true },
-    { src: 'assets/hero/hero-showroom.webp', thumb: 'assets/designs/showroom-interior-640.webp', is3d: true },
-    { src: 'assets/hero/hero-living.webp', thumb: 'assets/designs/living-interior-640.webp', is3d: true }
+    { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-638.webp', widths: [480, 638], is3d: false },
+    { base: 'residence-elevation', src: 'assets/img/residence-elevation-638.webp', widths: [480, 638], is3d: true },
+    { base: 'showroom-interior', src: 'assets/img/showroom-interior-608.webp', widths: [480, 608], is3d: true },
+    { base: 'living-interior', src: 'assets/img/living-interior-600.webp', widths: [480, 600], is3d: true }
   ];
 
   function initHeroSlider() {
@@ -142,16 +142,22 @@
     dotsWrap.innerHTML = '';
 
     heroSlidesData.forEach((slide, idx) => {
-      // Create slide element
+      // Create slide element with responsive picture set
       const div = document.createElement('div');
       div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+      const avifSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.avif ${w}w`).join(', ');
+      const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
       div.innerHTML = `
-        <img class="hero-slide-img" 
-             src="${slide.src}" 
-             alt="MAK BUILD Architectural Project ${idx + 1}"
-             ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
-             decoding="async"
-             width="1280" height="720">
+        <picture>
+          <source type="image/avif" srcset="${avifSrcset}" sizes="100vw">
+          <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
+          <img class="hero-slide-img" 
+               src="${slide.src}" 
+               alt="MAK BUILD Architectural Showcase ${idx + 1}"
+               ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+               decoding="async"
+               width="1280" height="720">
+        </picture>
       `;
       sliderWrap.appendChild(div);
 
@@ -555,19 +561,287 @@
   }
 
   // ==========================================
-  // 7. Projects & Showcase Section
+  // 7. Projects & Showcase Section (Embedded Fallback + High-DPI Engine)
   // ==========================================
+  const IMAGE_WIDTHS = {
+    'villa-facade-before': [480, 768, 1080, 1600, 2400],
+    'villa-facade-after': [480, 768, 1080, 1600, 2400],
+    'peb-facility-before': [480, 768, 1080, 1600, 2400],
+    'peb-facility-after': [480, 768, 1080, 1600, 2400],
+    'commercial-retail-before': [480, 768, 1080, 1280],
+    'commercial-retail-after': [480, 768, 1080, 1280],
+    'penthouse-before': [480, 768, 1080, 1376],
+    'penthouse-after': [480, 768, 1024],
+    'bespoke-living-kitchen': [480, 768, 1080, 1376],
+    'villa-contemporary-after': [480, 638],
+    'residence-elevation': [480, 638],
+    'showroom-interior': [480, 608],
+    'living-interior': [480, 600],
+    'office-signboard': [480, 768, 800]
+  };
+
+  function buildPicture(base, fallbackSrc, alt, sizes, loading = 'lazy', fetchPriority = false, width = 640, height = 400, imgClass = 'project-cover-img') {
+    const widths = IMAGE_WIDTHS[base];
+    if (!widths || !widths.length) {
+      return `<img class="${imgClass}" src="${fallbackSrc}" alt="${alt}" loading="${loading}" decoding="async" ${fetchPriority ? 'fetchpriority="high"' : ''} width="${width}" height="${height}">`;
+    }
+    const avifSrcset = widths.map(w => `assets/img/${base}-${w}.avif ${w}w`).join(', ');
+    const webpSrcset = widths.map(w => `assets/img/${base}-${w}.webp ${w}w`).join(', ');
+    const midWidth = widths[Math.min(1, widths.length - 1)];
+    const fallbackJpg = `assets/img/${base}-${midWidth}.jpg`;
+
+    return `
+      <picture>
+        <source type="image/avif" srcset="${avifSrcset}" sizes="${sizes}">
+        <source type="image/webp" srcset="${webpSrcset}" sizes="${sizes}">
+        <img class="${imgClass}" 
+             src="${fallbackJpg}" 
+             alt="${alt}" 
+             loading="${loading}" 
+             decoding="async" 
+             ${fetchPriority ? 'fetchpriority="high"' : ''} 
+             width="${width}" 
+             height="${height}">
+      </picture>
+    `;
+  }
+
+  const DEFAULT_PROJECTS = [
+    {
+      id: "residence-3d-elevation",
+      title: "Contemporary Two-Storey Residence – 3D Elevation",
+      titleTa: "நவீன இரண்டு அடுக்கு இல்லம் – 3D முகப்பு வடிவமைப்பு",
+      category: "3D Designs",
+      badge: "3D Design",
+      location: "",
+      area: "",
+      year: "",
+      base: "residence-elevation",
+      cover: "assets/img/residence-elevation-638.webp",
+      coverThumb: "assets/img/residence-elevation-480.webp",
+      coverWidth: 638,
+      coverHeight: 629,
+      hasBeforeAfter: false,
+      renderImage: "assets/img/residence-elevation-638.webp",
+      builtImage: "",
+      description: "Exterior render featuring wood-clad pillars, modern louvered panels and glass balcony.",
+      descriptionTa: "மர வேலைத்தூண்கள் மற்றும் கண்ணாடி பால்கனியுடன் கூடிய நவீன முகப்பு வடிவமைப்பு.",
+      blurNameplate: false,
+      blurBrand: false,
+      clientPermission: false
+    },
+    {
+      id: "showroom-interior-3d",
+      title: "Jewellery Showroom – 3D Interior Design",
+      titleTa: "நகை மாளிகை – 3D உள் அலங்கார வடிவமைப்பு",
+      category: "3D Designs",
+      badge: "3D Design",
+      location: "",
+      area: "",
+      year: "",
+      base: "showroom-interior",
+      cover: "assets/img/showroom-interior-608.webp",
+      coverThumb: "assets/img/showroom-interior-480.webp",
+      coverWidth: 608,
+      coverHeight: 364,
+      hasBeforeAfter: false,
+      renderImage: "assets/img/showroom-interior-608.webp",
+      builtImage: "",
+      description: "Luxury gold and silver displays with cove lighting in rich walnut and cream.",
+      descriptionTa: "தங்கம் மற்றும் வெள்ளி காட்சி அரங்கிற்கான ஆடம்பர உட்புற வடிவமைப்பு.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: false
+    },
+    {
+      id: "living-dining-3d",
+      title: "Living & Dining – 3D Interior Design",
+      titleTa: "வரவேற்பறை & உணவருந்தும் அறை – 3D வடிவமைப்பு",
+      category: "3D Designs",
+      badge: "3D Design",
+      location: "",
+      area: "",
+      year: "",
+      base: "living-interior",
+      cover: "assets/img/living-interior-600.webp",
+      coverThumb: "assets/img/living-interior-480.webp",
+      coverWidth: 600,
+      coverHeight: 318,
+      hasBeforeAfter: false,
+      renderImage: "assets/img/living-interior-600.webp",
+      builtImage: "",
+      description: "Contemporary living layout with cream sectional, arched wall niches and cove lighting.",
+      descriptionTa: "வளைவு சுவர் வடிவமைப்புகள் மற்றும் எல்இடி விளக்குகளுடன் கூடிய வரவேற்பறை.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: false
+    },
+    {
+      id: "contemporary-villa",
+      title: "Contemporary Villa Architecture",
+      titleTa: "நவீன ஆடம்பர வில்லா கட்டுமானம்",
+      category: "Villas",
+      badge: "Completed",
+      location: "Sirkazhi Main Town",
+      area: "3,800 sq.ft",
+      year: "2025",
+      base: "villa-contemporary-after",
+      cover: "assets/img/villa-contemporary-after-638.webp",
+      coverThumb: "assets/img/villa-contemporary-after-480.webp",
+      coverWidth: 638,
+      coverHeight: 629,
+      hasBeforeAfter: true,
+      beforeBase: "villa-facade-before",
+      afterBase: "villa-facade-after",
+      beforeImg: "assets/img/villa-facade-before-1600.webp",
+      afterImg: "assets/img/villa-facade-after-1600.webp",
+      beforeLabel: "BRICKWORK & RCC FRAME",
+      afterLabel: "CONTEMPORARY FACADE",
+      description: "Turnkey construction with high-grade RCC framework and contemporary architectural detailing.",
+      descriptionTa: "உயர்தர ஆர்சிசி கட்டமைப்பு மற்றும் சமகால முகப்புடன் கூடிய முழுமையான வில்லா.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: true
+    },
+    {
+      id: "commercial-retail-showroom",
+      title: "Commercial Retail Showroom",
+      titleTa: "வணிக சில்லறை விற்பனை அரங்கம்",
+      category: "Commercial & PEB",
+      badge: "Completed",
+      location: "Sirkazhi",
+      area: "2,200 sq.ft",
+      year: "2025",
+      base: "commercial-retail-after",
+      cover: "assets/img/commercial-retail-after-1080.webp",
+      coverThumb: "assets/img/commercial-retail-after-480.webp",
+      coverWidth: 1280,
+      coverHeight: 724,
+      hasBeforeAfter: true,
+      beforeBase: "commercial-retail-before",
+      afterBase: "commercial-retail-after",
+      beforeImg: "assets/img/commercial-retail-before-1080.webp",
+      afterImg: "assets/img/commercial-retail-after-1080.webp",
+      beforeLabel: "UNFINISHED RAW INTERIOR",
+      afterLabel: "COMPLETED JEWELLERY SHOWROOM",
+      description: "Complete retail transformation from unfinished structural shell to luxury retail showroom.",
+      descriptionTa: "வெறும் கான்கிரீட் சுவர்களில் இருந்து முழுமையான சொகுசு நகைக்கடையாக மாற்றியமைத்தல்.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: true
+    },
+    {
+      id: "peb-industrial-facility",
+      title: "PEB Industrial & Warehouse Facility",
+      titleTa: "தொழில்துறை கூடம் & கிடங்கு",
+      category: "Commercial & PEB",
+      badge: "Completed",
+      location: "Mayiladuthurai District",
+      area: "8,500 sq.ft",
+      year: "2024",
+      base: "peb-facility-after",
+      cover: "assets/img/peb-facility-after-1080.webp",
+      coverThumb: "assets/img/peb-facility-after-480.webp",
+      coverWidth: 2560,
+      coverHeight: 1440,
+      hasBeforeAfter: true,
+      beforeBase: "peb-facility-before",
+      afterBase: "peb-facility-after",
+      beforeImg: "assets/img/peb-facility-before-1600.webp",
+      afterImg: "assets/img/peb-facility-after-1600.webp",
+      beforeLabel: "FOUNDATION & FRAMEWORK",
+      afterLabel: "ENGINEERED PEB SHED",
+      description: "Engineered pre-engineered steel building fabricated to rigorous structural standards.",
+      descriptionTa: "தொழில்துறை தரநிலைகளுக்கு ஏற்ப துல்லியமாக வடிவமைக்கப்பட்ட எஃகு கட்டமைப்பு.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: true
+    },
+    {
+      id: "luxury-penthouse",
+      title: "Luxury Penthouse Living & Suites",
+      titleTa: "சொகுசு பென்ட்ஹவுஸ் உட்புற வடிவமைப்பு",
+      category: "Interiors",
+      badge: "Completed",
+      location: "Chidambaram Highway, Sirkazhi",
+      area: "2,400 sq.ft",
+      year: "2025",
+      base: "penthouse-after",
+      cover: "assets/img/penthouse-after-1024.webp",
+      coverThumb: "assets/img/penthouse-after-480.webp",
+      coverWidth: 1024,
+      coverHeight: 576,
+      hasBeforeAfter: true,
+      beforeBase: "penthouse-before",
+      afterBase: "penthouse-after",
+      beforeImg: "assets/img/penthouse-before-1080.webp",
+      afterImg: "assets/img/penthouse-after-1024.webp",
+      beforeLabel: "RAW RCC SHELL",
+      afterLabel: "FINISHED PENTHOUSE",
+      description: "Architectural interior fitout with bookmatched marble, cove ceilings and custom wood accents.",
+      descriptionTa: "மார்பிள் தரை, எல்இடி கோவ் விளக்குகள் மற்றும் தேக்கு மர வேலைப்பாடுகளுடன் கூடிய உட்புறம்.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: true
+    },
+    {
+      id: "bespoke-living-kitchen",
+      title: "Bespoke Living & Modular Kitchen",
+      titleTa: "வரவேற்பறை & நவீன மாடுலர் சமையலறை",
+      category: "Interiors",
+      badge: "Completed",
+      location: "Sirkazhi",
+      area: "2,600 sq.ft",
+      year: "2025",
+      base: "bespoke-living-kitchen",
+      cover: "assets/img/bespoke-living-kitchen-1080.webp",
+      coverThumb: "assets/img/bespoke-living-kitchen-480.webp",
+      coverWidth: 1376,
+      coverHeight: 768,
+      hasBeforeAfter: false,
+      description: "Full home interior design featuring fluted wall panels, warm ambient lighting and premium joinery.",
+      descriptionTa: "சுவர் அலங்காரம் மற்றும் நவீன மாடுலர் சமையலறையுடன் கூடிய முழுமையான உட்புற வடிவமைப்பு.",
+      blurBrand: false,
+      blurNameplate: false,
+      clientPermission: true
+    }
+  ];
+
   async function loadProjects() {
+    allProjects = DEFAULT_PROJECTS;
     try {
       const res = await fetch('projects.json');
       if (res.ok) {
-        allProjects = await res.json();
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) {
+          allProjects = data;
+        }
       }
     } catch (e) {
-      console.warn('Could not fetch projects.json, fallback to static defaults');
+      // Flawlessly uses DEFAULT_PROJECTS
     }
+
+    // Check URL Hash for Deep Linking (#work?cat=3d, #work?cat=villas, etc.)
+    syncTabFromHash();
+    window.addEventListener('hashchange', syncTabFromHash);
+
     renderProjectsTabs();
     renderProjects();
+  }
+
+  function syncTabFromHash() {
+    const hash = window.location.hash.toLowerCase();
+    if (hash.includes('cat=3d')) {
+      currentTab = '3D Designs';
+    } else if (hash.includes('cat=villas')) {
+      currentTab = 'Villas';
+    } else if (hash.includes('cat=commercial')) {
+      currentTab = 'Commercial & PEB';
+    } else if (hash.includes('cat=interiors')) {
+      currentTab = 'Interiors';
+    } else if (hash.startsWith('#work') && !hash.includes('cat=')) {
+      currentTab = 'all';
+    }
   }
 
   function renderProjectsTabs() {
@@ -577,25 +851,39 @@
 
     const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
     const categories = [
-      { id: 'all', label: t.tabAll },
-      { id: 'Villas', label: t.tabVillas },
-      { id: 'Commercial & PEB', label: t.tabCommercial },
-      { id: 'Interiors', label: t.tabInteriors },
-      { id: '3D Designs', label: t.tabDesigns }
+      { id: 'all', label: t.tabAll, hash: '#work' },
+      { id: 'Villas', label: t.tabVillas, hash: '#work?cat=villas' },
+      { id: 'Commercial & PEB', label: t.tabCommercial, hash: '#work?cat=commercial' },
+      { id: 'Interiors', label: t.tabInteriors, hash: '#work?cat=interiors' },
+      { id: '3D Designs', label: t.tabDesigns, hash: '#work?cat=3d' }
     ];
 
-    // Filter out categories that have zero projects
+    // Filter out categories that have zero projects (never show an empty tab)
     const available = categories.filter(cat => {
       if (cat.id === 'all') return true;
-      return allProjects.some(p => p.category === cat.id);
+      return allProjects.some(p => p.category === cat.id && (p.cover || p.renderImage));
     });
 
     available.forEach(cat => {
+      const count = cat.id === 'all' 
+        ? allProjects.filter(p => p.cover || p.renderImage).length 
+        : allProjects.filter(p => p.category === cat.id && (p.cover || p.renderImage)).length;
+
       const btn = document.createElement('button');
       btn.className = `project-tab-btn ${currentTab === cat.id ? 'active' : ''}`;
-      btn.textContent = cat.label;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', currentTab === cat.id ? 'true' : 'false');
+      btn.innerHTML = `
+        <span>${cat.label}</span>
+        <span class="tab-count">${count}</span>
+      `;
       btn.addEventListener('click', () => {
         currentTab = cat.id;
+        if (history.replaceState) {
+          history.replaceState(null, '', cat.hash);
+        } else {
+          location.hash = cat.hash;
+        }
         renderProjectsTabs();
         renderProjects();
       });
@@ -603,40 +891,61 @@
     });
   }
 
+  const baNudgeObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          entry.target.classList.add('ba-nudge-active');
+        }
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
   function renderProjects() {
     const grid = document.getElementById('projectsGrid');
     if (!grid) return;
     grid.innerHTML = '';
 
     const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
-    const filtered = currentTab === 'all' 
+    const filtered = (currentTab === 'all' 
       ? allProjects 
-      : allProjects.filter(p => p.category === currentTab);
+      : allProjects.filter(p => p.category === currentTab))
+      .filter(p => !(p.category === '3D Designs' && !p.cover && !p.renderImage));
 
-    filtered.forEach(proj => {
+    filtered.forEach((proj, idx) => {
       const card = document.createElement('div');
       card.className = 'project-card';
+      card.setAttribute('data-id', proj.id);
 
       const title = currentLang === 'ta' && proj.titleTa ? proj.titleTa : proj.title;
       const desc = currentLang === 'ta' && proj.descriptionTa ? proj.descriptionTa : proj.description;
+      const is3d = proj.category === '3D Designs' || proj.badge === '3D Design';
 
       let mediaHtml = '';
       if (proj.hasBeforeAfter && proj.beforeImg && proj.afterImg) {
-        // Before/After Draggable Slider
+        // High-DPI 60fps Before/After Draggable Slider
         mediaHtml = `
-          <div class="ba-container" data-ba-id="${proj.id}">
-            <div class="ba-before-layer">
-              <img class="ba-img" src="${proj.beforeImg}" alt="${proj.beforeLabel || 'Before'}" loading="lazy" width="640" height="400">
-              <span class="ba-badge before">${proj.beforeLabel || 'BEFORE'}</span>
+          <div class="ba-container ba-loading" data-ba-id="${proj.id}" tabindex="0" role="slider" aria-label="Before and after comparison slider for ${title}" aria-valuenow="50" aria-valuemin="4" aria-valuemax="96">
+            <div class="ba-layer ba-layer-before">
+              ${buildPicture(proj.beforeBase || proj.base, proj.beforeImg, proj.beforeLabel || 'Before', '(min-width:1024px) 50vw, 100vw', 'lazy', false, 1280, 720, 'ba-img')}
+              <div class="ba-badge before-badge">
+                <span class="ba-chip-tag">BEFORE</span>
+                ${proj.beforeLabel ? `<span class="ba-chip-caption">${proj.beforeLabel}</span>` : ''}
+              </div>
             </div>
-            <div class="ba-after-layer">
-              <img class="ba-img" src="${proj.afterImg}" alt="${proj.afterLabel || 'After'}" loading="lazy" width="640" height="400">
-              <span class="ba-badge after">${proj.afterLabel || 'AFTER'}</span>
+            <div class="ba-layer ba-layer-after" style="clip-path: inset(0 0 0 50%); -webkit-clip-path: inset(0 0 0 50%);">
+              ${buildPicture(proj.afterBase || proj.base, proj.afterImg, proj.afterLabel || 'After', '(min-width:1024px) 50vw, 100vw', 'lazy', false, 1280, 720, 'ba-img')}
+              <div class="ba-badge after-badge">
+                <span class="ba-chip-tag">AFTER</span>
+                ${proj.afterLabel ? `<span class="ba-chip-caption">${proj.afterLabel}</span>` : ''}
+              </div>
             </div>
-            <div class="ba-handle">
-              <div class="ba-handle-btn">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+            <div class="ba-divider" style="transform: translate3d(50%, 0, 0);">
+              <div class="ba-line"></div>
+              <div class="ba-handle" aria-hidden="true">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3"/>
                 </svg>
               </div>
             </div>
@@ -645,49 +954,89 @@
       } else {
         // Single Cover Image with Lightbox
         const isBlurBrand = proj.blurBrand && !proj.clientPermission;
-        const isBlurName = proj.blurNameplate && !proj.clientPermission;
         const blurClass = isBlurBrand ? 'blur-brand' : '';
         mediaHtml = `
-          <img class="project-cover-img ${blurClass}" 
-               src="${proj.coverThumb || proj.cover}" 
-               alt="${title}" 
-               loading="lazy" 
-               width="${proj.coverWidth || 640}" 
-               height="${proj.coverHeight || 400}">
+          <div class="project-media-wrap" role="button" tabindex="0" aria-label="Open preview for ${title}">
+            ${buildPicture(proj.base, proj.coverThumb || proj.cover, title, '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw', 'lazy', false, proj.coverWidth || 640, proj.coverHeight || 400, `project-cover-img ${blurClass}`)}
+          </div>
         `;
       }
 
-      card.innerHTML = `
-        <div class="project-media-wrap">
-          ${mediaHtml}
-        </div>
-        <div class="project-details">
-          <div class="project-meta-row">
-            ${proj.badge ? `<span class="project-badge">${proj.badge}</span>` : ''}
-            ${proj.location ? `<span class="project-location">${proj.location}</span>` : ''}
-            ${proj.area ? `<span class="project-location">• ${proj.area}</span>` : ''}
+      let badgeHtml = '';
+      if (is3d) {
+        badgeHtml = `<span class="project-badge gold-glass">3D DESIGN</span>`;
+      } else if (proj.badge) {
+        badgeHtml = `<span class="project-badge">${proj.badge}</span>`;
+      }
+
+      let actionsHtml = '';
+      if (is3d) {
+        actionsHtml = `
+          <div class="project-actions-row">
+            <button class="service-btn view-proj-btn" aria-label="View 3D render for ${title}">
+              <span>View Render</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+            <a href="https://wa.me/918144166022?text=${encodeURIComponent(`Hi MAK BUILD, I like the '${title}' design. Please share details.`)}" 
+               target="_blank" rel="noopener noreferrer" class="btn-request-design" aria-label="Request this design on WhatsApp">
+              <span>Request this design</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
           </div>
-          <h3 class="project-title">${title}</h3>
-          <p class="project-desc">${desc}</p>
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto;">
-            <button class="service-btn view-proj-btn" data-img="${proj.cover}">
+        `;
+      } else {
+        actionsHtml = `
+          <div class="project-actions-row">
+            <button class="service-btn view-proj-btn" aria-label="View project details for ${title}">
               <span>${t.viewProject}</span>
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
               </svg>
             </button>
             <a href="https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like more information on the project: ${title}`)}" 
-               target="_blank" rel="noopener noreferrer" style="color: var(--gold-primary); font-size: 0.8rem; font-weight: 600;">
-              WhatsApp
+               target="_blank" rel="noopener noreferrer" class="proj-whatsapp-link" aria-label="Chat on WhatsApp about ${title}">
+              <span>WhatsApp</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
             </a>
           </div>
+        `;
+      }
+
+      card.innerHTML = `
+        ${mediaHtml}
+        <div class="project-details">
+          <div class="project-meta-row">
+            ${badgeHtml}
+            ${proj.location ? `<span class="project-location">${proj.location}</span>` : ''}
+            ${proj.area ? `<span class="project-location">• ${proj.area}</span>` : ''}
+          </div>
+          <h3 class="project-title">${title}</h3>
+          <p class="project-desc">${desc}</p>
+          ${actionsHtml}
         </div>
       `;
 
-      // Lightbox click
+      // Lightbox listeners
+      const mediaWrap = card.querySelector('.project-media-wrap');
+      if (mediaWrap) {
+        mediaWrap.addEventListener('click', () => openLightbox(proj, filtered));
+        mediaWrap.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(proj, filtered);
+          }
+        });
+      }
+
       const viewBtn = card.querySelector('.view-proj-btn');
       if (viewBtn) {
-        viewBtn.addEventListener('click', () => openLightbox(proj.cover, title));
+        viewBtn.addEventListener('click', () => openLightbox(proj, filtered));
       }
 
       // Initialize draggable slider if present
@@ -701,50 +1050,98 @@
   }
 
   function initBaSlider(container) {
-    const afterLayer = container.querySelector('.ba-after-layer');
-    const handle = container.querySelector('.ba-handle');
+    const afterLayer = container.querySelector('.ba-layer-after');
+    const divider = container.querySelector('.ba-divider');
+    if (!afterLayer || !divider) return;
+
     let isDragging = false;
+    let currentPercent = 50;
+    let rafId = null;
+
+    // Observe for intro nudge
+    baNudgeObserver.observe(container);
+
+    // Shimmer skeleton removal once both images decode/load
+    const imgs = container.querySelectorAll('img');
+    if (imgs.length >= 2) {
+      Promise.all(Array.from(imgs).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
+      })).then(() => {
+        container.classList.remove('ba-loading');
+      });
+      // Safety timeout so shimmer never gets stuck
+      setTimeout(() => container.classList.remove('ba-loading'), 1500);
+    } else {
+      container.classList.remove('ba-loading');
+    }
 
     function setPosition(xPercent) {
-      const clamped = Math.max(0, Math.min(100, xPercent));
-      afterLayer.style.width = `${clamped}%`;
-      handle.style.left = `${clamped}%`;
+      // Clamped strictly between 4% and 96%
+      const clamped = Math.max(4, Math.min(96, xPercent));
+      currentPercent = clamped;
+
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        afterLayer.style.clipPath = `inset(0 0 0 ${clamped}%)`;
+        afterLayer.style.webkitClipPath = `inset(0 0 0 ${clamped}%)`;
+        divider.style.transform = `translate3d(${clamped}%, 0, 0)`;
+        container.setAttribute('aria-valuenow', Math.round(clamped));
+      });
     }
 
-    function onMove(e) {
-      if (!isDragging) return;
+    function getPercentFromPointer(e) {
       const rect = container.getBoundingClientRect();
-      const pageX = e.touches ? e.touches[0].clientX : e.clientX;
-      const xPercent = ((pageX - rect.left) / rect.width) * 100;
-      setPosition(xPercent);
+      if (!rect.width) return 50;
+      return ((e.clientX - rect.left) / rect.width) * 100;
     }
 
-    container.addEventListener('mousedown', (e) => {
+    function onPointerDown(e) {
+      container.classList.remove('ba-nudge-active');
       isDragging = true;
-      onMove(e);
-    });
-    window.addEventListener('mouseup', () => { isDragging = false; });
-    window.addEventListener('mousemove', onMove);
+      try {
+        container.setPointerCapture(e.pointerId);
+      } catch (_) {}
+      setPosition(getPercentFromPointer(e));
+    }
 
-    container.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      onMove(e);
-    }, { passive: true });
-    window.addEventListener('touchend', () => { isDragging = false; });
-    window.addEventListener('touchmove', onMove, { passive: true });
+    function onPointerMove(e) {
+      if (!isDragging) return;
+      setPosition(getPercentFromPointer(e));
+    }
 
-    // Keyboard accessibility
-    container.setAttribute('tabindex', '0');
-    container.setAttribute('role', 'slider');
-    container.setAttribute('aria-label', 'Before and after comparison slider');
-    container.setAttribute('aria-valuenow', '50');
+    function onPointerUp(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      try {
+        if (container.hasPointerCapture(e.pointerId)) {
+          container.releasePointerCapture(e.pointerId);
+        }
+      } catch (_) {}
+    }
+
+    container.addEventListener('pointerdown', onPointerDown);
+    container.addEventListener('pointermove', onPointerMove);
+    container.addEventListener('pointerup', onPointerUp);
+    container.addEventListener('pointercancel', onPointerUp);
+
+    // Keyboard accessibility: 2% steps, Home/End jump
     container.addEventListener('keydown', (e) => {
-      let currentVal = parseFloat(afterLayer.style.width) || 50;
+      container.classList.remove('ba-nudge-active');
       if (e.key === 'ArrowLeft') {
-        setPosition(currentVal - 5);
+        setPosition(currentPercent - 2);
         e.preventDefault();
       } else if (e.key === 'ArrowRight') {
-        setPosition(currentVal + 5);
+        setPosition(currentPercent + 2);
+        e.preventDefault();
+      } else if (e.key === 'Home') {
+        setPosition(4);
+        e.preventDefault();
+      } else if (e.key === 'End') {
+        setPosition(96);
         e.preventDefault();
       }
     });
@@ -1040,23 +1437,192 @@
       });
     });
 
+    // Keyboard navigation & Focus Trapping
     window.addEventListener('keydown', (e) => {
+      const activeModal = [compareModal, serviceModal, lightboxModal].find(m => m && m.classList.contains('open'));
+
       if (e.key === 'Escape') {
-        closeModal(compareModal);
-        closeModal(serviceModal);
-        closeModal(lightboxModal);
+        if (activeModal) closeModal(activeModal);
+        return;
+      }
+
+      if (activeModal === lightboxModal) {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          showNextLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          showPrevLightbox();
+        }
+      }
+
+      // Trap Tab focus inside active modal
+      if (activeModal && e.key === 'Tab') {
+        const focusables = activeModal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
+
+    // Touch swipe for Lightbox
+    if (lightboxModal) {
+      let touchStartX = 0;
+      lightboxModal.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      lightboxModal.addEventListener('touchend', (e) => {
+        const diffX = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diffX) > 40) {
+          if (diffX < 0) showNextLightbox();
+          else showPrevLightbox();
+        }
+      }, { passive: true });
+    }
   }
 
-  function openLightbox(src, alt) {
-    if (!lightboxModal) return;
-    const img = document.getElementById('lightboxImg');
-    if (img) {
-      img.src = src;
-      img.alt = alt || 'MAK BUILD Project Showcase';
+  let activeLightboxProjects = [];
+  let currentLightboxIndex = -1;
+
+  function renderLightboxContent(proj) {
+    if (!proj || !lightboxModal) return;
+    const mediaWrap = document.getElementById('lightboxMediaWrap');
+    const conceptBadge = document.getElementById('lightboxConceptBadge');
+    const titleEl = document.getElementById('lightboxTitle');
+    const descEl = document.getElementById('lightboxDesc');
+    const whatsappCta = document.getElementById('lightboxWhatsAppCta');
+
+    const title = currentLang === 'ta' && proj.titleTa ? proj.titleTa : proj.title;
+    const desc = currentLang === 'ta' && proj.descriptionTa ? proj.descriptionTa : proj.description;
+    const is3d = proj.category === '3D Designs' || proj.badge === '3D Design';
+
+    if (titleEl) titleEl.textContent = title;
+    if (descEl) descEl.textContent = desc;
+
+    if (conceptBadge) {
+      if (is3d) {
+        conceptBadge.style.display = 'inline-flex';
+        conceptBadge.textContent = 'Concept render, not a completed project';
+      } else {
+        conceptBadge.style.display = 'none';
+      }
     }
+
+    if (whatsappCta) {
+      if (is3d) {
+        whatsappCta.textContent = 'Request this design';
+        whatsappCta.href = `https://wa.me/918144166022?text=${encodeURIComponent(`Hi MAK BUILD, I like the '${title}' design. Please share details.`)}`;
+      } else {
+        whatsappCta.textContent = 'Enquire on WhatsApp';
+        whatsappCta.href = `https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like more information on the project: ${title}`)}`;
+      }
+    }
+
+    if (mediaWrap) {
+      mediaWrap.innerHTML = '';
+
+      if (proj.hasBeforeAfter && proj.beforeImg && proj.afterImg) {
+        // Draggable Before/After in Lightbox
+        mediaWrap.innerHTML = `
+          <div class="ba-container ba-loading" data-ba-id="${proj.id}-lb" tabindex="0" role="slider" aria-label="Before and after comparison slider for ${title}" aria-valuenow="50" aria-valuemin="4" aria-valuemax="96" style="width: 100%; max-width: 1080px; aspect-ratio: 16/10;">
+            <div class="ba-layer ba-layer-before">
+              ${buildPicture(proj.beforeBase || proj.base, proj.beforeImg, proj.beforeLabel || 'Before', '100vw', 'eager', true, 1600, 900, 'ba-img')}
+              <div class="ba-badge before-badge">
+                <span class="ba-chip-tag">BEFORE</span>
+                ${proj.beforeLabel ? `<span class="ba-chip-caption">${proj.beforeLabel}</span>` : ''}
+              </div>
+            </div>
+            <div class="ba-layer ba-layer-after" style="clip-path: inset(0 0 0 50%); -webkit-clip-path: inset(0 0 0 50%);">
+              ${buildPicture(proj.afterBase || proj.base, proj.afterImg, proj.afterLabel || 'After', '100vw', 'eager', true, 1600, 900, 'ba-img')}
+              <div class="ba-badge after-badge">
+                <span class="ba-chip-tag">AFTER</span>
+                ${proj.afterLabel ? `<span class="ba-chip-caption">${proj.afterLabel}</span>` : ''}
+              </div>
+            </div>
+            <div class="ba-divider" style="transform: translate3d(50%, 0, 0);">
+              <div class="ba-line"></div>
+              <div class="ba-handle" aria-hidden="true">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        `;
+        const ba = mediaWrap.querySelector('.ba-container');
+        if (ba) initBaSlider(ba);
+      } else if (proj.renderImage && proj.builtImage) {
+        // Concept 3D Design vs Final Build Comparison
+        mediaWrap.innerHTML = `
+          <div class="ba-container ba-loading" data-ba-id="${proj.id}-concept-lb" tabindex="0" role="slider" aria-label="3D Concept vs Final Build comparison for ${title}" aria-valuenow="50" aria-valuemin="4" aria-valuemax="96" style="width: 100%; max-width: 1080px; aspect-ratio: 16/10;">
+            <div class="ba-layer ba-layer-before">
+              <img class="ba-img" src="${proj.renderImage}" alt="3D Design Concept" loading="eager" decoding="async">
+              <div class="ba-badge before-badge">
+                <span class="ba-chip-tag">3D DESIGN</span>
+                <span class="ba-chip-caption">CONCEPT RENDER</span>
+              </div>
+            </div>
+            <div class="ba-layer ba-layer-after" style="clip-path: inset(0 0 0 50%); -webkit-clip-path: inset(0 0 0 50%);">
+              <img class="ba-img" src="${proj.builtImage}" alt="Final Built Structure" loading="eager" decoding="async">
+              <div class="ba-badge after-badge">
+                <span class="ba-chip-tag">FINAL BUILD</span>
+                <span class="ba-chip-caption">COMPLETED STRUCTURE</span>
+              </div>
+            </div>
+            <div class="ba-divider" style="transform: translate3d(50%, 0, 0);">
+              <div class="ba-line"></div>
+              <div class="ba-handle" aria-hidden="true">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        `;
+        const ba = mediaWrap.querySelector('.ba-container');
+        if (ba) initBaSlider(ba);
+      } else {
+        // Single HD Image with Max-Width Capping to avoid upscaling blur
+        const maxWidthStyle = proj.coverWidth ? `style="max-width: ${proj.coverWidth}px;"` : '';
+        mediaWrap.innerHTML = `
+          <div class="lightbox-img-box" ${maxWidthStyle}>
+            ${buildPicture(proj.base, proj.cover, title, '100vw', 'eager', true, proj.coverWidth || 1280, proj.coverHeight || 720, 'lightbox-img')}
+          </div>
+        `;
+      }
+    }
+  }
+
+  function openLightbox(proj, projectList) {
+    if (!lightboxModal) return;
+    activeLightboxProjects = (projectList && projectList.length) 
+      ? projectList 
+      : allProjects.filter(p => !(p.category === '3D Designs' && !p.cover && !p.renderImage));
+    currentLightboxIndex = activeLightboxProjects.findIndex(p => p.id === proj.id);
+    if (currentLightboxIndex === -1) currentLightboxIndex = 0;
+
+    renderLightboxContent(activeLightboxProjects[currentLightboxIndex]);
     openModal(lightboxModal);
+  }
+
+  function showNextLightbox() {
+    if (!activeLightboxProjects.length) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % activeLightboxProjects.length;
+    renderLightboxContent(activeLightboxProjects[currentLightboxIndex]);
+  }
+
+  function showPrevLightbox() {
+    if (!activeLightboxProjects.length) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + activeLightboxProjects.length) % activeLightboxProjects.length;
+    renderLightboxContent(activeLightboxProjects[currentLightboxIndex]);
   }
 
   // ==========================================

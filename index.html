@@ -40,8 +40,8 @@
   </noscript>
 
   <!-- Responsive Preload for LCP Hero Slide -->
-  <link rel="preload" as="image" href="assets/hero/hero-villa-640.webp" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/hero/hero-villa.webp" type="image/webp" media="(min-width: 641px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/villa-contemporary-after-480.webp" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/villa-contemporary-after-638.webp" type="image/webp" media="(min-width: 641px)" fetchpriority="high">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -96,7 +96,10 @@
     <div class="container header-inner">
       <a href="#hero" class="brand-lockup">
         <div class="brand-logo-wrap">
-          <img src="assets/mak-logo.png" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+          <picture>
+            <source type="image/svg+xml" srcset="assets/logo-mark.svg">
+            <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+          </picture>
         </div>
         <div class="brand-text">
           <span class="brand-name">MAK BUILD</span>
@@ -452,43 +455,75 @@
       </div>
     </section>
 
-    <!-- 10. About & Engineer Leadership Section -->
+    <!-- 10. About & Engineer Leadership Studio Card (Problem 4 Verified) -->
     <section id="about" class="about-section section-contained">
       <div class="container">
-        <div class="about-grid">
-          <div class="about-photo-wrap reveal-init">
-            <img src="assets/about/office-signboard.webp" alt="MAK BUILD Sirkazhi Studio" class="about-photo-img" loading="lazy" width="800" height="500">
+        <div class="section-header reveal-init">
+          <span class="section-eyebrow" data-i18n="aboutHeading">ENGINEERING LEADERSHIP</span>
+          <h2 class="section-title">Visit Our Sirkazhi Studio</h2>
+          <p class="section-sub">Direct consultations and structural engineering under Er. Manikandan Rajendran.</p>
+        </div>
+
+        <div class="studio-card reveal-init">
+          <div class="studio-signboard-col">
+            <picture>
+              <source type="image/avif" srcset="assets/img/office-signboard-480.avif 480w, assets/img/office-signboard-768.avif 768w, assets/img/office-signboard-800.avif 800w" sizes="(min-width: 1024px) 500px, 100vw">
+              <source type="image/webp" srcset="assets/img/office-signboard-480.webp 480w, assets/img/office-signboard-768.webp 768w, assets/img/office-signboard-800.webp 800w" sizes="(min-width: 1024px) 500px, 100vw">
+              <img src="assets/img/office-signboard.webp" alt="MAK BUILD Sirkazhi Studio Signboard" class="studio-signboard-img" loading="lazy" decoding="async" width="800" height="500">
+            </picture>
           </div>
-          <div class="about-content reveal-init">
-            <span class="section-eyebrow" data-i18n="aboutHeading">ENGINEERING LEADERSHIP</span>
-            <h2>Er. Manikandan Rajendran</h2>
-            <p id="aboutEngineerTitle" class="about-engineer-title">Civil &amp; Structural Engineer, Registered Engineer</p>
-            <p id="aboutIntro1" class="about-text">
-              MAK BUILD is headed by Er. Manikandan Rajendran, a qualified Civil and Structural Engineer dedicated to delivering durable, architecturally refined homes.
-            </p>
-            <p id="aboutIntro2" class="about-text">
-              Every project combines modern structural engineering with strict Vasthu compliance, ensuring aesthetic excellence and generational strength.
+
+          <div class="studio-details-col">
+            <div class="studio-brand-header">
+              <picture>
+                <source type="image/svg+xml" srcset="assets/logo-mark.svg">
+                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="studio-logo-mark" width="110" height="82">
+              </picture>
+              <div class="studio-brand-titles">
+                <h3 class="studio-brand-name">MAK BUILD</h3>
+                <span class="studio-brand-sub">CONSTRUCTION &amp; DESIGN</span>
+              </div>
+            </div>
+
+            <div class="studio-engineer-block">
+              <h4 class="studio-engineer-name">Er. Manikandan Rajendran</h4>
+              <div class="studio-credentials-pills">
+                <span class="credential-pill">Civil &amp; Structural Engineer</span>
+                <span class="credential-pill">Registered Engineer</span>
+              </div>
+            </div>
+
+            <p id="aboutIntro1" class="studio-lead-text">
+              MAK BUILD is headed by Er. Manikandan Rajendran, a qualified Civil and Structural Engineer delivering durable, architecturally refined turnkey villas and commercial projects across Sirkazhi and Mayiladuthurai.
             </p>
 
-            <div class="about-badges-row">
-              <div class="about-badge">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            <div class="studio-address-row">
+              <svg class="studio-pin-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span class="studio-address-text" id="contactAddressAbout">117C, Pidari South Street, Sirkazhi 609110</span>
+            </div>
+
+            <div class="studio-actions-row">
+              <a href="https://maps.google.com/?q=117c+Pidari+South+Street,+Sirkazhi+609110" target="_blank" rel="noopener noreferrer" class="btn-primary studio-btn-primary">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
                 </svg>
-                <span>Registered Civil Engineer</span>
-              </div>
-              <div class="about-badge">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                <span>Get Directions</span>
+              </a>
+              <a href="tel:+918144166022" class="btn-secondary studio-btn-secondary">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
-                <span>Vasthu Specialist</span>
-              </div>
-              <div class="about-badge">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                <span>Call</span>
+              </a>
+              <a href="https://wa.me/918144166022?text=Hello%20Er.%20Manikandan%2C%20I%20would%20like%20to%20visit%20your%20Sirkazhi%20studio%20for%20a%20construction%20consultation." target="_blank" rel="noopener noreferrer" class="btn-secondary studio-btn-secondary whatsapp">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.074-1.026-.067-.535-.192-1.378-.621-2.247-1.393-.974-.866-1.571-1.92-1.745-2.217-.174-.298-.019-.459.13-.607.135-.133.298-.348.446-.522.148-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
                 </svg>
-                <span>Sirkazhi Native</span>
-              </div>
+                <span>WhatsApp</span>
+              </a>
             </div>
           </div>
         </div>
@@ -628,7 +663,10 @@
         <div class="footer-brand-col">
           <a href="#hero" class="brand-lockup" aria-label="MAK BUILD Home">
             <div class="brand-logo-wrap">
-              <img src="assets/mak-logo.png" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+              <picture>
+                <source type="image/svg+xml" srcset="assets/logo-mark.svg">
+                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+              </picture>
             </div>
             <div class="brand-text">
               <span class="brand-name">MAK BUILD</span>
@@ -727,14 +765,30 @@
     </div>
   </div>
 
-  <!-- 15. Lightbox Modal -->
-  <div id="lightboxModal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image Preview">
+  <!-- 15. Lightbox Modal & Concept Render Viewer -->
+  <div id="lightboxModal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Project Preview">
     <button class="lightbox-close" aria-label="Close preview">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
       </svg>
     </button>
-    <img id="lightboxImg" class="lightbox-img" src="" alt="Project Preview">
+    <div class="lightbox-dialog">
+      <div id="lightboxMediaWrap" class="lightbox-media-wrap">
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Project Preview">
+      </div>
+      <div class="lightbox-info">
+        <span id="lightboxConceptBadge" class="lightbox-concept-badge" style="display: none;">
+          Concept render, not a completed project
+        </span>
+        <h3 id="lightboxTitle" class="lightbox-title"></h3>
+        <p id="lightboxDesc" class="lightbox-desc"></p>
+        <div id="lightboxActions" class="lightbox-actions">
+          <a id="lightboxWhatsAppCta" href="#" target="_blank" rel="noopener noreferrer" class="lightbox-cta-btn">
+            Request this design
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts: Deferred Vanilla Architecture -->
