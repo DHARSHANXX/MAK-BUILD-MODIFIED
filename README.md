@@ -1,62 +1,116 @@
-# MAK BUILD — House Construction Packages in Sirkazhi
+# MAK BUILD — Construction & Design
 
-> Fast, crisp, single-page website for **MAK BUILD – Construction & Design**, Sirkazhi, Tamil Nadu.  
-> Built with React + Tailwind CSS, optimized for performance on mobile devices.
-
----
-
-## ⚡ 5-Line Quickstart & Configuration Guide
-
-1. **Edit Business Content / Pricing / Contacts**: [`src/config.js`](file:///C:/Users/DHARSHAN/Documents/GitHub/MAK-BUILD-MODIFIED/src/config.js) (packages, rates, phones, specs, photos).
-2. **Install Dependencies**: `npm install` (Node.js 18+ recommended).
-3. **Run Local Dev Server**: `npm run dev` (starts Vite dev server with Hot Module Replacement).
-4. **Build Production Bundle**: `npm run build` (outputs optimized bundle to `dist/` and syncs with repository root for GitHub Pages).
-5. **Deploy to GitHub Pages**: Push repository `main` branch to GitHub (repository root is ready for direct GitHub Pages deployment).
+> **Official Website**: [https://dharshanxx.github.io/MAK-BUILD-MODIFIED/](https://dharshanxx.github.io/MAK-BUILD-MODIFIED/)  
+> **Studio Address**: 117C, Pidari South Street, Sirkazhi, Tamil Nadu 609110  
+> **Key Engineer**: Er. Manikandan Rajendran, Civil & Structural Engineer, Registered Engineer  
+> **Hotlines**: [+91 81441 66022](tel:+918144166022) | [+91 93857 47544](tel:+919385747544)  
+> **WhatsApp**: [https://wa.me/918144166022](https://wa.me/918144166022)  
+> **Email**: [makbuildsy@gmail.com](mailto:makbuildsy@gmail.com)  
+> **Instagram**: [@mak_build_construction](https://www.instagram.com/mak_build_construction)  
 
 ---
 
-## 🎨 Design System
+## 📋 Owner Action Items Checklist (`TODO_OWNER`)
 
-- **Typography**:
-  - Headings: `Archivo Black` (class `font-display`)
-  - Body: `Hind` + `Noto Sans Tamil`
-  - Loaded non-blocking via Google Fonts (`display=swap`)
-- **Colors**:
-  - Warm off-white background: `oklch(0.975 0.006 85)` (`var(--color-bg-light)`)
-  - Charcoal text: `oklch(0.2 0.01 60)` (`var(--color-text-main)`)
-  - Amber primary: `oklch(0.76 0.16 70)` (`var(--color-primary-amber)`)
-  - Dark charcoal secondary sections: `oklch(0.22 0.01 60)` (`var(--color-bg-dark)`) with off-white text
-  - Small radius: `0.25rem` (`rounded`)
+To maintain 100% authenticity, all missing items in `content.js` and `projects.json` are set to empty fields (`""` or `false`) and their respective UI elements are **automatically hidden** until verified:
 
----
-
-## 📱 Page Sections (in exact order)
-
-1. **Header**: Fixed top header with logo, brand name, and fixed language switch pill button (`"தமிழ் / English"`).
-2. **Hero**: Full-screen (`min 88svh`) photo of a built villa with dark gradient from the bottom, eyebrow `"MAK BUILD · Sirkazhi"`, huge heading `"Your home. Built right."`, pill badge `"50+ homes built across Sirkazhi & Mayiladuthurai"`, subtitle `"Three clear packages from ₹2200/sq.ft. Residential, commercial & interiors."`, and one primary button `"Book a free site visit"` linking to WhatsApp.
-3. **Why strip**: One row of 5 items with check icons: Free design charge · Customized plan · Structural design · GFC-standard drawings · Built to IS standards.
-4. **Packages ("Packages 2026")**:
-   - Subtitle: `"Price per sq.ft, including materials & labour."`
-   - 3 cards with price/sq.ft, one-line note, "Popular" badge on Moderate (amber highlight card), first 7 spec rows, and `"Get {name} quote"` WhatsApp button:
-     - **Basic ₹2200** — "Solid build, smart budget"
-     - **Moderate ₹2400** — "Most chosen for family homes" (Popular, highlighted)
-     - **Premium ₹2500** — "Top brands + soil test & structural design"
-   - Expandable `"Compare full specification"` `<details>` table with all 12 spec rows and 4 quality assurance check rows.
-5. **Our Work**: Dark section with heading + Instagram link (`https://www.instagram.com/mak_build_construction`). 4 photos in 2×2 mobile / 4-col desktop grid (4:5 aspect) with 16s Ken Burns zoom loop (CSS only, `prefers-reduced-motion` disables it):
-   - Contemporary Villa (`assets/villa-contemporary-after.jpg`)
-   - Penthouse Interior (`assets/penthouse-after-hd.jpg?v=6`)
-   - Living & Kitchen (`assets/portfolio-interior-design.jpg`)
-   - Retail Studio (`assets/commercial-retail-after.jpg`)
-6. **Contact**: Heading `"Let's build."`, subtitle `"Free design consultation. Book a free site visit today."`, one big WhatsApp button, phone `81441 66022`, phone `93857 47544`, email `makbuildsy@gmail.com`, address `"No.117c, Pidari South Street, Sirkazhi 609110"`, and Google Maps iframe embed of `"117c Pidari South Street, Sirkazhi 609110"`.
-7. **Footer**: `"© 2026 MAK BUILD, Sirkazhi"`.
-8. **Fixed floating WhatsApp button**: Bottom-right (mobile only).
-
----
-
-## 🌐 100% Bilingual Dictionary
-
-Every string on the page is dynamically translated between English and Tamil using a complete dictionary in `src/translations.js`, toggled via the fixed top-right pill button with state persistence in `localStorage`.
+- [ ] **Engineer Registration Number**:
+  - Location: `content.js` -> `company.engineerRegNo` & `flags.showEngineerRegistrationNo`
+  - Action: Enter the municipal/government civil engineering registration number and set `flags.showEngineerRegistrationNo: true`.
+- [ ] **Studio Working Hours**:
+  - Location: `content.js` -> `company.workingHours`
+  - Action: Enter official working hours (e.g., `"Monday – Saturday: 9:00 AM – 7:30 PM"`).
+- [ ] **Contact Form Key (Web3Forms / Formspree)**:
+  - Location: `content.js` -> `company.web3FormsKey`
+  - Action: Insert your free Web3Forms Access Key from [web3forms.com](https://web3forms.com). Until set, form submissions gracefully fallback to direct WhatsApp enquiry!
+- [ ] **Commercial & PEB Shed Rate**:
+  - Location: `content.js` -> `estimator.scopes[1].rate` & `hasRates`
+  - Action: Set sq.ft rate when ready. While empty, the Quick Estimator prompts the client to share requirements via WhatsApp.
+- [ ] **Interiors-Only Sq.Ft Rate**:
+  - Location: `content.js` -> `estimator.scopes[2].rate` & `hasRates`
+  - Action: Set indicative sq.ft rate for interior packages when ready.
+- [ ] **Re-Verify Add-on Pricing in Estimator**:
+  - Location: `content.js` -> `estimator.addOns`
+  - Current values: Modular Kitchen & Wardrobes (₹2.75 L), 3D Elevation & CAD Plans (₹45,000), Vasthu Blueprints & Sanctions (₹35,000), Borewell & Sump (₹1.20 L).
+- [ ] **Pin Code Verification**:
+  - Location: `content.js` -> `company.address.pincode`
+  - Action: Verified as `609110` (Pidari South Street). Re-confirm against postal authorities and Google Maps location.
+- [ ] **High-Resolution Original Photographs**:
+  - Replace cropped Instagram screenshots (`assets/designs/`) with original 4K/HD renders from SketchUp/Lumion/3ds Max when available.
+- [ ] **Client Nameplate & Brand Permissions**:
+  - Location: `projects.json` -> `clientPermission: false`
+  - Residence elevation: Nameplate "Benjamin's cottage" is blurred via `blurNameplate: true`.
+  - Jewellery showroom: Counter brand "Narayana Jewellers" is blurred via `blurBrand: true`. Set `clientPermission: true` once client approval is received.
+- [ ] **Signboard / Studio Photo**:
+  - Location: `assets/about/office-signboard.webp`
+  - Replace the placeholder studio banner with a photograph of Er. Manikandan Rajendran outside or inside the 117C Pidari South Street studio.
 
 ---
 
-© 2026 MAK BUILD — Construction & Design • Sirkazhi, Tamil Nadu.
+## 🔍 Brand & Material Spelling Verification List
+
+The following brand names and trade terms are transcribed directly from the 2026 specification document:
+
+| Item | Transcribed Spelling | Verification Status / Suggested Brand |
+| :--- | :--- | :--- |
+| **Cement** | Coromandel (written "Coramantal") | Verified as Coromandel Cement |
+| **Pipes** | Ashirvad (written "Ahirvad") | Verified as Ashirvad Pipes |
+| **Wire** | Havells / Polycab (written "Polycap") | Verified as Polycab |
+| **Plumbing** | Plumbing (written "Plumping") | Corrected typo to Plumbing |
+| **Column** | Column (written "Coloumn") | Corrected typo to Column |
+| **Switches** | Lisha / Hi-Fi (written "Lizha/Hi Fi") | Preserved as written |
+| **Steel** | Kavery, Agni, Amman, JSW | Preserved as written |
+| **Wood Windows** | Badak / Vembu | Preserved as written |
+
+---
+
+## 🚀 How to Add New Content
+
+### Adding a New Project
+1. Create a folder in `assets/projects/<slug>/` (e.g. `assets/projects/my-villa/`).
+2. Add your images:
+   - Single project: `cover.webp` (or `.jpg`/`.png`)
+   - Before/After project: `before.jpg` and `after.jpg`
+3. Run the automated scanner tool:
+   ```bash
+   node tools/make-projects.js
+   ```
+4. Open `projects.json` and adjust the title, category (`"Villas"` | `"Commercial & PEB"` | `"Interiors"` | `"3D Designs"`), area, and description.
+
+### Adding Client Testimonials
+1. Open `testimonials.json`.
+2. Add a new client review:
+   ```json
+   {
+     "id": "testimonial-1",
+     "clientName": "K. Anbarasan",
+     "location": "Sirkazhi",
+     "projectType": "Contemporary Villa",
+     "feedback": "MAK BUILD delivered our villa on schedule with structural precision.",
+     "rating": 5,
+     "consentGiven": true
+   }
+   ```
+3. Set `"consentGiven": true` to display the review. If all entries have `consentGiven: false`, the testimonials section is automatically hidden.
+
+---
+
+## 🌐 Deployment to GitHub Pages
+
+This website is a **pure static HTML + CSS + Vanilla JS** architecture.
+- **No build steps required**: You do **not** need to run `npm run build` or Vite.
+- Simply commit and push your repository to the `main` branch.
+- GitHub Pages will automatically serve `index.html`, `styles.css`, `app.js`, and `content.js` from the repository root.
+
+### Connecting a Custom Domain (e.g. `makbuild.in` / `makbuild.com`)
+1. In your GitHub repository, go to **Settings** &rarr; **Pages**.
+2. Under **Custom domain**, enter your domain name (e.g., `www.makbuild.in`).
+3. Click **Save**.
+4. In your domain registrar (GoDaddy, Namecheap, Google Domains):
+   - Add a `CNAME` record pointing `www` to `dharshanxx.github.io`.
+   - Add `A` records pointing `@` to GitHub Pages IP addresses:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+5. Enable **Enforce HTTPS** in GitHub repository settings.

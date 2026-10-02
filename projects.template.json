@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sample-project-slug",
+    "title": "Project Title",
+    "titleTa": "திட்டத்தின் பெயர்",
+    "category": "Villas",
+    "badge": "Completed",
+    "location": "Sirkazhi",
+    "area": "2,400 sq.ft",
+    "year": "2026",
+    "cover": "assets/projects/sample-project-slug/cover.webp",
+    "coverThumb": "assets/projects/sample-project-slug/cover-640.webp",
+    "coverWidth": 1200,
+    "coverHeight": 800,
+    "hasBeforeAfter": false,
+    "beforeImg": "",
+    "afterImg": "",
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "description": "Short project description (max ~15 words)",
+    "descriptionTa": "திட்டத்தின் சுருக்கம்",
+    "blurBrand": false,
+    "blurNameplate": false,
+    "clientPermission": true
+  }
+]

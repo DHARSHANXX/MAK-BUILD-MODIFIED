@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dharshanxx.github.io/MAK-BUILD-MODIFIED/sitemap.xml

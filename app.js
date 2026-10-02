@@ -1,936 +1,1100 @@
 /**
- * MAK BUILD — CONSTRUCTION & DESIGN
- * Location: Pidari S St, Thenpathi, Sirkali (Sirkazhi), Tamil Nadu 609109
- * Verified Contact: 81441 66022 (WhatsApp) / 93857 47544 (Phone)
- * Instagram: https://www.instagram.com/mak_build_construction (@mak_build_construction)
- * 
- * Production Application Logic (Conversion-Focused, Zero Backend Required)
+ * app.js
+ * MAK BUILD — Construction & Design
+ * High-performance, 60fps, dependency-free vanilla JavaScript application.
  */
 
-// Verified Company Contacts
-const COMPANY_WHATSAPP = "8144166022";
-const COMPANY_PHONE = "9385747544";
+(function () {
+  'use strict';
 
-// ----------------------------------------------------
-// 1. ALL REAL PROJECTS (Unified Before & After Gallery)
-// ----------------------------------------------------
-const ALL_PROJECTS = [
-  {
-    id: 1,
-    title: "Luxury Penthouse Residence",
-    category: "interior",
-    categoryLabel: "Interiors",
-    location: "Chidambaram Highway, Sirkazhi",
-    area: "2,400 sq.ft",
-    beforeImg: "assets/renovation-before-web.jpg",
-    afterImg: "assets/penthouse-after-hd.jpg?v=6",
-    beforeLabel: "RAW RCC SHELL",
-    afterLabel: "FINISHED PENTHOUSE",
-    specs: "Ultratech M25 concrete, Fluted teakwood slat wall, Bookmatched Italian beige marble, Warm LED cove false ceiling."
-  },
-  {
-    id: 2,
-    title: "Contemporary Villa Facade",
-    category: "villas",
-    categoryLabel: "Villas",
-    location: "Sirkazhi Main Town",
-    area: "3,800 sq.ft",
-    beforeImg: "assets/villa-facade-before-1920.jpg",
-    afterImg: "assets/villa-contemporary-after.jpg",
-    beforeLabel: "BRICKWORK & RCC FRAME",
-    afterLabel: "CONTEMPORARY FACADE",
-    specs: "Tata Tiscon Fe 550D rebar, Weather-Shield silicon texture, Saint-Gobain toughened glass balcony railings."
-  },
-  {
-    id: 6,
-    title: "Bespoke Living & Kitchen Interior",
-    category: "interior",
-    categoryLabel: "Interiors",
-    location: "Sirkazhi",
-    area: "2,600 sq.ft",
-    beforeImg: "assets/renovation-before.jpg",
-    afterImg: "assets/portfolio-interior-design.jpg",
-    beforeLabel: "RAW PLYWOOD FITOUT",
-    afterLabel: "FINISHED INTERIOR FITOUT",
-    specs: "BWP Marine plywood modular kitchen, Quartz stone countertops, Hafele soft-close hardware, Custom pooja woodwork."
-  },
-  {
-    id: 8,
-    title: "Modern Commercial Retail Studio",
-    category: "commercial",
-    categoryLabel: "Commercial & PEB",
-    location: "Old Bus Stand, Sirkazhi",
-    area: "1,800 sq.ft",
-    beforeImg: "assets/commercial-retail-before.jpg",
-    afterImg: "assets/commercial-retail-after.jpg",
-    beforeLabel: "CIVIL SHELL PHASE",
-    afterLabel: "COMMERCIAL RETAIL STUDIO",
-    specs: "Exposed rustic brick wall styling, Industrial track lights, Custom solid wood counters, Acoustic ceiling treatment."
-  }
-];
-
-// ----------------------------------------------------
-// 2. ESTIMATOR LOGIC & VALIDATION
-// ----------------------------------------------------
-const PACKAGE_RATES = {
-  essential: {
-    rate: 1750,
-    name: "Classic Construction",
-    desc: "Solid RCC frame, first-class bricks, vitrified tiles, and branded standard fittings."
-  },
-  premium: {
-    rate: 2350,
-    name: "Architectural Premium",
-    desc: "3D elevation design, GVT large format tiles, Teakwood main door, Jaquar sanitaryware, Asian Paints Royale."
-  },
-  luxury: {
-    rate: 3250,
-    name: "Ultra-Luxury Villa",
-    desc: "Bespoke architectural layout, Italian marble, double-height spaces, acoustic glass, and premium automation."
-  }
-};
-
-const PROJECT_TYPE_MULTIPLIERS = {
-  villa: { label: "Independent Residential Villa", mult: 1.0 },
-  house: { label: "Modern Duplex / Town House", mult: 0.95 },
-  commercial: { label: "Commercial Building & PEB Shed", mult: 1.15 },
-  interior: { label: "Turnkey Interiors & Modular Kitchen", mult: 0.65 }
-};
-
-const ADDONS_PRICING = {
-  kitchen: { name: "Modular Kitchen & Wardrobes", cost: 275000 },
-  elevation3d: { name: "3D Elevation & CAD Floor Plan", cost: 45000 },
-  vasthu: { name: "Vasthu Planning & Sanction Blueprints", cost: 35000 },
-  sump: { name: "Borewell & Underground Water Sump", cost: 120000 },
-  solar: { name: "Rooftop Solar Plant (3kW)", cost: 195000 }
-};
-
-// Estimator State
-const estimatorState = {
-  area: 2000,
-  packageType: "premium",
-  projectType: "villa",
-  addons: {
-    kitchen: true,
-    elevation3d: true,
-    vasthu: true,
-    sump: true,
-    solar: false
-  }
-};
-
-function formatLakhs(amount) {
-  if (amount >= 10000000) {
-    return `₹ ${(amount / 10000000).toFixed(2)} Cr`;
-  } else if (amount >= 100000) {
-    return `₹ ${(amount / 100000).toFixed(2)} Lakhs`;
-  } else {
-    return `₹ ${Math.round(amount).toLocaleString("en-IN")}`;
-  }
-}
-
-function calculateCost() {
-  // Validate Area between 300 and 50,000 sq.ft
-  let area = estimatorState.area;
-  if (isNaN(area) || area < 300) area = 300;
-  if (area > 50000) area = 50000;
-  estimatorState.area = area;
-
-  const pkg = PACKAGE_RATES[estimatorState.packageType];
-  const typeInfo = PROJECT_TYPE_MULTIPLIERS[estimatorState.projectType];
-  const effectiveRate = pkg.rate * typeInfo.mult;
-  const baseCost = area * effectiveRate;
-
-  let addonsTotal = 0;
-  for (const [key, isSelected] of Object.entries(estimatorState.addons)) {
-    if (isSelected && ADDONS_PRICING[key]) {
-      addonsTotal += ADDONS_PRICING[key].cost;
-    }
-  }
-
-  const calculatedTotal = baseCost + addonsTotal;
-
-  // Always show an estimate RANGE (₹X - ₹Y), never a single figure
-  const minEstimate = Math.round(calculatedTotal * 0.95);
-  const maxEstimate = Math.round(calculatedTotal * 1.05);
-
-  const rangeDisplay = document.getElementById("est-total-range");
-  const baseRateDisplay = document.getElementById("est-rate-persqft");
-  const areaValueDisplay = document.getElementById("est-area-value");
-  const civilDisplay = document.getElementById("breakdown-civil");
-  const finishingDisplay = document.getElementById("breakdown-finishing");
-  const mepDisplay = document.getElementById("breakdown-mep");
-  const addonsDisplay = document.getElementById("breakdown-addons");
-
-  if (rangeDisplay) {
-    rangeDisplay.textContent = `${formatLakhs(minEstimate)} – ${formatLakhs(maxEstimate)}`;
-  }
-  if (baseRateDisplay) {
-    baseRateDisplay.textContent = `₹ ${Math.round(effectiveRate).toLocaleString("en-IN")} / sq.ft`;
-  }
-  if (areaValueDisplay) {
-    areaValueDisplay.textContent = `${area.toLocaleString("en-IN")} sq.ft`;
-  }
-  if (civilDisplay) {
-    civilDisplay.textContent = formatLakhs(Math.round(baseCost * 0.52));
-  }
-  if (finishingDisplay) {
-    finishingDisplay.textContent = formatLakhs(Math.round(baseCost * 0.28));
-  }
-  if (mepDisplay) {
-    mepDisplay.textContent = formatLakhs(Math.round(baseCost * 0.12));
-  }
-  if (addonsDisplay) {
-    addonsDisplay.textContent = formatLakhs(addonsTotal);
-  }
-
-  return {
-    area,
-    calculatedTotal,
-    minEstimate,
-    maxEstimate,
-    effectiveRate,
-    pkgName: pkg.name,
-    projectLabel: typeInfo.label
-  };
-}
-
-function sendEstimateToWhatsApp() {
-  const est = calculateCost();
-  const activeAddons = Object.entries(estimatorState.addons)
-    .filter(([_, active]) => active)
-    .map(([key, _]) => `• ${ADDONS_PRICING[key]?.name || key}`)
-    .join("\n");
-
-  const msg = 
-`🏗️ *MAK BUILD - PROJECT ESTIMATE INQUIRY*
-━━━━━━━━━━━━━━━━━━━━━━━━
-📍 *Location:* Sirkazhi / Nearby Tamil Nadu Region
-📐 *Built-Up Area:* ${est.area.toLocaleString("en-IN")} sq.ft
-🏡 *Project Scope:* ${est.projectLabel}
-⭐ *Package:* ${est.pkgName} (~₹${Math.round(est.effectiveRate)}/sq.ft)
-
-📋 *Selected Add-Ons:*
-${activeAddons || "• None"}
-
-💰 *Indicative Investment Range:*
-${formatLakhs(est.minEstimate)} – ${formatLakhs(est.maxEstimate)}
-
-*(Indicative estimate only — final quotation depends on site conditions and discussion.)*
-━━━━━━━━━━━━━━━━━━━━━━━━
-Hello MAK BUILD team, I calculated this estimate on your website and would like to discuss next steps.`;
-
-  window.open(`https://wa.me/91${COMPANY_WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-
-// ----------------------------------------------------
-// 3. CONTACT FORM ENQUIRY (Prefilled WhatsApp Submission)
-// ----------------------------------------------------
-function handleContactSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const feedback = document.getElementById("contact-form-feedback");
-  const name = form.elements["client_name"]?.value.trim() || "";
-  const phone = form.elements["client_phone"]?.value.trim() || "";
-  const location = form.elements["client_location"]?.value.trim() || "";
-  const projectType = form.elements["client_project_type"]?.value || "Villas & Homes (Turnkey Civil)";
-  const message = form.elements["client_message"]?.value.trim() || "Plot inspection and architectural consultation.";
-
-  // Clear any existing feedback state
-  if (feedback) {
-    feedback.className = "hidden p-3.5 rounded-xl text-xs font-semibold";
-    feedback.textContent = "";
-  }
-
-  // Validate required fields
-  if (!name) {
-    if (feedback) {
-      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
-      feedback.textContent = "Please enter your name so our engineers know who they are speaking with.";
-    }
-    form.elements["client_name"]?.focus();
+  const CONTENT = window.MAK_CONTENT;
+  if (!CONTENT) {
+    console.error('MAK_CONTENT configuration not found.');
     return;
   }
 
-  // Clean phone to check digits
-  const digitsOnly = phone.replace(/[^0-9]/g, "");
-  if (!phone || digitsOnly.length < 10) {
-    if (feedback) {
-      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
-      feedback.textContent = "Please provide a valid 10-digit WhatsApp phone number so we can reach you.";
+  // State Management
+  let currentLang = localStorage.getItem('mak_lang') || 'en';
+  let allProjects = [];
+  let currentTab = 'all';
+  let moderateOption = 'standard'; // 'standard' (2300) | 'plus' (2400)
+  let heroCurrentIndex = 0;
+  let heroTimer = null;
+  const HERO_INTERVAL = 6000;
+  let isHeroPaused = false;
+
+  // DOM Elements
+  const header = document.querySelector('.header');
+  const langToggleBtn = document.getElementById('langToggleBtn');
+  const mobileNavToggle = document.getElementById('mobileNavToggle');
+  const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+  const mobileDrawerBackdrop = document.getElementById('mobileDrawerBackdrop');
+  const floatingMobileBar = document.querySelector('.floating-mobile-bar');
+  const compareModal = document.getElementById('compareModal');
+  const serviceModal = document.getElementById('serviceModal');
+  const lightboxModal = document.getElementById('lightboxModal');
+
+  // ==========================================
+  // 1. Language & Translations Engine
+  // ==========================================
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('mak_lang', lang);
+    document.documentElement.lang = lang;
+
+    // Update text content with data-i18n
+    const strings = CONTENT.ui[lang] || CONTENT.ui.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) {
+        el.textContent = strings[key];
+      }
+    });
+
+    // Update language toggle button label
+    if (langToggleBtn) {
+      langToggleBtn.textContent = strings.langBtn;
+      langToggleBtn.setAttribute('aria-label', `Switch to ${lang === 'en' ? 'Tamil' : 'English'}`);
     }
-    form.elements["client_phone"]?.focus();
-    return;
+
+    // Re-render dynamic sections
+    renderHeroCaptions();
+    renderServices();
+    renderPackages();
+    renderProjects();
+    updateEstimator();
+    renderProcess();
+    renderAboutAndContact();
   }
 
-  if (!location) {
-    if (feedback) {
-      feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40";
-      feedback.textContent = "Please provide your site or plot location (e.g. Sirkazhi, Thenpathi, etc.).";
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'ta' : 'en');
+    });
+  }
+
+  // ==========================================
+  // 2. Header Scroll & Sheen
+  // ==========================================
+  function initHeader() {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Logo sheen trigger
+    const logoWrap = document.querySelector('.brand-logo-wrap');
+    if (logoWrap) {
+      setTimeout(() => {
+        logoWrap.parentElement.classList.add('sheen-active');
+        setTimeout(() => logoWrap.parentElement.classList.remove('sheen-active'), 1500);
+      }, 500);
     }
-    form.elements["client_location"]?.focus();
-    return;
+
+    // Mobile nav drawer
+    if (mobileNavToggle && mobileNavDrawer && mobileDrawerBackdrop) {
+      const toggleDrawer = (open) => {
+        mobileNavDrawer.classList.toggle('open', open);
+        mobileDrawerBackdrop.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      mobileNavToggle.addEventListener('click', () => toggleDrawer(true));
+      mobileDrawerBackdrop.addEventListener('click', () => toggleDrawer(false));
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => toggleDrawer(false));
+      });
+    }
+
+    // Hide mobile bar on virtual keyboard open
+    if (floatingMobileBar) {
+      window.addEventListener('focusin', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+          floatingMobileBar.classList.add('hide-on-keyboard');
+        }
+      });
+      window.addEventListener('focusout', () => {
+        floatingMobileBar.classList.remove('hide-on-keyboard');
+      });
+    }
   }
 
-  // Valid submission: show brief positive feedback and open WhatsApp
-  if (feedback) {
-    feedback.className = "block p-3.5 rounded-xl text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/40";
-    feedback.textContent = "Connecting you directly to MAK BUILD engineers on WhatsApp...";
+  // ==========================================
+  // 3. Hero Background Slider
+  // ==========================================
+  const heroSlidesData = [
+    { src: 'assets/hero/hero-villa.webp', thumb: 'assets/hero/hero-villa-640.webp', is3d: false },
+    { src: 'assets/hero/hero-residence-elevation.webp', thumb: 'assets/designs/residence-elevation-640.webp', is3d: true },
+    { src: 'assets/hero/hero-showroom.webp', thumb: 'assets/designs/showroom-interior-640.webp', is3d: true },
+    { src: 'assets/hero/hero-living.webp', thumb: 'assets/designs/living-interior-640.webp', is3d: true }
+  ];
+
+  function initHeroSlider() {
+    const sliderWrap = document.getElementById('heroSliderWrap');
+    const dotsWrap = document.getElementById('heroDotsWrap');
+    const chip = document.getElementById('heroSlideChip');
+    if (!sliderWrap || !dotsWrap) return;
+
+    sliderWrap.innerHTML = '';
+    dotsWrap.innerHTML = '';
+
+    heroSlidesData.forEach((slide, idx) => {
+      // Create slide element
+      const div = document.createElement('div');
+      div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+      div.innerHTML = `
+        <img class="hero-slide-img" 
+             src="${slide.src}" 
+             alt="MAK BUILD Architectural Project ${idx + 1}"
+             ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+             decoding="async"
+             width="1280" height="720">
+      `;
+      sliderWrap.appendChild(div);
+
+      // Create dot
+      const dot = document.createElement('button');
+      dot.className = `hero-dot ${idx === 0 ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+      dot.addEventListener('click', () => goToSlide(idx));
+      dotsWrap.appendChild(dot);
+    });
+
+    updateSlideChip();
+    startHeroAutoplay();
+
+    // Pause autoplay on hover or touch-hold
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', () => { isHeroPaused = true; });
+      heroSection.addEventListener('mouseleave', () => { isHeroPaused = false; });
+      heroSection.addEventListener('touchstart', () => { isHeroPaused = true; }, { passive: true });
+      heroSection.addEventListener('touchend', () => { isHeroPaused = false; });
+    }
+
+    // Pause when tab hidden
+    document.addEventListener('visibilitychange', () => {
+      isHeroPaused = document.hidden;
+    });
+
+    // Arrow keys & swipe
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight') goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
+      if (e.key === 'ArrowLeft') goToSlide((heroCurrentIndex - 1 + heroSlidesData.length) % heroSlidesData.length);
+    });
+
+    // Touch swipe on hero
+    let touchStartX = 0;
+    if (heroSection) {
+      heroSection.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      heroSection.addEventListener('touchend', e => {
+        const diffX = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diffX) > 40) {
+          if (diffX < 0) goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
+          else goToSlide((heroCurrentIndex - 1 + heroSlidesData.length) % heroSlidesData.length);
+        }
+      }, { passive: true });
+    }
   }
 
-  const text = 
-`👋 *NEW PROJECT ENQUIRY — MAK BUILD (SIRKAZHI)*
-━━━━━━━━━━━━━━━━━━━━━━━━
-👤 *Name:* ${name}
-📞 *Phone:* ${phone}
-📍 *Site Location:* ${location}
-🏗️ *Project Type:* ${projectType}
-📝 *Message / Requirements:*
-${message}
-━━━━━━━━━━━━━━━━━━━━━━━━
-I would like to schedule a direct site consultation with MAK BUILD.`;
+  function goToSlide(index) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    if (!slides.length) return;
 
-  window.open(`https://wa.me/91${COMPANY_WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank");
-  form.reset();
-}
+    slides[heroCurrentIndex].classList.remove('active');
+    if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.remove('active');
 
-// ----------------------------------------------------
-// 4. OUR WORK GRID — INTERACTIVE BEFORE & AFTER SLIDERS
-// ----------------------------------------------------
-let activeFilter = "all";
+    heroCurrentIndex = index;
 
-function renderWorkGrid(filter = "all") {
-  activeFilter = filter;
-  const grid = document.getElementById("work-grid");
-  if (!grid) return;
+    slides[heroCurrentIndex].classList.add('active');
+    if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.add('active');
 
-  const filtered = filter === "all" 
-    ? ALL_PROJECTS 
-    : ALL_PROJECTS.filter(p => p.category === filter);
+    updateSlideChip();
+  }
 
-  grid.innerHTML = filtered.map(p => `
-    <article class="work-card glass-card rounded-2xl overflow-hidden border border-slate-800/80 hover:border-[#d4af37]/40 transition-all flex flex-col group">
-      
-      <!-- Interactive B&A Image Container -->
-      <div 
-        class="work-slider-box relative aspect-[16/10] sm:aspect-[16/10] overflow-hidden bg-slate-950 cursor-ew-resize select-none"
-        data-project-id="${p.id}"
-        tabindex="0"
-        role="slider"
-        aria-label="Before and after comparison for ${p.title}"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="50"
-        style="--ba-pos: 50%;"
-      >
-        <!-- AFTER Image (Underneath) -->
-        <img 
-          src="${p.afterImg}" 
-          alt="${p.id === 2 ? 'Modern contemporary villa designed and built by MAK BUILD' : 'After: ' + p.title}" 
-          class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-          loading="lazy"
-          width="800"
-          height="500"
-        />
+  function updateSlideChip() {
+    const chip = document.getElementById('heroSlideChip');
+    if (!chip) return;
+    const is3d = heroSlidesData[heroCurrentIndex]?.is3d;
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    if (is3d) {
+      chip.textContent = t.heroBadge3d;
+      chip.style.display = 'inline-flex';
+    } else {
+      chip.style.display = 'none';
+    }
+  }
 
-        <!-- BEFORE Image (Clipped on top with --ba-pos) -->
-        <div 
-          class="absolute inset-0 overflow-hidden pointer-events-none"
-          style="clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%); -webkit-clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%);"
-        >
-          <img 
-            src="${p.beforeImg}" 
-            alt="Before: ${p.title}" 
-            class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-            loading="lazy"
-            width="800"
-            height="500"
-          />
-        </div>
+  function startHeroAutoplay() {
+    if (heroTimer) clearInterval(heroTimer);
+    heroTimer = setInterval(() => {
+      if (!isHeroPaused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
+      }
+    }, HERO_INTERVAL);
+  }
 
-        <!-- Dividing Line -->
-        <div 
-          class="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#fceda2] via-[#d4af37] to-[#aa820a] pointer-events-none z-10 shadow-[0_0_10px_rgba(212,175,55,0.7)]"
-          style="left: var(--ba-pos); transform: translateX(-50%);"
-        ></div>
+  function renderHeroCaptions() {
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    const h1 = document.getElementById('heroH1');
+    const sub = document.getElementById('heroSub');
+    const tagline = document.getElementById('heroTamilTagline');
+    const infoEngineer = document.getElementById('heroInfoEngineer');
+    const infoScope = document.getElementById('heroInfoScope');
+    const infoStudio = document.getElementById('heroInfoStudio');
 
-        <!-- Draggable Handle Orb -->
-        <div 
-          class="absolute top-1/2 w-8 h-8 rounded-full bg-[#d4af37] text-slate-950 flex items-center justify-center pointer-events-none z-20 shadow-xl border-2 border-white -translate-y-1/2 -translate-x-1/2 active:scale-110 transition-transform"
-          style="left: var(--ba-pos);"
-        >
-          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-[2.5]" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m8 9-4 3 4 3m8-6 4 3-4 3"/>
+    if (h1) h1.textContent = t.heroH1;
+    if (sub) sub.textContent = t.heroSub;
+    if (tagline) tagline.textContent = CONTENT.company.taglineTa;
+
+    if (infoEngineer) {
+      infoEngineer.innerHTML = `<strong>${t.heroInfoEngineer}</strong>`;
+    }
+    if (infoScope) infoScope.textContent = t.heroInfoScope;
+    if (infoStudio) infoStudio.textContent = t.heroInfoStudio;
+
+    updateSlideChip();
+  }
+
+  // ==========================================
+  // 4. Services Section
+  // ==========================================
+  function renderServices() {
+    const grid = document.getElementById('servicesGrid');
+    const chipsWrap = document.getElementById('serviceChipsRow');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+
+    CONTENT.services.forEach(svc => {
+      const card = document.createElement('div');
+      card.className = 'service-card';
+      const title = currentLang === 'ta' ? svc.titleTa : svc.titleEn;
+      const shortDesc = currentLang === 'ta' ? svc.shortTa : svc.shortEn;
+      const bullets = currentLang === 'ta' ? svc.bulletsTa : svc.bulletsEn;
+
+      card.innerHTML = `
+        <div class="service-icon-box">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
           </svg>
         </div>
-
-        <!-- Labels -->
-        <div class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[9.5px] font-bold tracking-wider text-amber-300 border border-amber-400/30 pointer-events-none z-10">
-          BEFORE
-        </div>
-        <div class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[9.5px] font-bold tracking-wider text-[#d4af37] border border-[#d4af37]/30 pointer-events-none z-10">
-          AFTER
-        </div>
-
-        <!-- Enlarge Button -->
-        <button 
-          type="button"
-          onclick="openWorkModal(${p.id}); event.stopPropagation();"
-          class="absolute bottom-3 right-3 z-20 w-8 h-8 rounded-lg bg-slate-900/90 hover:bg-[#d4af37] text-slate-300 hover:text-slate-950 border border-slate-700 hover:border-[#d4af37] flex items-center justify-center transition-all shadow-md"
-          title="Click to Enlarge"
-          aria-label="Enlarge ${p.title}"
-        >
-          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        <h3 class="service-title">${title}</h3>
+        <p class="service-line">${shortDesc}</p>
+        <ul class="service-bullets">
+          ${bullets.map(b => `
+            <li class="service-bullet">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>${b}</span>
+            </li>
+          `).join('')}
+        </ul>
+        <button class="service-btn" data-service="${svc.id}" aria-label="${t.knowMore} about ${title}">
+          <span>${t.knowMore}</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
-      </div>
+      `;
 
-      <!-- Card Metadata: Title, Category, Location, Area ONLY -->
-      <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-slate-900/40">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-1.5">
-            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#d4af37] font-heading">
-              ${p.categoryLabel}
-            </span>
-            <span class="text-xs text-slate-300 font-medium font-keyboard">
-              ${p.area}
-            </span>
-          </div>
+      card.querySelector('.service-btn').addEventListener('click', () => openServiceModal(svc));
+      grid.appendChild(card);
+    });
 
-          <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-[#fceda2] transition-colors line-clamp-1">
-            ${p.title}
-          </h3>
+    // Chips
+    if (chipsWrap) {
+      chipsWrap.innerHTML = CONTENT.serviceChips.map(c => `
+        <span class="service-chip">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          ${currentLang === 'ta' ? c.ta : c.en}
+        </span>
+      `).join('');
+    }
+  }
+
+  function openServiceModal(svc) {
+    if (!serviceModal) return;
+    const titleEl = document.getElementById('serviceModalTitle');
+    const bodyEl = document.getElementById('serviceModalBody');
+    const title = currentLang === 'ta' ? svc.titleTa : svc.titleEn;
+    const desc = currentLang === 'ta' ? svc.shortTa : svc.shortEn;
+    const bullets = currentLang === 'ta' ? svc.bulletsTa : svc.bulletsEn;
+
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <p style="font-size: 1rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.6;">${desc}</p>
+        <h4 style="font-size: 0.95rem; color: var(--gold-light); margin-bottom: 12px; font-weight: 700;">Scope of Work:</h4>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+          ${bullets.map(b => `
+            <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: #e2e8f0;">
+              <svg width="16" height="16" fill="none" stroke="var(--gold-primary)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink: 0; margin-top: 3px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>${b}</span>
+            </li>
+          `).join('')}
+        </ul>
+        <div style="text-align: right;">
+          <a href="https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like to consult about your service: ${title}`)}" 
+             target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 10px 20px; font-size: 0.88rem;">
+            Enquire on WhatsApp
+          </a>
         </div>
+      `;
+    }
 
-        <div class="pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-          <span class="flex items-center gap-1.5 truncate">
-            <svg class="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-              <circle cx="12" cy="10" r="3"/>
+    openModal(serviceModal);
+  }
+
+  // ==========================================
+  // 5. Packages Section
+  // ==========================================
+  function renderPackages() {
+    const grid = document.getElementById('packagesGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    const tm = CONTENT.tierMapping;
+
+    // 1. Basic Card
+    const basicCard = document.createElement('div');
+    basicCard.className = 'package-card';
+    basicCard.innerHTML = `
+      <div class="package-header">
+        <h3 class="package-name">${currentLang === 'ta' ? tm.basic.nameTa : tm.basic.name}</h3>
+        <div class="package-rate-box">
+          <span class="package-currency">₹</span>
+          <span class="package-amount">${tm.basic.rate}</span>
+          <span class="package-unit">/ sq.ft</span>
+        </div>
+        <p class="package-tagline">${currentLang === 'ta' ? tm.basic.taglineTa : tm.basic.tagline}</p>
+        <p class="package-suits">${currentLang === 'ta' ? tm.basic.suitsTa : tm.basic.suits}</p>
+      </div>
+      <ul class="package-features">
+        ${(currentLang === 'ta' ? tm.basic.highlightsTa : tm.basic.highlights).map(h => `
+          <li class="package-feature">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            <span class="truncate">${p.location}</span>
-          </span>
+            <span>${h}</span>
+          </li>
+        `).join('')}
+      </ul>
+      <div class="package-cta">
+        <a href="https://wa.me/918144166022?text=${encodeURIComponent('Hello MAK BUILD, I would like a quote for the Basic Package (₹2,200/sq.ft).')}" 
+           target="_blank" rel="noopener noreferrer" class="package-quote-btn">
+          ${t.getQuoteBtn.replace('{tier}', 'Basic')}
+        </a>
+      </div>
+    `;
+    grid.appendChild(basicCard);
 
-          <button 
-            type="button" 
-            onclick="openWorkModal(${p.id})" 
-            class="text-[#d4af37] hover:underline font-semibold flex items-center gap-1 flex-shrink-0 ml-2"
-          >
-            <span>Compare</span> &rarr;
+    // 2. Moderate Card (With Standard/Plus Switch & Highlight)
+    const modCard = document.createElement('div');
+    modCard.className = 'package-card highlight';
+    const activeMod = tm.moderate.options[moderateOption];
+    modCard.innerHTML = `
+      <span class="popular-badge">${t.mostPopular}</span>
+      <div class="package-header">
+        <h3 class="package-name">${currentLang === 'ta' ? tm.moderate.nameTa : tm.moderate.name}</h3>
+        <div class="package-rate-box">
+          <span class="package-currency">₹</span>
+          <span class="package-amount" id="modRateAmount">${activeMod.rate}</span>
+          <span class="package-unit">/ sq.ft</span>
+        </div>
+        <div class="moderate-switch-wrap" role="group" aria-label="Moderate package tier options">
+          <button class="switch-btn ${moderateOption === 'standard' ? 'active' : ''}" data-mod-option="standard">
+            ${currentLang === 'ta' ? tm.moderate.options.standard.labelTa : tm.moderate.options.standard.label} (₹2,300)
+          </button>
+          <button class="switch-btn ${moderateOption === 'plus' ? 'active' : ''}" data-mod-option="plus">
+            ${currentLang === 'ta' ? tm.moderate.options.plus.labelTa : tm.moderate.options.plus.label} (₹2,400)
           </button>
         </div>
-
+        <p class="package-tagline" id="modTagline">${currentLang === 'ta' ? activeMod.taglineTa : activeMod.tagline}</p>
+        <p class="package-suits" id="modSuits">${currentLang === 'ta' ? activeMod.suitsTa : activeMod.suits}</p>
       </div>
-
-    </article>
-  `).join("");
-
-  attachCardSliderListeners();
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function attachCardSliderListeners() {
-  const sliderBoxes = document.querySelectorAll(".work-slider-box");
-
-  sliderBoxes.forEach(box => {
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let isHorizontal = null;
-
-    function updatePos(clientX) {
-      const rect = box.getBoundingClientRect();
-      const offsetX = clientX - rect.left;
-      const pct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
-      box.style.setProperty("--ba-pos", `${pct}%`);
-      box.setAttribute("aria-valuenow", Math.round(pct));
-    }
-
-    // Pointer Events (Touch + Mouse unified)
-    box.addEventListener("pointerdown", (e) => {
-      // Don't drag if user clicked enlarge button
-      if (e.target.closest("button")) return;
-      isDragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      isHorizontal = null;
-      if (e.pointerType === "mouse") {
-        try { box.setPointerCapture(e.pointerId); } catch (_) {}
-        updatePos(e.clientX);
-      }
-    });
-
-    box.addEventListener("pointermove", (e) => {
-      if (!isDragging) return;
-      if (e.pointerType === "touch" && isHorizontal === null) {
-        const dx = Math.abs(e.clientX - startX);
-        const dy = Math.abs(e.clientY - startY);
-        if (dy > dx && dy > 8) {
-          // Vertical scroll: release to native browser scrolling
-          isDragging = false;
-          return;
-        } else if (dx > dy && dx > 8) {
-          isHorizontal = true;
-          try { box.setPointerCapture(e.pointerId); } catch (_) {}
-        } else {
-          return;
-        }
-      }
-      updatePos(e.clientX);
-    });
-
-    const stopDragging = (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      isHorizontal = null;
-      try { box.releasePointerCapture(e.pointerId); } catch (_) {}
-    };
-
-    box.addEventListener("pointerup", stopDragging);
-    box.addEventListener("pointercancel", stopDragging);
-
-    // Keyboard Accessibility
-    box.addEventListener("keydown", (e) => {
-      let current = parseFloat(box.style.getPropertyValue("--ba-pos")) || 50;
-      if (e.key === "ArrowLeft") {
-        current = Math.max(0, current - 5);
-        box.style.setProperty("--ba-pos", `${current}%`);
-        box.setAttribute("aria-valuenow", Math.round(current));
-        e.preventDefault();
-      } else if (e.key === "ArrowRight") {
-        current = Math.min(100, current + 5);
-        box.style.setProperty("--ba-pos", `${current}%`);
-        box.setAttribute("aria-valuenow", Math.round(current));
-        e.preventDefault();
-      } else if (e.key === "Home") {
-        box.style.setProperty("--ba-pos", "0%");
-        box.setAttribute("aria-valuenow", 0);
-        e.preventDefault();
-      } else if (e.key === "End") {
-        box.style.setProperty("--ba-pos", "100%");
-        box.setAttribute("aria-valuenow", 100);
-        e.preventDefault();
-      }
-    });
-  });
-}
-
-// ----------------------------------------------------
-// 5. CLICK TO ENLARGE BEFORE/AFTER MODAL
-// ----------------------------------------------------
-let activeModalProject = null;
-
-function openWorkModal(projectId) {
-  const p = ALL_PROJECTS.find(item => item.id === projectId);
-  if (!p) return;
-  activeModalProject = p;
-
-  const modal = document.getElementById("work-modal");
-  const modalContent = document.getElementById("work-modal-content");
-  if (!modal || !modalContent) return;
-
-  modalContent.innerHTML = `
-    <div class="relative flex flex-col bg-slate-900 border border-[#d4af37]/40 rounded-2xl overflow-hidden shadow-2xl max-w-4xl w-[calc(100vw-28px)] max-h-[92vh] my-auto">
-      
-      <!-- Modal Header -->
-      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-4 bg-slate-950/80">
-        <div>
-          <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4af37] font-heading">
-            ${p.categoryLabel} &bull; ${p.area}
-          </span>
-          <h3 class="text-base sm:text-xl font-bold text-white mt-0.5">
-            ${p.title}
-          </h3>
-          <p class="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-            <svg class="w-3.5 h-3.5 text-[#d4af37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-              <circle cx="12" cy="10" r="3"/>
+      <ul class="package-features" id="modFeatures">
+        ${(currentLang === 'ta' ? activeMod.highlightsTa : activeMod.highlights).map(h => `
+          <li class="package-feature">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            <span>${p.location}</span>
-          </p>
-        </div>
-
-        <button 
-          type="button" 
-          onclick="closeWorkModal()" 
-          class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
-          aria-label="Close modal"
-        >
-          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6 6 18M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Large Interactive Comparison Canvas -->
-      <div class="p-3 sm:p-5 overflow-y-auto">
-        <div 
-          id="modal-slider-box" 
-          class="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-xl overflow-hidden bg-slate-950 cursor-ew-resize select-none border border-slate-800 shadow-xl"
-          tabindex="0"
-          role="slider"
-          aria-label="Comparison slider"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="50"
-          style="--ba-pos: 50%;"
-        >
-          <!-- AFTER Image -->
-          <img 
-            src="${p.afterImg}" 
-            alt="${p.id === 2 ? 'Modern contemporary villa designed and built by MAK BUILD' : 'After: ' + p.title}" 
-            class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-            width="1200"
-            height="675"
-          />
-
-          <!-- BEFORE Image (Clipped) -->
-          <div 
-            class="absolute inset-0 overflow-hidden pointer-events-none"
-            style="clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%); -webkit-clip-path: polygon(0 0, var(--ba-pos) 0, var(--ba-pos) 100%, 0 100%);"
-          >
-            <img 
-              src="${p.beforeImg}" 
-              alt="Before: ${p.title}" 
-              class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-              width="1200"
-              height="675"
-            />
-          </div>
-
-          <!-- Divider Line -->
-          <div 
-            class="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#fceda2] via-[#d4af37] to-[#aa820a] pointer-events-none z-10 shadow-[0_0_12px_rgba(212,175,55,0.85)]"
-            style="left: var(--ba-pos); transform: translateX(-50%);"
-          ></div>
-
-          <!-- Handle Orb -->
-          <div 
-            class="absolute top-1/2 w-10 h-10 rounded-full bg-[#d4af37] text-slate-950 flex items-center justify-center pointer-events-none z-20 shadow-2xl border-2 border-white -translate-y-1/2 -translate-x-1/2 active:scale-110"
-            style="left: var(--ba-pos);"
-          >
-            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-[2.5]" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m8 9-4 3 4 3m8-6 4 3-4 3"/>
-            </svg>
-          </div>
-
-          <!-- Stage Badges -->
-          <div class="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold tracking-wider text-amber-300 border border-amber-400/40 pointer-events-none z-10">
-            BEFORE: ${p.beforeLabel}
-          </div>
-          <div class="absolute top-3 right-3 bg-slate-950/85 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold tracking-wider text-[#d4af37] border border-[#d4af37]/40 pointer-events-none z-10">
-            AFTER: ${p.afterLabel}
-          </div>
-        </div>
-
-        <!-- Presets & Interaction Bar -->
-        <div class="mt-3 flex flex-wrap items-center justify-between gap-2.5 text-xs">
-          <div class="flex items-center gap-2">
-            <span class="text-slate-400 font-medium hidden sm:inline">Reveal:</span>
-            <button type="button" onclick="setModalBaPos(100)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700">100% Before</button>
-            <button type="button" onclick="setModalBaPos(50)" class="px-3 py-1.5 rounded-lg bg-[#d4af37]/20 text-[#fceda2] font-semibold border border-[#d4af37]/40">50/50 Split</button>
-            <button type="button" onclick="setModalBaPos(0)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700">100% After</button>
-          </div>
-
-          <span class="text-slate-400 text-[11px] flex items-center gap-1">
-            <span>Drag slider or swipe on touch screens</span>
-          </span>
-        </div>
-
-        <!-- Specs Line -->
-        <div class="mt-4 p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-300 leading-relaxed font-light">
-          <strong class="text-[#d4af37] font-semibold">Materials &amp; Engineering:</strong> ${p.specs}
-        </div>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="p-4 sm:p-5 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
-        <a 
-          href="https://wa.me/91${COMPANY_WHATSAPP}?text=Hi%20MAK%20BUILD%2C%20I%20saw%20your%20project%20${encodeURIComponent(p.title)}%20and%20would%20like%20to%20discuss%20a%20similar%20project." 
-          target="_blank"
-          class="w-full sm:w-auto bg-[#d4af37] hover:bg-[#f0c946] text-slate-950 font-bold px-6 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg transition-all"
-        >
-          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          <span>Discuss This Project on WhatsApp</span>
+            <span>${h}</span>
+          </li>
+        `).join('')}
+      </ul>
+      <div class="package-cta">
+        <a id="modQuoteBtn" href="https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like a quote for the Moderate ${activeMod.label} Package (₹${activeMod.rate}/sq.ft).`)}" 
+           target="_blank" rel="noopener noreferrer" class="package-quote-btn">
+          ${t.getQuoteBtn.replace('{tier}', `Moderate ${activeMod.label}`)}
         </a>
-
-        <button 
-          type="button" 
-          onclick="closeWorkModal()" 
-          class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-xs font-medium transition-colors"
-        >
-          Close
-        </button>
       </div>
+    `;
 
-    </div>
-  `;
+    // Wire up moderate switch
+    modCard.querySelectorAll('[data-mod-option]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        moderateOption = e.target.getAttribute('data-mod-option');
+        renderPackages();
+      });
+    });
 
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  document.body.style.overflow = "hidden";
+    grid.appendChild(modCard);
 
-  // Attach drag listeners to modal slider
-  const modalBox = document.getElementById("modal-slider-box");
-  if (modalBox) {
-    let isDraggingModal = false;
-    let startModalX = 0;
-    let startModalY = 0;
-    let isModalHorizontal = null;
+    // 3. Premium Card
+    const premCard = document.createElement('div');
+    premCard.className = 'package-card';
+    premCard.innerHTML = `
+      <div class="package-header">
+        <h3 class="package-name">${currentLang === 'ta' ? tm.premium.nameTa : tm.premium.name}</h3>
+        <div class="package-rate-box">
+          <span class="package-currency">₹</span>
+          <span class="package-amount">${tm.premium.rate}</span>
+          <span class="package-unit">/ sq.ft</span>
+        </div>
+        <p class="package-tagline">${currentLang === 'ta' ? tm.premium.taglineTa : tm.premium.tagline}</p>
+        <p class="package-suits">${currentLang === 'ta' ? tm.premium.suitsTa : tm.premium.suits}</p>
+      </div>
+      <ul class="package-features">
+        ${(currentLang === 'ta' ? tm.premium.highlightsTa : tm.premium.highlights).map(h => `
+          <li class="package-feature">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>${h}</span>
+          </li>
+        `).join('')}
+      </ul>
+      <div class="package-cta">
+        <a href="https://wa.me/918144166022?text=${encodeURIComponent('Hello MAK BUILD, I would like a quote for the Premium Package with Soil Test (₹2,500/sq.ft).')}" 
+           target="_blank" rel="noopener noreferrer" class="package-quote-btn">
+          ${t.getQuoteBtn.replace('{tier}', 'Premium')}
+        </a>
+      </div>
+    `;
+    grid.appendChild(premCard);
 
-    function updateModal(clientX) {
-      const rect = modalBox.getBoundingClientRect();
-      const offsetX = clientX - rect.left;
-      const pct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
-      modalBox.style.setProperty("--ba-pos", `${pct}%`);
-      modalBox.setAttribute("aria-valuenow", Math.round(pct));
+    // Wire compare specification button
+    const compareBtn = document.getElementById('openCompareModalBtn');
+    if (compareBtn) {
+      compareBtn.onclick = openCompareModal;
+    }
+  }
+
+  // ==========================================
+  // 6. 2026 Specification Compare Modal
+  // ==========================================
+  function openCompareModal() {
+    if (!compareModal) return;
+    const bodyEl = document.getElementById('compareModalBody');
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+
+    let html = `
+      <div class="spec-table-scroll">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>${t.tableColSpec}</th>
+              <th>${t.tableColA}</th>
+              <th>${t.tableColB}</th>
+              <th>${t.tableColC}</th>
+              <th style="background: rgba(212, 175, 55, 0.15); color: var(--gold-light);">${t.tableColD}</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    CONTENT.spec2026.forEach(group => {
+      const groupTitle = currentLang === 'ta' ? group.groupTa : group.group;
+      html += `
+        <tr class="spec-group-row">
+          <td colspan="5">${groupTitle}</td>
+        </tr>
+      `;
+
+      group.items.forEach(item => {
+        const itemName = currentLang === 'ta' ? item.nameTa : item.name;
+        const isDiff = item.diffPremium ? 'spec-row-diff' : '';
+        html += `
+          <tr class="${isDiff}">
+            <td><strong>${item.no}. ${itemName}</strong></td>
+            <td>${item.a}</td>
+            <td>${item.b}</td>
+            <td>${item.c}</td>
+            <td><strong>${item.d}</strong></td>
+          </tr>
+        `;
+      });
+    });
+
+    html += `
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 16px; text-align: right;">
+        * Rows highlighted in gold indicate advanced architectural specifications included in the Premium Tier.
+      </p>
+    `;
+
+    bodyEl.innerHTML = html;
+    openModal(compareModal);
+  }
+
+  // ==========================================
+  // 7. Projects & Showcase Section
+  // ==========================================
+  async function loadProjects() {
+    try {
+      const res = await fetch('projects.json');
+      if (res.ok) {
+        allProjects = await res.json();
+      }
+    } catch (e) {
+      console.warn('Could not fetch projects.json, fallback to static defaults');
+    }
+    renderProjectsTabs();
+    renderProjects();
+  }
+
+  function renderProjectsTabs() {
+    const tabsWrap = document.getElementById('projectsTabs');
+    if (!tabsWrap) return;
+    tabsWrap.innerHTML = '';
+
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    const categories = [
+      { id: 'all', label: t.tabAll },
+      { id: 'Villas', label: t.tabVillas },
+      { id: 'Commercial & PEB', label: t.tabCommercial },
+      { id: 'Interiors', label: t.tabInteriors },
+      { id: '3D Designs', label: t.tabDesigns }
+    ];
+
+    // Filter out categories that have zero projects
+    const available = categories.filter(cat => {
+      if (cat.id === 'all') return true;
+      return allProjects.some(p => p.category === cat.id);
+    });
+
+    available.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = `project-tab-btn ${currentTab === cat.id ? 'active' : ''}`;
+      btn.textContent = cat.label;
+      btn.addEventListener('click', () => {
+        currentTab = cat.id;
+        renderProjectsTabs();
+        renderProjects();
+      });
+      tabsWrap.appendChild(btn);
+    });
+  }
+
+  function renderProjects() {
+    const grid = document.getElementById('projectsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    const filtered = currentTab === 'all' 
+      ? allProjects 
+      : allProjects.filter(p => p.category === currentTab);
+
+    filtered.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+
+      const title = currentLang === 'ta' && proj.titleTa ? proj.titleTa : proj.title;
+      const desc = currentLang === 'ta' && proj.descriptionTa ? proj.descriptionTa : proj.description;
+
+      let mediaHtml = '';
+      if (proj.hasBeforeAfter && proj.beforeImg && proj.afterImg) {
+        // Before/After Draggable Slider
+        mediaHtml = `
+          <div class="ba-container" data-ba-id="${proj.id}">
+            <div class="ba-before-layer">
+              <img class="ba-img" src="${proj.beforeImg}" alt="${proj.beforeLabel || 'Before'}" loading="lazy" width="640" height="400">
+              <span class="ba-badge before">${proj.beforeLabel || 'BEFORE'}</span>
+            </div>
+            <div class="ba-after-layer">
+              <img class="ba-img" src="${proj.afterImg}" alt="${proj.afterLabel || 'After'}" loading="lazy" width="640" height="400">
+              <span class="ba-badge after">${proj.afterLabel || 'AFTER'}</span>
+            </div>
+            <div class="ba-handle">
+              <div class="ba-handle-btn">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Single Cover Image with Lightbox
+        const isBlurBrand = proj.blurBrand && !proj.clientPermission;
+        const isBlurName = proj.blurNameplate && !proj.clientPermission;
+        const blurClass = isBlurBrand ? 'blur-brand' : '';
+        mediaHtml = `
+          <img class="project-cover-img ${blurClass}" 
+               src="${proj.coverThumb || proj.cover}" 
+               alt="${title}" 
+               loading="lazy" 
+               width="${proj.coverWidth || 640}" 
+               height="${proj.coverHeight || 400}">
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="project-media-wrap">
+          ${mediaHtml}
+        </div>
+        <div class="project-details">
+          <div class="project-meta-row">
+            ${proj.badge ? `<span class="project-badge">${proj.badge}</span>` : ''}
+            ${proj.location ? `<span class="project-location">${proj.location}</span>` : ''}
+            ${proj.area ? `<span class="project-location">• ${proj.area}</span>` : ''}
+          </div>
+          <h3 class="project-title">${title}</h3>
+          <p class="project-desc">${desc}</p>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto;">
+            <button class="service-btn view-proj-btn" data-img="${proj.cover}">
+              <span>${t.viewProject}</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+            <a href="https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like more information on the project: ${title}`)}" 
+               target="_blank" rel="noopener noreferrer" style="color: var(--gold-primary); font-size: 0.8rem; font-weight: 600;">
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+
+      // Lightbox click
+      const viewBtn = card.querySelector('.view-proj-btn');
+      if (viewBtn) {
+        viewBtn.addEventListener('click', () => openLightbox(proj.cover, title));
+      }
+
+      // Initialize draggable slider if present
+      const baContainer = card.querySelector('.ba-container');
+      if (baContainer) {
+        initBaSlider(baContainer);
+      }
+
+      grid.appendChild(card);
+    });
+  }
+
+  function initBaSlider(container) {
+    const afterLayer = container.querySelector('.ba-after-layer');
+    const handle = container.querySelector('.ba-handle');
+    let isDragging = false;
+
+    function setPosition(xPercent) {
+      const clamped = Math.max(0, Math.min(100, xPercent));
+      afterLayer.style.width = `${clamped}%`;
+      handle.style.left = `${clamped}%`;
     }
 
-    modalBox.addEventListener("pointerdown", (e) => {
-      isDraggingModal = true;
-      startModalX = e.clientX;
-      startModalY = e.clientY;
-      isModalHorizontal = null;
-      if (e.pointerType === "mouse") {
-        try { modalBox.setPointerCapture(e.pointerId); } catch (_) {}
-        updateModal(e.clientX);
+    function onMove(e) {
+      if (!isDragging) return;
+      const rect = container.getBoundingClientRect();
+      const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+      const xPercent = ((pageX - rect.left) / rect.width) * 100;
+      setPosition(xPercent);
+    }
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      onMove(e);
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    window.addEventListener('mousemove', onMove);
+
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      onMove(e);
+    }, { passive: true });
+    window.addEventListener('touchend', () => { isDragging = false; });
+    window.addEventListener('touchmove', onMove, { passive: true });
+
+    // Keyboard accessibility
+    container.setAttribute('tabindex', '0');
+    container.setAttribute('role', 'slider');
+    container.setAttribute('aria-label', 'Before and after comparison slider');
+    container.setAttribute('aria-valuenow', '50');
+    container.addEventListener('keydown', (e) => {
+      let currentVal = parseFloat(afterLayer.style.width) || 50;
+      if (e.key === 'ArrowLeft') {
+        setPosition(currentVal - 5);
+        e.preventDefault();
+      } else if (e.key === 'ArrowRight') {
+        setPosition(currentVal + 5);
+        e.preventDefault();
       }
     });
 
-    modalBox.addEventListener("pointermove", (e) => {
-      if (!isDraggingModal) return;
-      if (e.pointerType === "touch" && isModalHorizontal === null) {
-        const dx = Math.abs(e.clientX - startModalX);
-        const dy = Math.abs(e.clientY - startModalY);
-        if (dy > dx && dy > 8) {
-          isDraggingModal = false;
-          return;
-        } else if (dx > dy && dx > 8) {
-          isModalHorizontal = true;
-          try { modalBox.setPointerCapture(e.pointerId); } catch (_) {}
-        } else {
-          return;
+    setPosition(50);
+  }
+
+  // ==========================================
+  // 8. Quick Cost Estimator Engine
+  // ==========================================
+  let estState = {
+    scope: 'residential',
+    area: 1200,
+    pkg: 'moderate-standard', // basic, moderate-standard, moderate-plus, premium
+    addons: []
+  };
+
+  function initEstimator() {
+    const scopeBtns = document.querySelectorAll('[data-est-scope]');
+    const areaRange = document.getElementById('estAreaRange');
+    const areaInput = document.getElementById('estAreaInput');
+    const pkgBtns = document.querySelectorAll('[data-est-pkg]');
+    const addonsList = document.getElementById('estAddonsList');
+
+    // Scope selection
+    scopeBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        estState.scope = e.currentTarget.getAttribute('data-est-scope');
+        scopeBtns.forEach(b => b.classList.toggle('active', b === e.currentTarget));
+        updateEstimator();
+      });
+    });
+
+    // Area range slider & field sync
+    if (areaRange && areaInput) {
+      areaRange.addEventListener('input', (e) => {
+        estState.area = parseInt(e.target.value, 10);
+        areaInput.value = estState.area;
+        updateEstimator();
+      });
+      areaInput.addEventListener('input', (e) => {
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val)) val = 300;
+        val = Math.max(300, Math.min(50000, val));
+        estState.area = val;
+        areaRange.value = val;
+        updateEstimator();
+      });
+    }
+
+    // Package selection
+    pkgBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        estState.pkg = e.currentTarget.getAttribute('data-est-pkg');
+        pkgBtns.forEach(b => b.classList.toggle('active', b === e.currentTarget));
+        updateEstimator();
+      });
+    });
+
+    // Addons
+    if (addonsList) {
+      addonsList.innerHTML = '';
+      CONTENT.estimator.addOns.forEach(addon => {
+        const item = document.createElement('label');
+        item.className = 'addon-chip';
+        item.innerHTML = `
+          <div class="addon-chip-left">
+            <input type="checkbox" class="addon-checkbox" value="${addon.id}">
+            <span>${currentLang === 'ta' ? addon.labelTa : addon.labelEn}</span>
+          </div>
+          <span class="addon-price">+₹${(addon.cost / 100000).toFixed(2)} L</span>
+        `;
+        const chk = item.querySelector('input');
+        chk.addEventListener('change', () => {
+          if (chk.checked) estState.addons.push(addon.id);
+          else estState.addons = estState.addons.filter(id => id !== addon.id);
+          item.classList.toggle('active', chk.checked);
+          updateEstimator();
+        });
+        addonsList.appendChild(item);
+      });
+    }
+
+    updateEstimator();
+  }
+
+  function updateEstimator() {
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    const amountEl = document.getElementById('estResultAmount');
+    const noteEl = document.getElementById('estResultNote');
+    const whatsappBtn = document.getElementById('estWhatsAppBtn');
+    const pkgGroup = document.getElementById('estPkgGroup');
+
+    if (!amountEl || !whatsappBtn) return;
+
+    // Check scope rate rules
+    const currentScope = CONTENT.estimator.scopes.find(s => s.id === estState.scope);
+    if (!currentScope.hasRates) {
+      // Commercial or Interiors has NO rates yet (TODO_OWNER)
+      amountEl.textContent = "—";
+      amountEl.style.fontSize = "1.5rem";
+      noteEl.textContent = t.estEmptyRateNotice;
+      if (pkgGroup) pkgGroup.style.opacity = '0.4';
+
+      const scopeName = currentLang === 'ta' ? currentScope.nameTa : currentScope.nameEn;
+      const msg = `Hello MAK BUILD, I would like an estimate for ${scopeName} with approximately ${estState.area} sq.ft built-up area.`;
+      whatsappBtn.href = `https://wa.me/918144166022?text=${encodeURIComponent(msg)}`;
+      whatsappBtn.textContent = t.estWhatsAppBtn;
+      return;
+    }
+
+    if (pkgGroup) pkgGroup.style.opacity = '1';
+    amountEl.style.fontSize = "";
+
+    // Determine square foot rate from package
+    let rate = 2300;
+    let pkgLabel = "Moderate (Standard)";
+    if (estState.pkg === 'basic') {
+      rate = 2200;
+      pkgLabel = "Basic";
+    } else if (estState.pkg === 'moderate-standard') {
+      rate = 2300;
+      pkgLabel = "Moderate (Standard)";
+    } else if (estState.pkg === 'moderate-plus') {
+      rate = 2400;
+      pkgLabel = "Moderate (Plus)";
+    } else if (estState.pkg === 'premium') {
+      rate = 2500;
+      pkgLabel = "Premium";
+    }
+
+    // Addons cost
+    let addonsTotal = 0;
+    let selectedAddonNames = [];
+    estState.addons.forEach(id => {
+      const a = CONTENT.estimator.addOns.find(item => item.id === id);
+      if (a) {
+        addonsTotal += a.cost;
+        selectedAddonNames.push(currentLang === 'ta' ? a.labelTa : a.labelEn);
+      }
+    });
+
+    const baseCost = (estState.area * rate) + addonsTotal;
+    const lowCost = Math.round(baseCost * 0.95);
+    const highCost = Math.round(baseCost * 1.05);
+
+    function formatLakhs(amt) {
+      const l = amt / 100000;
+      return `₹${l.toFixed(2)} Lakhs`;
+    }
+
+    amountEl.textContent = `${formatLakhs(lowCost)} – ${formatLakhs(highCost)}`;
+    noteEl.textContent = t.estIndicativeNote;
+
+    // WhatsApp Message
+    const scopeName = currentLang === 'ta' ? currentScope.nameTa : currentScope.nameEn;
+    const msg = `Hello MAK BUILD,\nI used your Quick Estimator for:\n- Project: ${scopeName}\n- Area: ${estState.area} sq.ft\n- Package: ${pkgLabel} (₹${rate}/sq.ft)\n- Add-ons: ${selectedAddonNames.join(', ') || 'None'}\n- Indicative Estimate: ${formatLakhs(lowCost)} to ${formatLakhs(highCost)}\n\nPlease schedule a free site visit to verify the estimate.`;
+    whatsappBtn.href = `https://wa.me/918144166022?text=${encodeURIComponent(msg)}`;
+    whatsappBtn.textContent = t.estWhatsAppBtn;
+  }
+
+  // ==========================================
+  // 9. Process Section
+  // ==========================================
+  function renderProcess() {
+    const grid = document.getElementById('processStepsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    CONTENT.processSteps.forEach(step => {
+      const card = document.createElement('div');
+      card.className = 'process-step-card';
+      card.innerHTML = `
+        <div class="step-num">${step.no}</div>
+        <h3 class="step-title">${currentLang === 'ta' ? step.titleTa : step.titleEn}</h3>
+        <p class="step-desc">${currentLang === 'ta' ? step.descTa : step.descEn}</p>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // ==========================================
+  // 10. About & Contact Information
+  // ==========================================
+  function renderAboutAndContact() {
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+
+    const aboutIntro1 = document.getElementById('aboutIntro1');
+    const aboutIntro2 = document.getElementById('aboutIntro2');
+    const aboutTitle = document.getElementById('aboutEngineerTitle');
+    if (aboutIntro1) aboutIntro1.textContent = t.aboutIntro1;
+    if (aboutIntro2) aboutIntro2.textContent = t.aboutIntro2;
+    if (aboutTitle) {
+      aboutTitle.textContent = currentLang === 'ta' ? CONTENT.company.engineerRoleTa : CONTENT.company.engineerRole;
+    }
+
+    // Studio Address
+    const contactAddress = document.getElementById('contactAddress');
+    if (contactAddress) {
+      contactAddress.textContent = currentLang === 'ta' ? CONTENT.company.address.fullTa : CONTENT.company.address.full;
+    }
+  }
+
+  function initContactForm() {
+    const form = document.getElementById('enquiryForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Check honeypot
+      const hp = form.querySelector('.form-hp');
+      if (hp && hp.value) return;
+
+      const name = form.querySelector('[name="name"]').value.trim();
+      const phone = form.querySelector('[name="phone"]').value.trim();
+      const location = form.querySelector('[name="location"]').value.trim();
+      const projectType = form.querySelector('[name="projectType"]').value;
+      const message = form.querySelector('[name="message"]').value.trim();
+
+      if (!name || !phone) {
+        alert('Please provide your name and phone number.');
+        return;
+      }
+
+      const submitBtn = form.querySelector('.form-submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+
+      const accessKey = CONTENT.company.web3FormsKey;
+      let sentSuccessfully = false;
+
+      if (accessKey && accessKey !== 'TODO_OWNER') {
+        try {
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ access_key: accessKey, name, phone, location, projectType, message })
+          });
+          const json = await res.json();
+          if (json.success) sentSuccessfully = true;
+        } catch (err) {
+          console.warn('Direct form submission error, falling back to WhatsApp');
         }
       }
-      updateModal(e.clientX);
-    });
 
-    const stopModalDrag = (e) => {
-      if (!isDraggingModal) return;
-      isDraggingModal = false;
-      isModalHorizontal = null;
-      try { modalBox.releasePointerCapture(e.pointerId); } catch (_) {}
-    };
-
-    modalBox.addEventListener("pointerup", stopModalDrag);
-    modalBox.addEventListener("pointercancel", stopModalDrag);
-
-    // Keyboard support in modal
-    modalBox.addEventListener("keydown", (e) => {
-      let current = parseFloat(modalBox.style.getPropertyValue("--ba-pos")) || 50;
-      if (e.key === "ArrowLeft") {
-        setModalBaPos(Math.max(0, current - 5));
-        e.preventDefault();
-      } else if (e.key === "ArrowRight") {
-        setModalBaPos(Math.min(100, current + 5));
-        e.preventDefault();
-      }
-    });
-  }
-}
-
-function setModalBaPos(percentage) {
-  const modalBox = document.getElementById("modal-slider-box");
-  if (!modalBox) return;
-  const clamped = Math.max(0, Math.min(100, percentage));
-  modalBox.style.setProperty("--ba-pos", `${clamped}%`);
-  modalBox.setAttribute("aria-valuenow", Math.round(clamped));
-}
-
-function closeWorkModal() {
-  const modal = document.getElementById("work-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-  document.body.style.overflow = "";
-}
-
-// ----------------------------------------------------
-// 6. INITIALIZATION & EVENT BINDINGS
-// ----------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  // Render initial work grid (all projects)
-  renderWorkGrid("all");
-
-  // Category filter buttons
-  const filterBtns = document.querySelectorAll("[data-work-filter]");
-  filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach(b => {
-        b.classList.remove("bg-[#d4af37]", "text-slate-950", "font-bold", "shadow-md");
-        b.classList.add("bg-slate-800", "text-slate-300");
-        b.setAttribute("aria-selected", "false");
-      });
-      btn.classList.add("bg-[#d4af37]", "text-slate-950", "font-bold", "shadow-md");
-      btn.classList.remove("bg-slate-800", "text-slate-300");
-      btn.setAttribute("aria-selected", "true");
-
-      const filter = btn.dataset.workFilter;
-      renderWorkGrid(filter);
-    });
-  });
-
-  // Modal backdrop click
-  const modal = document.getElementById("work-modal");
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeWorkModal();
-    });
-  }
-
-  // Escape key closes modal
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeWorkModal();
-  });
-
-  // Estimator Area Controls (Slider + Direct Input)
-  const areaSlider = document.getElementById("est-area-slider");
-  const areaInput = document.getElementById("est-area-input");
-
-  if (areaSlider) {
-    areaSlider.addEventListener("input", (e) => {
-      const val = parseInt(e.target.value, 10);
-      estimatorState.area = val;
-      if (areaInput) areaInput.value = val;
-      calculateCost();
-    });
-  }
-
-  if (areaInput) {
-    // Live update on input without locking keyboard backspace
-    areaInput.addEventListener("input", (e) => {
-      const raw = e.target.value.trim();
-      if (!raw) return;
-      const val = parseInt(raw, 10);
-      if (!isNaN(val) && val >= 300 && val <= 50000) {
-        estimatorState.area = val;
-        if (areaSlider) areaSlider.value = Math.min(10000, val);
-        calculateCost();
-      }
-    });
-
-    const clampAndCalculate = () => {
-      let val = parseInt(areaInput.value, 10);
-      if (isNaN(val) || val < 300) val = 300;
-      if (val > 50000) val = 50000;
-      estimatorState.area = val;
-      areaInput.value = val;
-      if (areaSlider) areaSlider.value = Math.min(10000, val);
-      calculateCost();
-    };
-
-    areaInput.addEventListener("blur", clampAndCalculate);
-    areaInput.addEventListener("change", clampAndCalculate);
-  }
-
-  // Estimator Scope Select
-  const scopeSelect = document.getElementById("est-scope-select");
-  if (scopeSelect) {
-    scopeSelect.addEventListener("change", (e) => {
-      estimatorState.projectType = e.target.value;
-      calculateCost();
-    });
-  }
-
-  // Estimator Package Tier Buttons
-  const pkgButtons = document.querySelectorAll("[data-est-pkg]");
-  pkgButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      pkgButtons.forEach(b => {
-        b.classList.remove("border-[#d4af37]", "bg-[#d4af37]/10", "text-[#d4af37]");
-        b.classList.add("border-slate-800", "bg-slate-900/60", "text-slate-300");
-      });
-      btn.classList.add("border-[#d4af37]", "bg-[#d4af37]/10", "text-[#d4af37]");
-      btn.classList.remove("border-slate-800", "bg-slate-900/60", "text-slate-300");
-      estimatorState.packageType = btn.dataset.estPkg;
-      calculateCost();
-    });
-  });
-
-  // Estimator Add-on Checkboxes
-  const addonCheckboxes = document.querySelectorAll("[data-est-addon]");
-  addonCheckboxes.forEach(cb => {
-    cb.addEventListener("change", (e) => {
-      const key = e.target.dataset.estAddon;
-      estimatorState.addons[key] = e.target.checked;
-      calculateCost();
-    });
-  });
-
-  // WhatsApp Quote Button
-  const waQuoteBtn = document.getElementById("est-whatsapp-btn");
-  if (waQuoteBtn) {
-    waQuoteBtn.addEventListener("click", sendEstimateToWhatsApp);
-  }
-
-  // Initial Calculation
-  calculateCost();
-
-  // Contact Form Submission
-  const contactForm = document.getElementById("contact-form");
-  if (contactForm) {
-    contactForm.addEventListener("submit", handleContactSubmit);
-  }
-
-  // Accessible Mobile Menu Toggle
-  const mobileToggle = document.getElementById("mobile-menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-  if (mobileToggle && mobileMenu) {
-    const closeMobileMenu = () => {
-      mobileMenu.style.display = "none";
-      mobileMenu.classList.add("hidden");
-      mobileToggle.setAttribute("aria-expanded", "false");
-    };
-
-    const openMobileMenu = () => {
-      mobileMenu.style.display = "block";
-      mobileMenu.classList.remove("hidden");
-      mobileToggle.setAttribute("aria-expanded", "true");
-    };
-
-    mobileToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isClosed = mobileMenu.style.display === "none" || mobileMenu.classList.contains("hidden");
-      if (isClosed) {
-        openMobileMenu();
+      if (sentSuccessfully) {
+        alert('Thank you! Your enquiry has been sent. We will contact you shortly.');
+        form.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       } else {
-        closeMobileMenu();
+        // WhatsApp fallback
+        const waMsg = `Hello MAK BUILD,\nNew Website Enquiry:\n- Name: ${name}\n- Phone: ${phone}\n- Location: ${location || 'Not specified'}\n- Project Type: ${projectType}\n- Message: ${message || 'No additional message'}`;
+        window.open(`https://wa.me/918144166022?text=${encodeURIComponent(waMsg)}`, '_blank');
+        form.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       }
-    });
-
-    mobileMenu.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", closeMobileMenu);
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!mobileMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
-        closeMobileMenu();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMobileMenu();
     });
   }
 
-  // Lucide icons trigger
-  if (window.lucide) window.lucide.createIcons();
-});
+  // ==========================================
+  // 11. Modals & Lightbox Engine
+  // ==========================================
+  let lastActiveElement = null;
 
-// Global exports
-window.openWorkModal = openWorkModal;
-window.closeWorkModal = closeWorkModal;
-window.setModalBaPos = setModalBaPos;
-window.sendEstimateToWhatsApp = sendEstimateToWhatsApp;
-window.renderWorkGrid = renderWorkGrid;
+  function openModal(modal) {
+    if (!modal) return;
+    lastActiveElement = document.activeElement;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length) focusable[0].focus();
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastActiveElement) lastActiveElement.focus();
+  }
+
+  function initModals() {
+    [compareModal, serviceModal, lightboxModal].forEach(modal => {
+      if (!modal) return;
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.closest('.modal-close-btn') || e.target.closest('.lightbox-close')) {
+          closeModal(modal);
+        }
+      });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal(compareModal);
+        closeModal(serviceModal);
+        closeModal(lightboxModal);
+      }
+    });
+  }
+
+  function openLightbox(src, alt) {
+    if (!lightboxModal) return;
+    const img = document.getElementById('lightboxImg');
+    if (img) {
+      img.src = src;
+      img.alt = alt || 'MAK BUILD Project Showcase';
+    }
+    openModal(lightboxModal);
+  }
+
+  // ==========================================
+  // 12. Single Shared IntersectionObserver
+  // ==========================================
+  function initScrollReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal-init').forEach(el => el.classList.add('reveal-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.reveal-init').forEach(el => observer.observe(el));
+  }
+
+  // ==========================================
+  // 13. Application Initialization
+  // ==========================================
+  document.addEventListener('DOMContentLoaded', () => {
+    initHeader();
+    initHeroSlider();
+    initModals();
+    setLanguage(currentLang);
+    loadProjects();
+    initEstimator();
+    initContactForm();
+    initScrollReveal();
+  });
+
+})();
