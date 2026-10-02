@@ -1,22 +1,27 @@
 {
   "name": "mak-build-modified",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "MAK BUILD — Construction, Pre-Engineered Buildings & Architectural Systems",
+  "description": "MAK BUILD — Construction & Design in Sirkazhi, Tamil Nadu",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/restore-dev.js && vite",
+    "build": "node scripts/restore-dev.js && vite build && node scripts/sync-gh-pages.js",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.11.17",
-    "lucide-react": "^0.454.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.5.4",
-    "three": "^0.128.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@types/three": "^0.128.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "puppeteer-core": "^24.43.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "vite": "^6.4.3"
   }
 }
