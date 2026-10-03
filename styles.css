@@ -17,8 +17,8 @@
   --text-2: #DCE4EE;
   --text-muted: #B4C0D0;
 
-  /* Aliases for full site backwards compatibility */
-  --bg-base: var(--bg);
+  /* Aliases for full site backwards compatibility & shader visibility (Rule 15, 16) */
+  --bg-base: rgba(7, 17, 31, 0.35);
   --bg-surface: var(--surface);
   --bg-card: var(--surface);
   --bg-glass: rgba(15, 26, 46, 0.85);
@@ -60,7 +60,7 @@
 
 html {
   font-family: var(--font-sans);
-  background-color: var(--bg-base);
+  background-color: #07111F;
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -74,11 +74,32 @@ html[lang="ta"] {
 }
 
 body {
-  background-color: var(--bg-base);
+  background-color: transparent;
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+}
+
+/* Animated Architectural Nebula Background Shader (Rule 17, 18, 25) */
+.mak-bg-shader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: #07111F;
+}
+
+.mak-bg-shader--fallback {
+  background: radial-gradient(circle at 50% 30%, #0B1F36 0%, #07111F 100%);
+}
+
+/* Ensure foreground sections sit cleanly above the background shader */
+.section-contained, .trust-strip, .hero-section, footer, main {
+  position: relative;
+  z-index: 1;
 }
 
 /* Optimize below-the-fold layout computation */

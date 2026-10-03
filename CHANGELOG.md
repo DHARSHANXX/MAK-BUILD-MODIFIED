@@ -333,6 +333,49 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
   - **0 horizontal scroll / overflow**
   - **100% test assertions satisfied** in `tools/test-suite.cjs`.
 
+---
+
+## Update: Interactive Nebula Shader Animated Background Integration (October 3, 2026)
+
+### 1. Architectural Ambience & Visual Direction
+- **Brand Palette & Color Progression**:
+  - Deep Navy (`#07111F`) $\rightarrow$ Dark Blue (`#0B1F36`) $\rightarrow$ Architectural Blue (`#123A63`) $\rightarrow$ Subtle Metallic Gold (`#D4AF37`, `#E7C766`) $\rightarrow$ Soft White Highlights (`#EAF0F6`).
+  - **Strict Constraints Enforced**: 0% purple, 0% pink, 0% green, 0% red, 0% rainbow, and 0% neon cyberpunk tones.
+  - Generates slow atmospheric architectural fluid motion with subtle metallic gold light travel and soft white peak highlights.
+- **Translucency & Readability Layering**:
+  - Configured `body` with `background-color: transparent`.
+  - Updated `--bg-base` to `rgba(7, 17, 31, 0.35)` to allow 60–70% nebula presence while retaining 30–40% dark contrast backing.
+  - Preserved solid surfaces (`#0F1A2E`) on cards, project modals, and forms for pristine 7:1+ typography readability.
+  - Set all sections (`main`, `.hero-section`, `.section-contained`, `.trust-strip`, `footer`) to `position: relative; z-index: 1;`.
+
+### 2. Dual-Engine Architecture (React Three.js + Zero-Dependency Vanilla WebGL)
+- **TypeScript Component (`components/ui/liquid-shader.tsx`)**:
+  - Built with `@react-three/fiber` / `three` with OrthographicCamera and fullscreen quad.
+  - Raymarching loop with dynamic step counts (3 on mobile, 4 on desktop).
+  - Animation loop decoupled from React state (pure `useRef` updates).
+  - Page Visibility API integration (`visibilitychange` listener) automatically pauses RAF loops when backgrounded.
+  - Respects user accessibility preferences via `window.matchMedia('(prefers-reduced-motion: reduce)')`.
+  - Clean resource disposal (`geometry.dispose()`, `material.dispose()`, `renderer.dispose()`) on component unmount.
+  - Verified with `npx tsc --noEmit` (0 TypeScript errors).
+- **Standalone Vanilla WebGL Engine (`liquid-shader.js`)**:
+  - Developed lightweight (~5.8 KB), zero-dependency WebGL2/WebGL1 fallback engine.
+  - Integrated via `<canvas id="mak-bg-shader" class="mak-bg-shader" aria-hidden="true"></canvas>` in `index.html`.
+  - Hardware-capped DPR: $\le 1.0$ on mobile/touch screens, $\le 1.25$ on desktop/tablets.
+  - Desktop subtle parallax using lerped mouse coordinates (`targetMouse` $\rightarrow$ `mouse` with 0.05 easing factor).
+  - Mobile touch interaction disabled to prioritize battery life and 60fps scroll smoothness.
+
+### 3. Comprehensive Verification & Performance Audit
+- **Automated Validation (`tools/verify-nebula-shader.cjs`)**:
+  - WebGL context status: **Active & Initialized**.
+  - Pointer events pass-through: **100% verified** (`pointer-events: none` on canvas, all CTAs clickable).
+  - DPR clamping: `1.00` on mobile, `1.25` on desktop.
+  - Horizontal overflow: **None** across all viewports (320px, 390px, 768px, 1440px).
+  - Page Visibility API: Successfully pauses on `hidden`, resumes immediately on `visible`.
+- **Full Test Suite (`tools/test-suite.cjs`)**:
+  - **0 console errors / 0 runtime exceptions**.
+  - **100% assertions satisfied**.
+
+
 
 
 
