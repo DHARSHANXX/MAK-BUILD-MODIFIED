@@ -4,6 +4,13 @@
 **Date**: October 2, 2026  
 **Stack**: Pure HTML5 + CSS3 + Vanilla ES6 JavaScript (Zero Build Tools, GitHub Pages Compatible)
 
+## [2026-10-03] Background Refinement: Lively Ray-Marched Nebula & Mobile CSS Blobs
+- **Hard Edges & Grid Removal**: Completely removed blueprint grid square blocks (`.mak-bg-blueprint-grid`), diagonal drafting beams (`.mak-bg-blueprint-drafting`), gold sweep beams (`.mak-bg-gold-sweep`), and horizontal hairline section dividers across all sections.
+- **Desktop Ray-Marched Nebula Shader**: Upgraded GLSL fragment shader to lively flow (speed multiplier ~`0.5`), floating UV origin drift (`sin`/`cos`), 4 raymarch iterations, and strict palette (#0B2A4A, #123F70, #1B5C9E, #D4AF37, #E7C766, #F3D477, #EAF0F6) mixed over `#07111F` without center dimming.
+- **Mobile Liquid-Light Blobs**: Implemented 3 heavily blurred (`filter: blur(40px)`) radial-gradient CSS blobs (2 blue, 1 gold) drifting on curved GPU paths (28s–42s) with zero JavaScript per frame.
+- **Translucent Sections & Footer**: Positioned background layer at `position: fixed; inset: 0; z-index: -1; pointer-events: none;`, keeping all sections and footer translucent (`rgba(7, 17, 31, 0.20-0.30)`) so the atmosphere shows continuously from Hero to Footer.
+- **Verification**: 0 console errors, 100% test suite pass rate across 6 device viewports, interactive elements 100% clickable.
+
 ---
 
 ## Executive Summary

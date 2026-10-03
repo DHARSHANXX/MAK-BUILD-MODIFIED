@@ -56,7 +56,7 @@ server.listen(PORT, async () => {
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 });
   await page.goto(`http://localhost:${PORT}/index.html`, { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1000));
-  for (const s of ['#hero', '.process-section', '#about', '#contact', 'footer']) {
+  for (const s of ['#hero', '#packages', '#work', '.process-section', '#about', '#contact', 'footer']) {
     const el = await page.$(s);
     if (el) {
       await el.scrollIntoView();

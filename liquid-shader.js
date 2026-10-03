@@ -46,16 +46,16 @@
       isCoarse = window.matchMedia("(pointer: coarse)").matches;
     } catch (e) {}
 
-    var isMobile =
-      isCoarse ||
-      window.innerWidth < 768 ||
-      (typeof navigator !== "undefined" && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-
+    var isMobile = isCoarse || window.innerWidth <= 768;
     var isTablet = !isMobile && window.innerWidth < 1024;
 
     function setFallback() {
       canvas.classList.add("mak-bg-shader--fallback");
       canvas.style.display = "none";
+      var atmosphere = document.getElementById("mak-bg-atmosphere");
+      if (atmosphere) {
+        atmosphere.classList.add("mak-bg-shader-fallback-active");
+      }
     }
 
     // 3. WebGL Context Creation with Low-Power Profile
@@ -79,7 +79,7 @@
       return;
     }
 
-    // 4. Vertex & Fragment Shaders (MAK BUILD Brand Palette)
+    // 4. Vertex & Fragment Shaders (Ray-marched Nebula with lively flow)
     var VS =
       "attribute vec2 aPos;" +
       "void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }";
@@ -91,49 +91,52 @@
       "uniform vec2 uMouse;" +
       "uniform float uIters;" +
       "uniform float uReducedMotion;" +
-      // Exact MAK BUILD Color Flow
-      "const vec3 cDeepNavy  = vec3(0.027, 0.067, 0.122);" + // #07111F
-      "const vec3 cDarkBlue  = vec3(0.043, 0.122, 0.212);" + // #0B1F36
-      "const vec3 cArchBlue  = vec3(0.071, 0.227, 0.388);" + // #123A63
-      "const vec3 cPremGold  = vec3(0.831, 0.686, 0.216);" + // #D4AF37
-      "const vec3 cSoftGold  = vec3(0.906, 0.780, 0.400);" + // #E7C766
-      "const vec3 cSoftWhite = vec3(0.918, 0.941, 0.965);" + // #EAF0F6
+      // Exact MAK BUILD Color Flow: Deep Navy -> Architectural Blue -> Subtle Metallic Gold -> Soft White
+      "const vec3 cDeepNavy  = vec3(0.0275, 0.0667, 0.1216);" + // #07111F
+      "const vec3 cNavy1     = vec3(0.0431, 0.1647, 0.2902);" + // #0B2A4A
+      "const vec3 cBlueMid   = vec3(0.0706, 0.2471, 0.4392);" + // #123F70
+      "const vec3 cBlueHigh  = vec3(0.1059, 0.3608, 0.6196);" + // #1B5C9E
+      "const vec3 cGoldBase  = vec3(0.8314, 0.6863, 0.2157);" + // #D4AF37
+      "const vec3 cGoldMid   = vec3(0.9059, 0.7804, 0.4000);" + // #E7C766
+      "const vec3 cGoldLight = vec3(0.9529, 0.8314, 0.4667);" + // #F3D477
+      "const vec3 cSoftWhite = vec3(0.9176, 0.9412, 0.9647);" + // #EAF0F6
       "mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }" +
       "float map(vec3 p, float t){" +
-      "  p.xz *= rot(t * 0.035);" +
-      "  p.xy *= rot(t * 0.020);" +
-      "  vec3 q = p * 1.35 + vec3(t * 0.04, t * 0.025, t * 0.035);" +
-      "  float s = sin(q.x + sin(q.z + sin(q.y))) * 0.5;" +
+      "  p.xz *= rot(t * 0.08);" +
+      "  p.xy *= rot(t * 0.05);" +
+      "  vec3 q = p * 1.25 + vec3(t * 0.07, t * 0.045, t * 0.06);" +
+      "  float s = sin(q.x + sin(q.z + sin(q.y))) * 0.52;" +
       "  return length(p * 0.72) * log(length(p) + 1.0) + s - 1.15;" +
       "}" +
       "void main(){" +
       "  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes.xy) / min(uRes.x, uRes.y);" +
-      "  uv += uMouse * 0.045;" +
-      "  float t = uTime * (uReducedMotion > 0.5 ? 0.06 : 0.38);" +
-      "  vec3 col = mix(cDeepNavy, cDarkBlue, clamp(gl_FragCoord.y / uRes.y, 0.0, 1.0));" +
-      "  float d = 2.6;" +
-      "  float maxI = uIters;" +
+      "  float t = uTime * (uReducedMotion > 0.5 ? 0.0 : 0.50);" +
+      "  vec2 drift = vec2(sin(t * 0.20) * 0.16, cos(t * 0.15) * 0.12);" +
+      "  uv += drift;" +
+      "  uv += uMouse * 0.035;" +
+      "  vec3 col = cDeepNavy;" +
+      "  float d = 2.4;" +
+      "  vec3 ro = vec3(0.0, 0.0, 4.6);" +
+      "  vec3 rd = normalize(vec3(uv, -1.0));" +
       "  for(int i = 0; i < 4; i++){" +
-      "    if(float(i) >= maxI) break;" +
-      "    vec3 p = vec3(0.0, 0.0, 4.8) + normalize(vec3(uv, -1.0)) * d;" +
+      "    vec3 p = ro + rd * d;" +
       "    float rz = map(p, t);" +
-      "    float grad = clamp((rz - map(p + 0.12, t)) * 0.5, -0.1, 1.0);" +
-      "    vec3 blueVol = mix(cDarkBlue, cArchBlue, clamp(grad * 1.4, 0.0, 1.0));" +
-      "    col += blueVol * (smoothstep(2.5, 0.0, rz) * 0.36);" +
-      "    float goldSweep = sin(p.x * 0.60 + p.y * 0.40 - t * 0.25);" +
-      "    float goldFactor = smoothstep(0.82, 0.98, goldSweep) * clamp(grad * 1.5, 0.0, 1.0);" +
-      "    vec3 goldCol = mix(cPremGold, cSoftGold, 0.45);" +
-      "    col += goldCol * (goldFactor * 0.38);" +
-      "    float whiteFactor = pow(clamp(grad, 0.0, 1.0), 3.5) * smoothstep(0.88, 1.0, goldSweep + 0.12) * 0.30;" +
+      "    float f = clamp((rz - map(p + 0.14, t)) * 0.5, -0.1, 1.0);" +
+      "    vec3 blueCol = mix(cNavy1, cBlueMid, clamp(f * 1.3, 0.0, 1.0));" +
+      "    blueCol = mix(blueCol, cBlueHigh, clamp(f * 2.2 - 0.6, 0.0, 1.0));" +
+      "    col += blueCol * (smoothstep(2.4, 0.0, rz) * 0.34);" +
+      "    float goldWave = sin(p.x * 0.58 + p.y * 0.42 - t * 0.32);" +
+      "    float goldFactor = smoothstep(0.72, 0.98, goldWave) * clamp(f * 1.45, 0.0, 1.0);" +
+      "    vec3 goldCol = mix(cGoldBase, cGoldMid, clamp(goldFactor * 1.4, 0.0, 1.0));" +
+      "    goldCol = mix(goldCol, cGoldLight, clamp(goldFactor * 2.0 - 0.6, 0.0, 1.0));" +
+      "    col += goldCol * (goldFactor * 0.36);" +
+      "    float whiteFactor = pow(clamp(f, 0.0, 1.0), 3.2) * smoothstep(0.86, 1.0, goldWave) * 0.28;" +
       "    col += cSoftWhite * whiteFactor;" +
       "    d += min(rz, 1.0);" +
       "  }" +
-      "  float centerDist = length(uv);" +
-      "  float softVignette = smoothstep(1.3, 0.25, centerDist);" +
-      "  col = mix(cDeepNavy, col, 0.85 + softVignette * 0.15);" +
+      "  col = mix(cDeepNavy, col, 0.88);" +
       "  col = clamp(col, 0.0, 1.0);" +
-      "  float lum = clamp(length(col - cDeepNavy) * 2.2, 0.0, 0.85);" +
-      "  gl_FragColor = vec4(col, lum);" +
+      "  gl_FragColor = vec4(col, 1.0);" +
       "}";
 
     function compile(type, src) {
@@ -184,8 +187,8 @@
     var contextLost = false;
     var resizeTimer = 0;
 
-    // Quality Configuration (Rule 8, 9, 14, 19)
-    var iters = isMobile ? 3.0 : (isTablet ? 3.5 : 4.0);
+    // Quality Configuration (4 loop iterations desktop)
+    var iters = 4.0;
     var targetMouseX = 0;
     var targetMouseY = 0;
     var currentMouseX = 0;
@@ -242,6 +245,7 @@
     }
 
     function shouldRun() {
+      if (isMobile) return false; // Mobile uses CSS liquid blobs (no shader)
       if (reducedMotion || contextLost) return false;
       if (document.hidden) return false;
       return true;
@@ -271,14 +275,12 @@
     window.addEventListener("resize", function () {
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(function () {
-        isMobile =
-          isCoarse ||
-          window.innerWidth < 768 ||
-          (typeof navigator !== "undefined" && navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+        isMobile = isCoarse || window.innerWidth <= 768;
         isTablet = !isMobile && window.innerWidth < 1024;
-        iters = isMobile ? 3.0 : (isTablet ? 3.5 : 4.0);
+        iters = 4.0;
         resize();
         draw(performance.now());
+        syncLoop();
       }, 120);
     }, { passive: true });
 
