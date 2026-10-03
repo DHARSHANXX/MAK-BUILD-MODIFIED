@@ -11,86 +11,85 @@ const svgHeight = 1000;
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
   <defs>
+    <!-- Background Gradient: Deep luxury obsidian-navy -->
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#141E33"/>
-      <stop offset="35%" stop-color="#0B1322"/>
-      <stop offset="100%" stop-color="#04070D"/>
+      <stop offset="0%" stop-color="#0B1322"/>
+      <stop offset="38%" stop-color="#070C16"/>
+      <stop offset="100%" stop-color="#04060C"/>
     </linearGradient>
 
-    <radialGradient id="centerGlow" cx="50%" cy="30%" r="55%">
-      <stop offset="0%" stop-color="rgba(227, 200, 119, 0.22)"/>
-      <stop offset="70%" stop-color="rgba(11, 19, 34, 0)"/>
+    <!-- Refined Thin Gold Accent Border (Single border, no nested lines) -->
+    <linearGradient id="refinedGoldBorder" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(240, 218, 150, 0.75)"/>
+      <stop offset="28%" stop-color="rgba(201, 162, 75, 0.45)"/>
+      <stop offset="68%" stop-color="rgba(240, 218, 150, 0.70)"/>
+      <stop offset="100%" stop-color="rgba(165, 126, 42, 0.45)"/>
+    </linearGradient>
+
+    <!-- Button Border Gradient -->
+    <linearGradient id="btnBorder" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(201, 162, 75, 0.5)"/>
+      <stop offset="50%" stop-color="rgba(250, 230, 165, 0.95)"/>
+      <stop offset="100%" stop-color="rgba(201, 162, 75, 0.5)"/>
+    </linearGradient>
+
+    <!-- Architectural CAD Grid Pattern -->
+    <pattern id="archGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(201, 162, 75, 0.03)" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.2" fill="rgba(201, 162, 75, 0.08)"/>
+    </pattern>
+
+    <!-- Subtle Radial Vignette -->
+    <radialGradient id="innerDepth" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="rgba(201, 162, 75, 0.06)"/>
+      <stop offset="55%" stop-color="rgba(11, 19, 34, 0)"/>
+      <stop offset="100%" stop-color="rgba(0, 0, 0, 0.45)"/>
     </radialGradient>
 
-    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#FFF8E0"/>
-      <stop offset="30%" stop-color="#E8CE83"/>
-      <stop offset="70%" stop-color="#C9A24B"/>
-      <stop offset="100%" stop-color="#997322"/>
+    <!-- Button Surface Gradient -->
+    <linearGradient id="btnBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(201, 162, 75, 0.14)"/>
+      <stop offset="100%" stop-color="rgba(201, 162, 75, 0.04)"/>
     </linearGradient>
-
-    <linearGradient id="goldLineGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="rgba(227, 200, 119, 0)"/>
-      <stop offset="25%" stop-color="rgba(227, 200, 119, 0.95)"/>
-      <stop offset="50%" stop-color="#FFF8E0"/>
-      <stop offset="75%" stop-color="rgba(227, 200, 119, 0.95)"/>
-      <stop offset="100%" stop-color="rgba(227, 200, 119, 0)"/>
-    </linearGradient>
-
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="rgba(0, 0, 0, 0.85)"/>
-    </filter>
-
-    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="rgba(201, 162, 75, 0.6)"/>
-    </filter>
   </defs>
 
-  <!-- Base Plate Background with Luxury Bevel -->
-  <rect x="20" y="20" width="${svgWidth - 40}" height="${svgHeight - 40}" rx="32" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="5" filter="url(#shadow)"/>
-  
-  <!-- Subtle Center Radial Glow -->
-  <rect x="24" y="24" width="${svgWidth - 48}" height="${svgHeight - 48}" rx="28" fill="url(#centerGlow)"/>
+  <!-- Full-bleed Card Plate: Single refined thin gold border with subtle rounded corners (no outer margin, no nested borders) -->
+  <rect x="3" y="3" width="${svgWidth - 6}" height="${svgHeight - 6}" rx="24" fill="url(#bgGrad)" stroke="url(#refinedGoldBorder)" stroke-width="3.5"/>
 
-  <!-- Inner Hairline Gold Border -->
-  <rect x="46" y="46" width="${svgWidth - 92}" height="${svgHeight - 92}" rx="22" fill="none" stroke="rgba(227, 200, 119, 0.45)" stroke-width="2"/>
+  <!-- Architectural Background Texture (Barely visible subtle CAD grid & depth vignette) -->
+  <rect x="5" y="5" width="${svgWidth - 10}" height="${svgHeight - 10}" rx="21" fill="url(#archGrid)"/>
+  <rect x="5" y="5" width="${svgWidth - 10}" height="${svgHeight - 10}" rx="21" fill="url(#innerDepth)"/>
 
-  <!-- 4 Corner Brass Rivets / Mounting Screws -->
-  <g fill="url(#goldGrad)">
-    <circle cx="72" cy="72" r="10"/>
-    <circle cx="${svgWidth - 72}" cy="72" r="10"/>
-    <circle cx="72" cy="${svgHeight - 72}" r="10"/>
-    <circle cx="${svgWidth - 72}" cy="${svgHeight - 72}" r="10"/>
+  <!-- MAK BUILD Vector Brand Mark (reduced size, generous breathing room, 0 glow) -->
+  <image x="630" y="125" width="340" height="255" href="data:image/png;base64,${logoPngBase64}"/>
+
+  <!-- Er. Manikandan Rajendran (Primary text, elegant typography, crisp pure white) -->
+  <text x="800" y="460" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="60" font-weight="700" fill="#FFFFFF" letter-spacing="1">Er. Manikandan Rajendran</text>
+
+  <!-- Two Professional Titles: Smaller, refined, perfectly aligned badges -->
+  <!-- Left Title: Civil & Structural Engineer (410px wide) -->
+  <g transform="translate(410, 506)">
+    <rect x="0" y="0" width="410" height="54" rx="10" fill="rgba(255, 255, 255, 0.035)" stroke="rgba(201, 162, 75, 0.42)" stroke-width="1.4"/>
+    <text x="205" y="36" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="26" font-weight="600" fill="#E8EEF5" letter-spacing="0.5">Civil &amp; Structural Engineer</text>
   </g>
 
-  <!-- MAK BUILD Transparent Logo Mark (includes icon + brand title + sub) -->
-  <image x="560" y="60" width="480" height="300" href="data:image/png;base64,${logoPngBase64}" filter="url(#goldGlow)"/>
-
-  <!-- Architectural Gold Divider Line with Center Diamond -->
-  <line x1="220" y1="385" x2="1380" y2="385" stroke="url(#goldLineGrad)" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="800,372 814,385 800,398 786,385" fill="#FFF8E0" filter="url(#goldGlow)"/>
-
-  <!-- Engineer Name (High Contrast, Bold, Ultra Crisp) -->
-  <text x="800" y="475" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Arial', sans-serif" font-size="64" font-weight="900" fill="#FFFFFF" letter-spacing="1">Er. Manikandan Rajendran</text>
-
-  <!-- Credentials Pill Badges (High Contrast, Crisp & Distinct) -->
-  <!-- Left Pill: Civil & Structural Engineer -->
-  <rect x="270" y="520" width="510" height="68" rx="34" fill="rgba(201, 162, 75, 0.22)" stroke="url(#goldGrad)" stroke-width="2.5"/>
-  <text x="525" y="565" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Arial', sans-serif" font-size="30" font-weight="800" fill="#FFFFFF" letter-spacing="0.5">Civil &amp; Structural Engineer</text>
-
-  <!-- Right Pill: Registered Engineer -->
-  <rect x="820" y="520" width="510" height="68" rx="34" fill="rgba(201, 162, 75, 0.22)" stroke="url(#goldGrad)" stroke-width="2.5"/>
-  <text x="1075" y="565" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Arial', sans-serif" font-size="30" font-weight="800" fill="#FFFFFF" letter-spacing="0.5">Registered Engineer</text>
-
-  <!-- Studio Physical Address with Gold Map Pin Icon -->
-  <g transform="translate(260, 672)">
-    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#E8CE83" transform="scale(2.0) translate(-6, -18)"/>
+  <!-- Right Title: Registered Engineer (345px wide) -->
+  <g transform="translate(845, 506)">
+    <rect x="0" y="0" width="345" height="54" rx="10" fill="rgba(255, 255, 255, 0.035)" stroke="rgba(201, 162, 75, 0.42)" stroke-width="1.4"/>
+    <text x="172.5" y="36" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="26" font-weight="600" fill="#E8EEF5" letter-spacing="0.5">Registered Engineer</text>
   </g>
-  <text x="825" y="680" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Arial', sans-serif" font-size="44" font-weight="700" fill="#F4F8FC" letter-spacing="1">117C, Pidari South Street, Sirkazhi 609110</text>
 
-  <!-- Visit Studio Action Banner (Luminous, Bold, 100% Readable) -->
-  <rect x="360" y="755" width="880" height="92" rx="46" fill="rgba(201, 162, 75, 0.28)" stroke="url(#goldGrad)" stroke-width="3" filter="url(#goldGlow)"/>
-  <text x="800" y="813" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Arial', sans-serif" font-size="34" font-weight="900" fill="#FFF8E0" letter-spacing="6">VISIT OUR SIRKAZHI STUDIO</text>
+  <!-- Studio Physical Address: Clean, compact with subtle gold location pin icon -->
+  <g transform="translate(435, 640)">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#D4AF37" transform="translate(0, -25) scale(1.35)"/>
+    <text x="42" y="0" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="34" font-weight="500" fill="#CBD5E1" letter-spacing="0.6">117C, Pidari South Street, Sirkazhi 609110</text>
+  </g>
+
+  <!-- Visit Studio Action Button: Refined modern CTA (reduced width, elegant button rather than a large pill) -->
+  <g transform="translate(520, 718)">
+    <rect x="0" y="0" width="560" height="68" rx="10" fill="url(#btnBg)" stroke="url(#btnBorder)" stroke-width="1.8"/>
+    <text x="280" y="42" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="25" font-weight="700" fill="#FFF0C2" letter-spacing="2.6">VISIT OUR SIRKAZHI STUDIO</text>
+  </g>
 </svg>
 `;
 
@@ -98,7 +97,7 @@ async function main() {
   const svgBuffer = Buffer.from(svg);
   const outOriginal = path.join(ROOT_DIR, 'assets/originals/office-signboard.webp');
   
-  console.log('Rendering high-contrast HD signboard master to', outOriginal);
+  console.log('Rendering redesigned architectural profile card master to', outOriginal);
   await sharp(svgBuffer)
     .webp({ quality: 98, effort: 6 })
     .toFile(outOriginal);

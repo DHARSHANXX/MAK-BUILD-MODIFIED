@@ -304,6 +304,36 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
   - Verified on desktop (1440×900), tablet (768×1024), mobile standard (390×844), and mobile small (320×640).
   - 0 horizontal scroll / overflow, natural wrap, 0 console errors.
 
+---
+
+## Update: MAK BUILD Architectural Profile Card Redesign (October 3, 2026)
+
+### 1. Minimalist Architectural Profile Card Redesign
+- **Aesthetic Target**: Luxury Architecture Studio × Modern Engineering Firm × Minimal Premium Business Profile.
+- **Borders & Frame**:
+  - Eliminated the cluttered nested borders, inner hairline, and corner brass rivets/screws.
+  - Implemented a single, refined thin gold border (`rgba(240, 218, 150, 0.75)` to `rgba(201, 162, 75, 0.45)`) with subtle rounded corners (`rx="24"`).
+  - Removed duplicate wrapper border in `styles.css` under `.studio-signboard-col` for a seamless single-border card plate.
+- **Background & Architectural Texture**:
+  - Deep luxury obsidian-navy base gradient (`#0B1322` $\rightarrow$ `#070C16` $\rightarrow$ `#04060C`) with subtle radial vignette depth.
+  - Incorporated an ultra-subtle, barely visible CAD architectural grid pattern (`rgba(201, 162, 75, 0.03)` with drafting dots) providing authentic architectural character without distraction.
+- **Logo Breathing Room & Clean Rendering**:
+  - Sized the MAK BUILD transparent vector logo mark with generous negative space, preserved 4:3 aspect ratio, and eliminated heavy yellow drop-glows and divider line/diamond ornaments.
+- **Typography & Hierarchy**:
+  - **Er. Manikandan Rajendran**: Established as clear, prominent primary text after the logo in bold 700 brilliant white (`#FFFFFF`) with refined 1px letter spacing.
+  - **Professional Titles**: Replaced oversized bulky pills with two smaller, perfectly aligned badges (`Civil & Structural Engineer` and `Registered Engineer`) featuring delicate gold-tinted borders (`stroke-width="1.4"`), subtle dark glass fills, and crisp off-white typography.
+  - **Physical Address**: Compact layout with a minimalist gold location pin icon and slate off-white text (`117C, Pidari South Street, Sirkazhi 609110`).
+  - **CTA Button**: Transformed from a giant bulbous pill into a refined architectural CTA button (`VISIT OUR SIRKAZHI STUDIO`) with a 35% narrower width, subtle rounded corners (`rx="10"`), and metallic gold outline.
+
+### 2. Multi-tier Production Optimization & QA Verification
+- Rendered vector master at 1600×1000 via Sharp in `tools/make-signboard.cjs`.
+- Generated responsive derivatives across 480w, 768w, 1080w, and 1600w in AVIF, WebP, and MozJPEG.
+- Verified across desktop (1440px), tablet (768px), and mobile (390px):
+  - **0 console errors**
+  - **0 horizontal scroll / overflow**
+  - **100% test assertions satisfied** in `tools/test-suite.cjs`.
+
+
 
 
 
