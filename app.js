@@ -15,6 +15,7 @@
 
   // State Management
   let currentLang = localStorage.getItem('mak_lang') || 'en';
+  let currentTheme = localStorage.getItem('mak_theme') || 'light';
   let allProjects = [];
   let currentTab = 'all';
   let moderateOption = 'standard'; // 'standard' (2300) | 'plus' (2400)
@@ -26,6 +27,7 @@
   // DOM Elements
   const header = document.querySelector('.header');
   const langToggleBtn = document.getElementById('langToggleBtn');
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
   const mobileNavToggle = document.getElementById('mobileNavToggle');
   const mobileNavDrawer = document.getElementById('mobileNavDrawer');
   const mobileDrawerBackdrop = document.getElementById('mobileDrawerBackdrop');
@@ -33,6 +35,34 @@
   const compareModal = document.getElementById('compareModal');
   const serviceModal = document.getElementById('serviceModal');
   const lightboxModal = document.getElementById('lightboxModal');
+
+  // ==========================================
+  // 0. Theme Manager (Light & Dark Mode)
+  // ==========================================
+  function initTheme() {
+    applyTheme(currentTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(nextTheme);
+      });
+    }
+  }
+
+  function applyTheme(theme) {
+    currentTheme = theme;
+    localStorage.setItem('mak_theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`);
+      themeToggleBtn.setAttribute('title', `Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`);
+    }
+
+    // Inform WebGL shader and observers
+    window.dispatchEvent(new CustomEvent('mak-theme-change', { detail: { theme } }));
+  }
 
   // ==========================================
   // 1. Language & Translations Engine
@@ -59,11 +89,13 @@
 
     // Re-render dynamic sections
     renderHeroCaptions();
+    renderStats();
     renderServices();
     renderPackages();
     renderProjects();
     updateEstimator();
     renderProcess();
+    renderFaqs();
     renderAboutAndContact();
   }
 
@@ -271,8 +303,99 @@
   }
 
   // ==========================================
-  // 4. Services Section
+  // 3b. Stats Strip & Number Counter Animation
   // ==========================================
+  let statsAnimated = false;
+
+  function renderStats() {
+    const grid = document.getElementById('statsGrid');
+    if (!grid || !CONTENT.stats) return;
+    grid.innerHTML = '';
+
+    CONTENT.stats.forEach(stat => {
+      const item = document.createElement('div');
+      item.className = 'stat-item';
+      const label = currentLang === 'ta' ? stat.labelTa : stat.labelEn;
+      item.innerHTML = `
+        <div class="stat-number" data-target="${stat.value}" data-suffix="${stat.suffix}">
+          ${statsAnimated ? stat.value + stat.suffix : '0' + stat.suffix}
+        </div>
+        <div class="stat-label">${label}</div>
+      `;
+      grid.appendChild(item);
+    });
+  }
+
+  function initStatsObserver() {
+    const statsSection = document.getElementById('statsStrip');
+    if (!statsSection) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      statsAnimated = true;
+      document.querySelectorAll('.stat-number').forEach(el => {
+        const target = el.getAttribute('data-target') || '0';
+        const suffix = el.getAttribute('data-suffix') || '';
+        el.textContent = `${target}${suffix}`;
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !statsAnimated) {
+          statsAnimated = true;
+          animateStats();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(statsSection);
+  }
+
+  function animateStats() {
+    const numbers = document.querySelectorAll('.stat-number');
+    const duration = 1600;
+    const startTime = performance.now();
+
+    function updateCount(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease-out cubic
+
+      numbers.forEach(el => {
+        const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+        const suffix = el.getAttribute('data-suffix') || '';
+        const current = Math.floor(easeProgress * target);
+        el.textContent = `${current}${suffix}`;
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      } else {
+        numbers.forEach(el => {
+          const target = el.getAttribute('data-target');
+          const suffix = el.getAttribute('data-suffix') || '';
+          el.textContent = `${target}${suffix}`;
+        });
+      }
+    }
+
+    requestAnimationFrame(updateCount);
+  }
+
+  // ==========================================
+  // 4. Services Section & Unique Line Icons
+  // ==========================================
+  const serviceIcons = {
+    'construction': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h6M9 14h6M9 18h6M12 3v4"/></svg>`,
+    'plans-elevations': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2a3 3 0 100 6 3 3 0 000-6zm0 6v3m0 0l-5 11m5-11l5 11M9 17h6M4 22h16"/></svg>`,
+    'building-approvals': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
+    'interiors': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 11a2 2 0 012-2h12a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6zm0 4h16M7 19v2M17 19v2M6 9V6a1 1 0 011-1h10a1 1 0 011 1v3"/></svg>`,
+    'renovations': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
+    'estimation-consulting': `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`
+  };
+
   function renderServices() {
     const grid = document.getElementById('servicesGrid');
     const chipsWrap = document.getElementById('serviceChipsRow');
@@ -287,12 +410,11 @@
       const title = currentLang === 'ta' ? svc.titleTa : svc.titleEn;
       const shortDesc = currentLang === 'ta' ? svc.shortTa : svc.shortEn;
       const bullets = currentLang === 'ta' ? svc.bulletsTa : svc.bulletsEn;
+      const iconSvg = serviceIcons[svc.id] || `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>`;
 
       card.innerHTML = `
         <div class="service-icon-box">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-          </svg>
+          ${iconSvg}
         </div>
         <h3 class="service-title">${title}</h3>
         <p class="service-line">${shortDesc}</p>
@@ -338,10 +460,15 @@
     const title = currentLang === 'ta' ? svc.titleTa : svc.titleEn;
     const desc = currentLang === 'ta' ? svc.shortTa : svc.shortEn;
     const bullets = currentLang === 'ta' ? svc.bulletsTa : svc.bulletsEn;
+    const iconSvg = serviceIcons[svc.id] || '';
 
     if (titleEl) titleEl.textContent = title;
     if (bodyEl) {
       bodyEl.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
+          <div class="service-icon-box" style="margin-bottom: 0; width: 44px; height: 44px;">${iconSvg}</div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: var(--gold-light);">${title}</div>
+        </div>
         <p style="font-size: 1rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.6;">${desc}</p>
         <h4 style="font-size: 0.95rem; color: var(--gold-light); margin-bottom: 12px; font-weight: 700;">Scope of Work:</h4>
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
@@ -1167,6 +1294,14 @@
     const pkgBtns = document.querySelectorAll('[data-est-pkg]');
     const addonsList = document.getElementById('estAddonsList');
 
+    function updateSliderProgress(val) {
+      if (!areaRange) return;
+      const min = parseInt(areaRange.min, 10) || 300;
+      const max = parseInt(areaRange.max, 10) || 10000;
+      const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
+      areaRange.style.setProperty('--slider-progress', `${pct}%`);
+    }
+
     // Scope selection
     scopeBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -1178,9 +1313,11 @@
 
     // Area range slider & field sync
     if (areaRange && areaInput) {
+      updateSliderProgress(estState.area);
       areaRange.addEventListener('input', (e) => {
         estState.area = parseInt(e.target.value, 10);
         areaInput.value = estState.area;
+        updateSliderProgress(estState.area);
         updateEstimator();
       });
       areaInput.addEventListener('input', (e) => {
@@ -1189,6 +1326,7 @@
         val = Math.max(300, Math.min(50000, val));
         estState.area = val;
         areaRange.value = val;
+        updateSliderProgress(estState.area);
         updateEstimator();
       });
     }
@@ -1259,16 +1397,16 @@
 
     // Determine square foot rate from package
     let rate = 2300;
-    let pkgLabel = "Moderate (Standard)";
+    let pkgLabel = "Standard";
     if (estState.pkg === 'basic') {
       rate = 2200;
       pkgLabel = "Basic";
     } else if (estState.pkg === 'moderate-standard') {
       rate = 2300;
-      pkgLabel = "Moderate (Standard)";
+      pkgLabel = "Standard";
     } else if (estState.pkg === 'moderate-plus') {
       rate = 2400;
-      pkgLabel = "Moderate (Plus)";
+      pkgLabel = "Plus";
     } else if (estState.pkg === 'premium') {
       rate = 2500;
       pkgLabel = "Premium";
@@ -1294,12 +1432,12 @@
       return `₹${l.toFixed(2)} Lakhs`;
     }
 
-    amountEl.textContent = `${formatLakhs(lowCost)} – ${formatLakhs(highCost)}`;
+    amountEl.innerHTML = `<span style="white-space: nowrap;">${formatLakhs(lowCost)}</span> – <span style="white-space: nowrap;">${formatLakhs(highCost)}</span>`;
     noteEl.textContent = t.estIndicativeNote;
 
     // WhatsApp Message
     const scopeName = currentLang === 'ta' ? currentScope.nameTa : currentScope.nameEn;
-    const msg = `Hello MAK BUILD,\nI used your Quick Estimator for:\n- Project: ${scopeName}\n- Area: ${estState.area} sq.ft\n- Package: ${pkgLabel} (₹${rate}/sq.ft)\n- Add-ons: ${selectedAddonNames.join(', ') || 'None'}\n- Indicative Estimate: ${formatLakhs(lowCost)} to ${formatLakhs(highCost)}\n\nPlease schedule a free site visit to verify the estimate.`;
+    const msg = `Hello MAK BUILD,\nI used your Quick Estimator for:\n- Project: ${scopeName}\n- Area: ${estState.area} sq.ft\n- Package: ${pkgLabel} (₹${rate.toLocaleString('en-IN')}/sq.ft)\n- Add-ons: ${selectedAddonNames.join(', ') || 'None'}\n- Indicative Estimate: ${formatLakhs(lowCost)} to ${formatLakhs(highCost)}\n\nPlease schedule a free site visit to verify the estimate.`;
     whatsappBtn.href = `https://wa.me/918144166022?text=${encodeURIComponent(msg)}`;
     whatsappBtn.textContent = t.estWhatsAppBtn;
   }
@@ -1321,6 +1459,62 @@
         <p class="step-desc">${currentLang === 'ta' ? step.descTa : step.descEn}</p>
       `;
       grid.appendChild(card);
+    });
+  }
+
+  // ==========================================
+  // 9b. FAQ Accordion
+  // ==========================================
+  function renderFaqs() {
+    const faqList = document.getElementById('faqList');
+    if (!faqList || !CONTENT.faqs) return;
+    faqList.innerHTML = '';
+
+    const faqTitle = document.getElementById('faqTitle');
+    const faqSubtitle = document.getElementById('faqSubtitle');
+    const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
+    if (faqTitle && t.faqHeading) faqTitle.textContent = t.faqHeading;
+    if (faqSubtitle && t.faqSub) faqSubtitle.textContent = t.faqSub;
+
+    CONTENT.faqs.forEach((faq, index) => {
+      const item = document.createElement('div');
+      item.className = 'faq-item';
+      const q = currentLang === 'ta' ? faq.qTa : faq.qEn;
+      const a = currentLang === 'ta' ? faq.aTa : faq.aEn;
+
+      item.innerHTML = `
+        <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-${index}">
+          <span>${q}</span>
+          <svg class="faq-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div id="faq-ans-${index}" class="faq-answer-panel">
+          <p>${a}</p>
+        </div>
+      `;
+
+      const btn = item.querySelector('.faq-question-btn');
+      btn.addEventListener('click', () => {
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.faq-item').forEach(other => {
+          if (other !== item) {
+            other.classList.remove('active');
+            const otherBtn = other.querySelector('.faq-question-btn');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          item.classList.remove('active');
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          item.classList.add('active');
+        }
+      });
+
+      faqList.appendChild(item);
     });
   }
 
@@ -1627,13 +1821,82 @@
   }
 
   // ==========================================
-  // 12. Single Shared IntersectionObserver
+  // 12. ScrollSpy, Clean URLs & Back to Top
+  // ==========================================
+  function initScrollSpyAndBackToTop() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    const sectionIds = ['hero', 'services', 'packages', 'work', 'estimator', 'about', 'faq', 'contact'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    const navLinks = document.querySelectorAll('.nav-menu .nav-link, .mobile-nav-drawer .mobile-nav-link');
+
+    function updateActiveNav(activeId) {
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${activeId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          updateActiveNav(id);
+          const currentHash = window.location.hash;
+          // If viewing #work and currently filtered by cat, do not overwrite category
+          if (id === 'work' && currentHash.startsWith('#work?cat=')) {
+            return;
+          }
+          if (history.replaceState && currentHash !== `#${id}`) {
+            history.replaceState(null, '', `#${id}`);
+          }
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    });
+
+    sections.forEach(sec => spyObserver.observe(sec));
+
+    // Back to top scroll listener
+    window.addEventListener('scroll', () => {
+      if (backToTopBtn) {
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      }
+    }, { passive: true });
+
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  // ==========================================
+  // 13. Single Shared IntersectionObserver with Stagger
   // ==========================================
   function initScrollReveal() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.querySelectorAll('.reveal-init').forEach(el => el.classList.add('reveal-visible'));
       return;
     }
+
+    // Auto-stagger card grids
+    document.querySelectorAll('.services-grid, .packages-grid, .projects-grid, .process-steps-grid, .stats-grid').forEach(grid => {
+      Array.from(grid.children).forEach((child, i) => {
+        if (!child.style.transitionDelay) {
+          child.style.transitionDelay = `${(i % 4) * 0.08}s`;
+        }
+      });
+    });
 
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -1651,15 +1914,18 @@
   }
 
   // ==========================================
-  // 13. Application Initialization
+  // 14. Application Initialization
   // ==========================================
   document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initHeader();
     initHeroSlider();
     initModals();
     setLanguage(currentLang);
     loadProjects();
     initEstimator();
+    initStatsObserver();
+    initScrollSpyAndBackToTop();
     initContactForm();
     initScrollReveal();
   });

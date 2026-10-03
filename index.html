@@ -109,8 +109,12 @@
       <a href="#hero" class="brand-lockup">
         <div class="brand-logo-wrap">
           <picture>
+            <source type="image/svg+xml" srcset="assets/logo-mark-dark.svg">
+            <img src="assets/logo-mark-dark.png" srcset="assets/logo-mark-dark.png 1x, assets/logo-mark-dark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img logo-light" width="44" height="44">
+          </picture>
+          <picture>
             <source type="image/svg+xml" srcset="assets/logo-mark.svg">
-            <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+            <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img logo-dark" width="44" height="44">
           </picture>
         </div>
         <div class="brand-text">
@@ -132,6 +136,15 @@
 
       <!-- Header Actions -->
       <div class="header-actions">
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="theme-icon-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path stroke-linecap="round" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <svg class="theme-icon-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+          </svg>
+        </button>
         <button id="langToggleBtn" class="lang-toggle-btn">தமிழ்</button>
         <a href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20would%20like%20to%20get%20a%20free%20quote%20for%20house%20construction." 
            target="_blank" rel="noopener noreferrer" class="header-quote-btn" data-i18n="heroCtaQuote">
@@ -257,6 +270,15 @@
       </div>
     </section>
 
+    <!-- 3b. Stats Strip (Animated Number Counter) -->
+    <section id="statsStrip" class="stats-strip" aria-label="Company Experience and Track Record">
+      <div class="container">
+        <div id="statsGrid" class="stats-grid reveal-init">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
     <!-- 4. Services Section -->
     <section id="services" class="services-section section-contained">
       <div class="container">
@@ -364,11 +386,11 @@
                   </button>
                   <button class="scope-option-btn" data-est-scope="commercial">
                     <span>Commercial &amp; PEB Shed</span>
-                    <span style="font-size: 0.78rem; color: var(--text-dim);">Custom Quote</span>
+                    <span class="custom-quote-label" style="font-size: 0.78rem;">Custom Quote</span>
                   </button>
                   <button class="scope-option-btn" data-est-scope="interiors">
                     <span>Interiors-only</span>
-                    <span style="font-size: 0.78rem; color: var(--text-dim);">Custom Quote</span>
+                    <span class="custom-quote-label" style="font-size: 0.78rem;">Custom Quote</span>
                   </button>
                 </div>
               </div>
@@ -387,8 +409,8 @@
                 <label class="estimator-label" data-i18n="estPackageLabel">Construction Package</label>
                 <div class="estimator-package-select">
                   <button class="pkg-radio-btn" data-est-pkg="basic">Basic (₹2,200)</button>
-                  <button class="pkg-radio-btn active" data-est-pkg="moderate-standard">Mod. Standard (₹2,300)</button>
-                  <button class="pkg-radio-btn" data-est-pkg="moderate-plus">Mod. Plus (₹2,400)</button>
+                  <button class="pkg-radio-btn active" data-est-pkg="moderate-standard">Standard (₹2,300)</button>
+                  <button class="pkg-radio-btn" data-est-pkg="moderate-plus">Plus (₹2,400)</button>
                   <button class="pkg-radio-btn" data-est-pkg="premium">Premium (₹2,500)</button>
                 </div>
               </div>
@@ -488,8 +510,12 @@
           <div class="studio-details-col">
             <div class="studio-brand-header">
               <picture>
+                <source type="image/svg+xml" srcset="assets/logo-mark-dark.svg">
+                <img src="assets/logo-mark-dark.png" srcset="assets/logo-mark-dark.png 1x, assets/logo-mark-dark@2x.png 2x" alt="MAK BUILD Emblem" class="studio-logo-mark logo-light" width="110" height="82">
+              </picture>
+              <picture>
                 <source type="image/svg+xml" srcset="assets/logo-mark.svg">
-                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="studio-logo-mark" width="110" height="82">
+                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="studio-logo-mark logo-dark" width="110" height="82">
               </picture>
               <div class="studio-brand-titles">
                 <h3 class="studio-brand-name">MAK BUILD</h3>
@@ -538,6 +564,20 @@
               </a>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10a. FAQ Accordion Section -->
+    <section id="faq" class="faq-section section-contained" aria-label="Frequently Asked Questions">
+      <div class="container">
+        <div class="section-header reveal-init">
+          <span class="section-eyebrow">COMMON QUESTIONS</span>
+          <h2 id="faqTitle" class="section-title">Frequently Asked Questions</h2>
+          <p id="faqSubtitle" class="section-sub">Clear answers on construction cost, municipal approvals, materials &amp; milestone schedule.</p>
+        </div>
+        <div id="faqList" class="faq-list reveal-init">
+          <!-- Rendered dynamically by app.js -->
         </div>
       </div>
     </section>
@@ -676,8 +716,12 @@
           <a href="#hero" class="brand-lockup" aria-label="MAK BUILD Home">
             <div class="brand-logo-wrap">
               <picture>
+                <source type="image/svg+xml" srcset="assets/logo-mark-dark.svg">
+                <img src="assets/logo-mark-dark.png" srcset="assets/logo-mark-dark.png 1x, assets/logo-mark-dark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img logo-light" width="44" height="44">
+              </picture>
+              <picture>
                 <source type="image/svg+xml" srcset="assets/logo-mark.svg">
-                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img" width="44" height="44">
+                <img src="assets/logo-mark.png" srcset="assets/logo-mark.png 1x, assets/logo-mark@2x.png 2x" alt="MAK BUILD Emblem" class="brand-logo-img logo-dark" width="44" height="44">
               </picture>
             </div>
             <div class="brand-text">
@@ -802,6 +846,21 @@
       </div>
     </div>
   </div>
+
+  <!-- Floating Desktop WhatsApp Button with Pulse -->
+  <a id="floatingWhatsAppBtn" href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20have%20an%20enquiry%20regarding%20construction%20and%20design." target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.074-1.026-.067-.535-.192-1.378-.621-2.247-1.393-.974-.866-1.571-1.92-1.745-2.217-.174-.298-.019-.459.13-.607.135-.133.298-.348.446-.522.148-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+    </svg>
+    <span class="floating-whatsapp-tooltip">Chat with us</span>
+  </a>
+
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
 
   <!-- Scripts: Deferred Vanilla Architecture -->
   <script src="content.js" defer></script>

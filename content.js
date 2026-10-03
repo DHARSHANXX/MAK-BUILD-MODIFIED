@@ -382,7 +382,47 @@ window.MAK_CONTENT = {
     }
   },
 
-  // 8. BILINGUAL UI STRINGS
+  // 8. PROVEN TRACK RECORD / STATS COUNTER
+  stats: [
+    { value: 12, suffix: "+", labelEn: "Years Experience", labelTa: "ஆண்டுகள் அனுபவம்" },
+    { value: 150, suffix: "+", labelEn: "Projects Delivered", labelTa: "நிறைவுற்ற திட்டங்கள்" },
+    { value: 100, suffix: "%", labelEn: "Vasthu Compliant", labelTa: "வாஸ்து பொருத்தம்" },
+    { value: 350, suffix: "+", labelEn: "Happy Families", labelTa: "மகிழ்வான குடும்பங்கள்" }
+  ],
+
+  // 9. FREQUENTLY ASKED QUESTIONS (FAQ)
+  faqs: [
+    {
+      id: "faq-cost",
+      qEn: "What is the construction cost per sq.ft in Sirkazhi & coastal Tamil Nadu?",
+      qTa: "சீர்காழி மற்றும் கடலோர பகுதியில் ஒரு சதுர அடி கட்டுமான விலை என்ன?",
+      aEn: "Our 2026 residential construction packages range from ₹2,200/sq.ft (Basic), ₹2,300/sq.ft (Standard), ₹2,400/sq.ft (Plus), to ₹2,500/sq.ft (Premium). This includes all materials, skilled labour, registered engineer supervision, and complete turnkey delivery. We provide an exact itemised estimate after a free site visit.",
+      aTa: "எங்களின் 2026 கட்டுமான பேக்கேஜ்கள் சதுர அடிக்கு ₹2,200 (அடிப்படை), ₹2,300 (ஸ்டாண்டர்ட்), ₹2,400 (பிளஸ்), ₹2,500 (பிரீமியம்) வரை உள்ளன. இதில் அனைத்து கட்டுமான பொருட்கள் மற்றும் தொழிலாளர் கூலி முழுமையாக அடங்கும். நேரடி நில ஆய்வுக்குப் பின் விரிவான மதிப்பீடு வழங்கப்படும்."
+    },
+    {
+      id: "faq-timeline",
+      qEn: "How long does it take to obtain building approvals?",
+      qTa: "கட்டட அனுமதி பெற எவ்வளவு காலம் ஆகும்?",
+      aEn: "Local panchayat approvals typically take 15 to 30 days, while DTCP and municipal sanctions generally take 30 to 45 days. As certified registered engineers, we prepare compliant drawings and handle the entire statutory documentation seamlessly.",
+      aTa: "உள்ளூர் பஞ்சாயத்து அனுமதி பெற 15 முதல் 30 நாட்களும், DTCP அல்லது நகராட்சி அனுமதி பெற 30 முதல் 45 நாட்களும் ஆகும். பதிவுபெற்ற பொறியாளராக நாங்களே முழுமையான வரைபடங்கள் மற்றும் அரசு அனுமதிகளை ஒருங்கிணைக்கிறோம்."
+    },
+    {
+      id: "faq-materials",
+      qEn: "What brands of materials do you use for construction?",
+      qTa: "கட்டுமானத்திற்கு என்னென்ன பிராண்ட் பொருட்கள் பயன்படுத்தப்படுகின்றன?",
+      aEn: "We strictly use tested ISI-certified brands: UltraTech, Ramco, or Dalmia cement; JSW, Amman, or Agni Fe-550D TMT steel; first-class chamber red bricks; UPVC windows; Finolex or Ashirvad plumbing; and Asian Paints / Birla Opus finishes matching your selected package.",
+      aTa: "நாங்கள் ISI சான்றிதழ் பெற்ற தரமான பிராண்டுகளை மட்டுமே பயன்படுத்துகிறோம்: அல்ட்ராடெக்/ராம்கோ சிமெண்ட், JSW/அம்மன் TMT ஸ்டீல், முதல் தர சிவப்பு செங்கற்கள், UPVC ஜன்னல்கள், பினோலெக்ஸ் பைப் மற்றும் ஏசியன் பெயிண்ட்ஸ்."
+    },
+    {
+      id: "faq-milestones",
+      qEn: "How are payment milestones structured?",
+      qTa: "கட்டுமான கட்டண தவணைகள் (Payment Milestones) எவ்வாறு பிரிக்கப்பட்டுள்ளன?",
+      aEn: "Payments are linked purely to verified on-site progress across transparent stages: Advance on Agreement (10%), Foundation & Plinth (20%), Lintel & Roof Slab (25%), Brickwork & Plastering (20%), Flooring & MEP Fittings (15%), and Final Handover with deep cleaning (10%). No hidden charges.",
+      aTa: "கட்டுமான கட்டணங்கள் வெளிப்படையான 6 நிலைகளாக பிரிக்கப்பட்டுள்ளன: முன்பணம் (10%), அஸ்திவாரம் (20%), ரூஃப் தளம் (25%), பூச்சு வேலை (20%), டைல்ஸ் & பிளம்பிங் (15%), மற்றும் சாவி ஒப்படைப்பு (10%). எந்த மறைமுகக் கட்டணங்களும் இல்லை."
+    }
+  ],
+
+  // 10. BILINGUAL UI STRINGS
   ui: {
     en: {
       langBtn: "தமிழ்",
@@ -474,6 +514,9 @@ window.MAK_CONTENT = {
       aboutStudioTitle: "Visit our Sirkazhi Studio",
       aboutIntro1: "MAK BUILD is headed by Er. Manikandan Rajendran, a qualified Civil and Structural Engineer dedicated to delivering durable, architecturally refined homes.",
       aboutIntro2: "Every project combines modern structural engineering with strict Vasthu compliance, ensuring aesthetic excellence and generational strength.",
+
+      faqHeading: "Frequently Asked Questions",
+      faqSub: "Clear answers to essential construction, cost, and approval queries.",
 
       contactHeading: "Let's Build Together",
       contactSub: "Schedule a free site visit or consultation with our civil engineer.",
@@ -584,6 +627,9 @@ window.MAK_CONTENT = {
       aboutStudioTitle: "எங்கள் சீர்காழி ஸ்டுடியோவிற்கு வருகை தருக",
       aboutIntro1: "MAK BUILD நிறுவனம் சிவில் மற்றும் கட்டமைப்பு பொறியாளர் மணிகண்டன் ராஜேந்திரன் தலைமையில் இயங்குகிறது.",
       aboutIntro2: "நவீன கட்டமைப்பு பொறியியலுடன் துல்லியமான வாஸ்து சாஸ்திரத்தையும் இணைத்து தலைமுறை கடந்து நிற்கும் இல்லங்களை உருவாக்குகிறோம்.",
+
+      faqHeading: "அடிக்கடி கேட்கப்படும் கேள்விகள்",
+      faqSub: "கட்டுமானம், திட்ட அனுமதி மற்றும் செலவுகள் பற்றிய விளக்கங்கள்.",
 
       contactHeading: "தொடர்பு கொள்க",
       contactSub: "இலவச தள ஆய்வு மற்றும் ஆலோசனைக்கு எங்களை தொடர்பு கொள்ளுங்கள்.",

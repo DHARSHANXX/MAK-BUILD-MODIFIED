@@ -91,8 +91,10 @@
       "uniform vec2 uMouse;" +
       "uniform float uIters;" +
       "uniform float uReducedMotion;" +
-      // Exact MAK BUILD Color Flow: Deep Navy -> Architectural Blue -> Subtle Metallic Gold on White
+      "uniform float uIsDark;" +
+      // Exact MAK BUILD Color Flow: Deep Navy -> Architectural Blue -> Subtle Metallic Gold
       "const vec3 cWhite     = vec3(0.9686, 0.9804, 0.9922);" + // #F7FAFD
+      "const vec3 cNavyBase  = vec3(0.0275, 0.0667, 0.1216);" + // #07111F
       "const vec3 cNavy1     = vec3(0.0431, 0.1647, 0.2902);" + // #0B2A4A
       "const vec3 cBlueMid   = vec3(0.0706, 0.2471, 0.4392);" + // #123F70
       "const vec3 cBlueHigh  = vec3(0.1059, 0.3608, 0.6196);" + // #1B5C9E
@@ -109,11 +111,11 @@
       "}" +
       "void main(){" +
       "  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes.xy) / min(uRes.x, uRes.y);" +
-      "  float t = uTime * (uReducedMotion > 0.5 ? 0.0 : 0.50);" +
+      "  float t = uTime * (uReducedMotion > 0.5 ? 0.0 : 1.00);" + // 2x speed for lively, immediate motion
       "  vec2 drift = vec2(sin(t * 0.20) * 0.16, cos(t * 0.15) * 0.12);" +
       "  uv += drift;" +
       "  uv += uMouse * 0.035;" +
-      "  vec3 col = cWhite;" +
+      "  vec3 col = mix(cWhite, cNavyBase, uIsDark);" +
       "  float d = 2.4;" +
       "  vec3 ro = vec3(0.0, 0.0, 4.6);" +
       "  vec3 rd = normalize(vec3(uv, -1.0));" +
@@ -123,15 +125,21 @@
       "    float f = clamp((rz - map(p + 0.14, t)) * 0.5, -0.1, 1.0);" +
       "    vec3 blueCol = mix(cNavy1, cBlueMid, clamp(f * 1.3, 0.0, 1.0));" +
       "    blueCol = mix(blueCol, cBlueHigh, clamp(f * 2.2 - 0.6, 0.0, 1.0));" +
-      "    float blueWeight = smoothstep(2.4, 0.0, rz) * 0.08;" +
+      "    float blueWeight = smoothstep(2.4, 0.0, rz) * (uIsDark > 0.5 ? 0.22 : 0.08);" +
       "    col = mix(col, blueCol, blueWeight);" +
       "    float goldWave = sin(p.x * 0.58 + p.y * 0.42 - t * 0.32);" +
       "    float goldFactor = smoothstep(0.74, 0.98, goldWave) * clamp(f * 1.45, 0.0, 1.0);" +
       "    vec3 goldCol = mix(cGoldBase, cGoldMid, clamp(goldFactor * 1.4, 0.0, 1.0));" +
       "    goldCol = mix(goldCol, cGoldLight, clamp(goldFactor * 2.0 - 0.6, 0.0, 1.0));" +
-      "    col = mix(col, goldCol, goldFactor * 0.14);" +
+      "    col = mix(col, goldCol, goldFactor * (uIsDark > 0.5 ? 0.30 : 0.14));" +
       "    d += min(rz, 1.0);" +
       "  }" +
+      // Subtle architectural gold light streak sweeping across at ~22 degrees
+      "  float streakCoord = uv.x * 0.92 - uv.y * 0.38;" +
+      "  float sweep = fract(streakCoord * 0.50 - t * 0.10);" +
+      "  float streakLine = smoothstep(0.0, 0.012, sweep) * smoothstep(0.045, 0.012, sweep);" +
+      "  vec3 streakColor = mix(cGoldBase, cGoldLight, 0.75);" +
+      "  col = mix(col, streakColor, streakLine * (uIsDark > 0.5 ? 0.30 : 0.20));" +
       "  col = clamp(col, 0.0, 1.0);" +
       "  gl_FragColor = vec4(col, 1.0);" +
       "}";
@@ -177,6 +185,7 @@
     var uMouse = gl.getUniformLocation(program, "uMouse");
     var uIters = gl.getUniformLocation(program, "uIters");
     var uReducedMotion = gl.getUniformLocation(program, "uReducedMotion");
+    var uIsDark = gl.getUniformLocation(program, "uIsDark");
 
     var start = performance.now();
     var rafId = 0;
@@ -219,11 +228,14 @@
       gl.enableVertexAttribArray(aPos);
       gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
+      var isDark = document.documentElement.getAttribute("data-theme") === "dark" ? 1.0 : 0.0;
+
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, (now - start) * 0.001);
       gl.uniform2f(uMouse, currentMouseX, currentMouseY);
       gl.uniform1f(uIters, iters);
       gl.uniform1f(uReducedMotion, reducedMotion ? 1.0 : 0.0);
+      gl.uniform1f(uIsDark, isDark);
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
@@ -315,6 +327,22 @@
       }
       running = false;
     });
+
+    // Theme change dynamic redraw
+    window.addEventListener("mak-theme-change", function () {
+      draw(performance.now());
+    });
+    try {
+      var themeObserver = new MutationObserver(function (mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          if (mutations[i].attributeName === "data-theme") {
+            draw(performance.now());
+            break;
+          }
+        }
+      });
+      themeObserver.observe(document.documentElement, { attributes: true });
+    } catch (e) {}
 
     resize();
     draw(performance.now());
