@@ -23,7 +23,7 @@ const TARGET_WIDTHS = [480, 768, 1080, 1600, 2400];
 
 // Placement specifications and max rendered CSS widths
 const USAGE_SPECS = {
-  'villa-contemporary-after': { maxCssWidth: 460, slot: 'Project Grid Card / Master Villa' },
+  'villa-contemporary-after': { maxCssWidth: 640, slot: 'Hero Slide 1 Architectural CAD Elevation' },
   'villa-facade-before': { maxCssWidth: 680, slot: 'Villa Before/After Slider (Before)' },
   'villa-facade-after': { maxCssWidth: 680, slot: 'Villa Before/After Slider (After)' },
   'commercial-retail-before': { maxCssWidth: 680, slot: 'Commercial Showroom Slider (Before)' },

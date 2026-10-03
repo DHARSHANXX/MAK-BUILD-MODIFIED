@@ -240,6 +240,29 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
 - Added `.hero-slide[data-slide="residence-elevation"] .hero-slide-img { object-position: center 36%; }` in `styles.css`.
 - The two-storey contemporary elevation with its glass balcony, timber ceiling accents, and warm wall sconces shines clearly behind the gradient overlay with zero blur or stretching.
 
+---
+
+## Update: Master Architectural CAD Blueprint Elevation Ingestion into Hero Slide 1 (October 3, 2026)
+
+### 1. Master CAD Elevation Blueprint Ingestion ("1st Image")
+- **Problem**: The Hero Background Slider Slide 1 was previously using an outdated 638×629 thumbnail (`villa-contemporary-after.png`), which was a duplicate render of Slide 2 and lacked high-resolution definition.
+- **Solution**:
+  - Ingested the pristine 1024 × 840 architectural front elevation CAD drawing (`media_1791005255424.jpg`) with exact technical details: "+9.60" height marker, "WIDTH 18.00 M", "MAK BUILD • FRONT ELEVATION • 1:100", compass north arrow, palm trees, and full two-storey structural elevation.
+  - Enhanced and enriched colors using Sharp: boosted the architectural lines with radiant, luminous champagne gold and amber hues, while deepening the dark background into luxury obsidian blueprint navy (`#080B12`) with subtle cyan grid coordinates.
+  - Applied selective highlight bloom and Lanczos3 0.7-sigma sharpening for a glossy, crystal-clear architectural look.
+  - Generated multi-tier responsive derivatives in **AVIF**, **WebP**, and **MozJPEG** at **480w**, **768w**, and **1024w**.
+
+### 2. Exact Location Optimization — Hero Background Slide 1 ("2nd Position")
+- **Hero Slider Integration**:
+  - Updated `heroSlidesData[0]` in `app.js` to reference `assets/img/villa-contemporary-after-1024.webp` with responsive tiers `[480, 768, 1024]`.
+  - Updated LCP preload links in `index.html` to preload `assets/img/villa-contemporary-after-1024.webp` on desktop and 480w on mobile.
+  - Updated `IMAGE_WIDTHS['villa-contemporary-after']` to `[480, 768, 1024]`.
+- **CSS Framing & Glossy Styling**:
+  - In `styles.css`, configured `.hero-slide[data-slide="villa-contemporary-after"] .hero-slide-img { object-position: 70% center; filter: contrast(1.08) brightness(1.18); }`.
+  - Perfectly positions the two-storey CAD elevation, palm trees, and north compass in the open right half of the desktop hero section, while the left half maintains deep contrast behind the headline and CTAs.
+  - Verified across desktop (1440×900) and mobile (390×844) with 0 console errors and 100% responsive fluid scaling.
+
+
 
 
 

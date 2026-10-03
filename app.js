@@ -126,7 +126,7 @@
   // 3. Hero Background Slider
   // ==========================================
   const heroSlidesData = [
-    { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-638.webp', widths: [480, 638], is3d: false },
+    { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-1024.webp', widths: [480, 768, 1024], is3d: false },
     { base: 'residence-elevation', src: 'assets/img/residence-elevation-1024.webp', widths: [480, 768, 1024], is3d: true },
     { base: 'showroom-interior', src: 'assets/img/showroom-interior-1024.webp', widths: [480, 768, 1024], is3d: true },
     { base: 'living-interior', src: 'assets/img/living-interior-1024.webp', widths: [480, 768, 1024], is3d: true }
@@ -574,7 +574,7 @@
     'penthouse-before': [480, 768, 1080, 1376],
     'penthouse-after': [480, 768, 1024],
     'bespoke-living-kitchen': [480, 768, 1080, 1376],
-    'villa-contemporary-after': [480, 638],
+    'villa-contemporary-after': [480, 768, 1024],
     'residence-elevation': [480, 768, 1024],
     'showroom-interior': [480, 768, 1024],
     'living-interior': [480, 768, 1024],
@@ -687,10 +687,10 @@
       area: "3,800 sq.ft",
       year: "2025",
       base: "villa-contemporary-after",
-      cover: "assets/img/villa-contemporary-after-638.webp",
+      cover: "assets/img/villa-contemporary-after-1024.webp",
       coverThumb: "assets/img/villa-contemporary-after-480.webp",
-      coverWidth: 638,
-      coverHeight: 629,
+      coverWidth: 1024,
+      coverHeight: 840,
       hasBeforeAfter: true,
       beforeBase: "villa-facade-before",
       afterBase: "villa-facade-after",
