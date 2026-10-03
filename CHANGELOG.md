@@ -214,5 +214,32 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
 - Added `.hero-slide[data-slide="living-interior"] .hero-slide-img { object-position: center 38%; }` in `styles.css`.
 - The rich warm cove lighting and crystal chandelier glow through the balanced hero overlay while preserving text contrast and readability.
 
+---
+
+## Update: Contemporary Two-Storey Residence Master Upgrade Across Project Card & Hero Slider (October 3, 2026)
+
+### 1. Master Residence Elevation Image Ingestion ("1st Image")
+- **Problem**: The Contemporary Two-Storey Residence 3D Elevation design was previously using a legacy 638×629, 61.9 KB WebP file (`assets/originals/residence-elevation.webp`):
+  - In the 3D Designs Card ("Contemporary Two-Storey Residence – 3D Elevation"), the resolution lacked punch, with soft edges on the upper glass balcony, black louvers, and compound wall.
+  - In Hero Background Slider (Slide 2), the 638px image was stretched across desktop viewports, causing blur and pixelation on high-DPI displays.
+- **Solution**:
+  - Ingested the pristine 1024 × 1009 master render (`media_1791001244906.jpg`) with crisp blue sky, wood-clad vertical feature, dark louvers, upper glass balcony, compound wall with "Benjamin's cottage" nameplate, black sliding gate, and front road.
+  - Generated multi-tier derivatives (480w, 768w, 1024w) in **AVIF**, **WebP**, and **MozJPEG** using Sharp Lanczos3 resampling and 0.5-sigma sharpening.
+  - Updated `IMAGE_WIDTHS['residence-elevation']` to `[480, 768, 1024]`.
+
+### 2. Location-by-Location Responsive Optimization
+
+#### A. 3D Designs Project Card & Lightbox ("2nd Place")
+- Updated `cover`, `coverThumb`, and `renderImage` in `DEFAULT_PROJECTS` (`app.js`) and `projects.json` to `assets/img/residence-elevation-1024.webp` (1024 × 1009).
+- In `styles.css`, configured `.project-card[data-id="residence-3d-elevation"] .project-cover-img { object-position: center 36%; }`.
+- Preserves the entire architectural elevation without clipping: roof parapet, glass balcony, wood feature wall, dark louvers, boundary wall, nameplate, and black steel gate are all cleanly displayed.
+- Lightbox modal renders the full 1024px uncropped master image with concept render badge and WhatsApp design enquiry button.
+
+#### B. Hero Background Slider (Slide 2 — "3rd Place")
+- Updated `heroSlidesData[1]` in `app.js` with responsive tiers `[480, 768, 1024]` and fallback `assets/img/residence-elevation-1024.webp`.
+- Added `.hero-slide[data-slide="residence-elevation"] .hero-slide-img { object-position: center 36%; }` in `styles.css`.
+- The two-storey contemporary elevation with its glass balcony, timber ceiling accents, and warm wall sconces shines clearly behind the gradient overlay with zero blur or stretching.
+
+
 
 

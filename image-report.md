@@ -1,6 +1,6 @@
 # MAK BUILD — Comprehensive Image Asset & Sharpness Report
 
-Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T19:09:10.343Z.
+Generated automatically by `tools/optimize-images.cjs` on 2026-10-03T04:28:38.220Z.
 
 ## 1. Overview & Image Pipeline Rules
 - **Downsampling Kernel**: Lanczos3 (`sharp.kernel.lanczos3`) with `sigma ≈ 0.5` high-frequency recovery.
@@ -24,7 +24,7 @@ Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T19:09:10.34
 | `peb-facility-before.jpg` | 2560×1440 | 627.8 KB | 480, 768, 1080, 1600, 2400, 2560w | 680px | **3.76×** | ✅ **SHARP & GLOSSY (HD)** | PEB Industrial Facility Slider (Before) |
 | `penthouse-after.jpg` | 1024×576 | 160.2 KB | 480, 768, 1024w | 680px | **1.51×** | ✅ **SHARP & GLOSSY (HD)** | Luxury Penthouse Slider (After) |
 | `penthouse-before.jpg` | 1376×768 | 839.4 KB | 480, 768, 1080, 1376w | 680px | **2.02×** | ✅ **SHARP & GLOSSY (HD)** | Luxury Penthouse Slider (Before) |
-| `residence-elevation.webp` | 638×629 | 61.9 KB | 480, 638w | 460px | **1.39×** | ⚠️ **TOO SMALL – replace with larger original** | 3D Elevation Design Card / Hero Slide 2 |
+| `residence-elevation.jpg` | 1024×1009 | 404.9 KB | 480, 768, 1024w | 460px | **2.23×** | ✅ **SHARP & GLOSSY (HD)** | 3D Elevation Design Card / Hero Slide 2 |
 | `showroom-interior.jpg` | 1024×579 | 368.6 KB | 480, 768, 1024w | 460px | **2.23×** | ✅ **SHARP & GLOSSY (HD)** | 3D Showroom Design Card / Hero Slide 3 |
 | `villa-contemporary-after.png` | 638×629 | 779.0 KB | 480, 638w | 460px | **1.39×** | ⚠️ **TOO SMALL – replace with larger original** | Project Grid Card / Master Villa |
 | `villa-facade-after.jpg` | 2560×1440 | 669.8 KB | 480, 768, 1080, 1600, 2400, 2560w | 680px | **3.76×** | ✅ **SHARP & GLOSSY (HD)** | Villa Before/After Slider (After) |
@@ -38,9 +38,9 @@ Generated automatically by `tools/optimize-images.cjs` on 2026-10-02T19:09:10.34
    - *Status*: **TOO SMALL** for full-bleed hero backdrop slots (requires 1920–2560px for 1×/2× displays), but **SHARP** in project cards up to 425px CSS width.
    - *Action*: In hero slide containers, max rendered size is intelligently bounded with CSS background containment and sharp overlay gradients to prevent pixelation blur, preserving the master villa image faithfully as requested. A higher-resolution original (1920px+) should be captured from source renders if available.
 
-2. **3D Concept Renders (`residence-elevation`, `showroom-interior`, `living-interior` - 600–638px)**:
-   - *Status*: **TOO SMALL** for desktop hero backgrounds, but **EXCELLENT** for grid cards (rendered at 320–420px CSS width on phones and desktop grids).
-   - *Action*: Capped at their true physical width in the lightbox viewer (`max-width: 638px; margin: 0 auto;`), ensuring 100% crisp 1:1 pixel fidelity with zero upscaling blur.
+2. **3D Concept Renders (`residence-elevation`, `showroom-interior`, `living-interior`)**:
+   - *Status*: Upgraded to **1024px High-Definition Masters** (`residence-elevation.jpg` 1024×1009, `showroom-interior.jpg` 1024×579, and `living-interior.jpg` 1024×599).
+   - *Result*: Pristine 2.23× DPR in project cards, razor-sharp responsive AVIF/WebP srcset derivatives (480w, 768w, 1024w), and vivid detail in Hero background slides and lightbox modal previews.
 
 3. **High-Resolution Masters (`peb-facility`, `villa-facade`, `commercial-retail`, `penthouse`)**:
    - *Status*: **2560px and 1280–1920px masters**.

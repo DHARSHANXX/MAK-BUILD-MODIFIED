@@ -127,7 +127,7 @@
   // ==========================================
   const heroSlidesData = [
     { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-638.webp', widths: [480, 638], is3d: false },
-    { base: 'residence-elevation', src: 'assets/img/residence-elevation-638.webp', widths: [480, 638], is3d: true },
+    { base: 'residence-elevation', src: 'assets/img/residence-elevation-1024.webp', widths: [480, 768, 1024], is3d: true },
     { base: 'showroom-interior', src: 'assets/img/showroom-interior-1024.webp', widths: [480, 768, 1024], is3d: true },
     { base: 'living-interior', src: 'assets/img/living-interior-1024.webp', widths: [480, 768, 1024], is3d: true }
   ];
@@ -575,7 +575,7 @@
     'penthouse-after': [480, 768, 1024],
     'bespoke-living-kitchen': [480, 768, 1080, 1376],
     'villa-contemporary-after': [480, 638],
-    'residence-elevation': [480, 638],
+    'residence-elevation': [480, 768, 1024],
     'showroom-interior': [480, 768, 1024],
     'living-interior': [480, 768, 1024],
     'office-signboard': [480, 768, 1080, 1600]
@@ -618,12 +618,12 @@
       area: "",
       year: "",
       base: "residence-elevation",
-      cover: "assets/img/residence-elevation-638.webp",
+      cover: "assets/img/residence-elevation-1024.webp",
       coverThumb: "assets/img/residence-elevation-480.webp",
-      coverWidth: 638,
-      coverHeight: 629,
+      coverWidth: 1024,
+      coverHeight: 1009,
       hasBeforeAfter: false,
-      renderImage: "assets/img/residence-elevation-638.webp",
+      renderImage: "assets/img/residence-elevation-1024.webp",
       builtImage: "",
       description: "Exterior render featuring wood-clad pillars, modern louvered panels and glass balcony.",
       descriptionTa: "மர வேலைத்தூண்கள் மற்றும் கண்ணாடி பால்கனியுடன் கூடிய நவீன முகப்பு வடிவமைப்பு.",

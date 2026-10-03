@@ -503,6 +503,10 @@ img {
   transform: scale(1.06);
 }
 
+.hero-slide[data-slide="residence-elevation"] .hero-slide-img {
+  object-position: center 36%;
+}
+
 .hero-slide[data-slide="showroom-interior"] .hero-slide-img {
   object-position: 72% center;
 }
@@ -1302,7 +1306,11 @@ img {
   image-rendering: auto;
 }
 
-/* Precise Focal Framing to Preserve Complete Showroom Details */
+/* Precise Focal Framing to Preserve Complete Elevation & Showroom Details */
+.project-card[data-id="residence-3d-elevation"] .project-cover-img {
+  object-position: center 36%;
+}
+
 .project-card[data-id="showroom-interior-3d"] .project-cover-img {
   object-position: 84% center;
 }
