@@ -281,6 +281,30 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
 - Preserved 100% of category logic, project data, counts (`All 8`, `Villas 1`, `Commercial & PEB 2`, `Interiors 2`, `3D Designs 3`), and deep link URL hashes.
 - Verified across 9 viewports (320px, 360px, 375px, 390px, 414px, 768px, 1024px, 1366px, 1920px): **0 horizontal overflow**, **0 console errors**, and **100% automated QA test pass**.
 
+---
+
+## Update: Project Category Filter Navigation Reorder (October 3, 2026)
+
+### 1. Filter Order Update
+- **Requirement**: Reorder the project/category filter buttons to:
+  `3D Designs — 3` | `Interiors — 2` | `Villas — 1` | `Commercial & PEB — 2` | `All — 8`
+- **Implementation**:
+  - Reordered the `categories` array in `renderProjectsTabs()` in `app.js` to match the exact sequence.
+  - Retained 100% of the existing CSS styling, pill shapes, active-state gold highlights (`var(--gold-grad)`), hover states, touch targets, and responsive wrapping.
+  - Fully preserved category counts, names, icons, and deep link URL hashes (`#work?cat=3d`, `#work?cat=interiors`, `#work?cat=villas`, `#work?cat=commercial`, `#work`).
+
+### 2. Functional & QA Verification
+- **Filter Tests Passed**:
+  - `3D Designs` → correctly filters and displays exactly the 3 3D Design projects.
+  - `Interiors` → correctly filters and displays exactly the 2 Interior projects.
+  - `Villas` → correctly filters and displays exactly the 1 Villa project.
+  - `Commercial & PEB` → correctly filters and displays exactly the 2 Commercial & PEB projects.
+  - `All` → correctly filters and displays all 8 projects.
+- **Responsive Viewports**:
+  - Verified on desktop (1440×900), tablet (768×1024), mobile standard (390×844), and mobile small (320×640).
+  - 0 horizontal scroll / overflow, natural wrap, 0 console errors.
+
+
 
 
 

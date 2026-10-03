@@ -852,11 +852,11 @@
 
     const t = CONTENT.ui[currentLang] || CONTENT.ui.en;
     const categories = [
-      { id: 'all', label: t.tabAll, hash: '#work' },
+      { id: '3D Designs', label: t.tabDesigns, hash: '#work?cat=3d' },
+      { id: 'Interiors', label: t.tabInteriors, hash: '#work?cat=interiors' },
       { id: 'Villas', label: t.tabVillas, hash: '#work?cat=villas' },
       { id: 'Commercial & PEB', label: t.tabCommercial, hash: '#work?cat=commercial' },
-      { id: 'Interiors', label: t.tabInteriors, hash: '#work?cat=interiors' },
-      { id: '3D Designs', label: t.tabDesigns, hash: '#work?cat=3d' }
+      { id: 'all', label: t.tabAll, hash: '#work' }
     ];
 
     // Filter out categories that have zero projects (never show an empty tab)
