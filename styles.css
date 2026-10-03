@@ -1149,10 +1149,22 @@ img {
   color: var(--text-dim);
 }
 
-/* 8. Projects Showcase & Draggable Sliders */
+/* 8. Projects Showcase & Draggable Sliders - Compact Spacing Refinement */
 .projects-section {
-  padding: 96px 0;
+  padding: 68px 0;
   background: var(--bg-base);
+}
+
+.projects-section .section-header {
+  margin: 0 auto 28px auto;
+}
+
+.projects-section .section-eyebrow {
+  margin-bottom: 6px;
+}
+
+.projects-section .section-title {
+  margin-bottom: 8px;
 }
 
 .projects-tabs {
@@ -1161,7 +1173,36 @@ img {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .projects-section {
+    padding: 44px 0;
+  }
+
+  .projects-section .section-header {
+    margin: 0 auto 20px auto;
+  }
+
+  .projects-section .section-eyebrow {
+    margin-bottom: 4px;
+  }
+
+  .projects-section .section-title {
+    margin-bottom: 6px;
+  }
+
+  .projects-tabs {
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .project-tab-btn {
+    padding: 7px 15px;
+    font-size: 0.84rem;
+    min-height: 38px;
+  }
 }
 
 .project-tab-btn {
