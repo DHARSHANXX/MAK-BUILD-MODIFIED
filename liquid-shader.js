@@ -62,7 +62,7 @@
     var gl = null;
     try {
       gl = canvas.getContext("webgl", {
-        alpha: false,
+        alpha: true,
         antialias: false,
         depth: false,
         stencil: false,
@@ -132,7 +132,8 @@
       "  float softVignette = smoothstep(1.3, 0.25, centerDist);" +
       "  col = mix(cDeepNavy, col, 0.85 + softVignette * 0.15);" +
       "  col = clamp(col, 0.0, 1.0);" +
-      "  gl_FragColor = vec4(col, 1.0);" +
+      "  float lum = clamp(length(col - cDeepNavy) * 2.2, 0.0, 0.85);" +
+      "  gl_FragColor = vec4(col, lum);" +
       "}";
 
     function compile(type, src) {

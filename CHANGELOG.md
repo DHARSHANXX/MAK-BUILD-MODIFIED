@@ -375,6 +375,49 @@ This fix-and-polish release resolves all 5 critical quality problems identified 
   - **0 console errors / 0 runtime exceptions**.
   - **100% assertions satisfied**.
 
+---
+
+## Update: Background Atmosphere, Section Transparency & Visual Integration (October 3, 2026)
+
+### 1. Root Cause Resolution & Step 0 CSS Audit
+- **Problem**: The animated background layer was hidden behind opaque near-black section backgrounds (`#090d16`, `#080B11`, `#0b0f18`, `#06080d`) in Packages, Estimator, About, Contact, and Footer, creating stark horizontal black bands and voids.
+- **Solution**:
+  - Replaced all solid black section backgrounds with `transparent` or soft translucent overlays (`rgba(7, 17, 31, 0.20 to 0.30)`).
+  - Removed all hard borders between sections, replacing them with delicate gold hairlines (`rgba(212, 175, 55, 0.15)`).
+  - Filled empty spaces below the Google Maps embed, below the Get Directions button, and above the footer with continuous transparent styling.
+  - Ensured `html` base is `#07111F` (deep navy, never black) and `body` is `transparent`.
+
+### 2. Signature 5-Layer CSS + WebGL Atmosphere System
+- **Layer A (Base)**: Linear gradient `linear-gradient(180deg, #07111F 0%, #0B2A4A 45%, #07111F 100%)`.
+- **Layer B (Blue Atmosphere)**: Dual soft radial gradient orbs (Rich Blue `#123F70` at 45% and Soft Blue `#1B5C9E` at 20%) slowly drifting across 80s/90s GPU-composited keyframe loops.
+- **Layer C (Glossy Gold Light)**: Soft elliptical gold radial gradient (`#F3D477` / `#E7C766` at 32% opacity) drifting diagonally on a 60s ease-in-out loop with a faint 55s metallic sweep band.
+- **Layer D (Architectural Blueprint Grid)**: Subtle CAD grid (100px major / 20px minor in `rgba(234, 240, 246, 0.04)`) with faint gold drafting lines (`rgba(231, 199, 102, 0.10)`).
+- **Layer E (Vignette)**: Deepest navy edge vignette in `#050B14` (max 30% opacity) preserving luminous center depth.
+- **Ambient WebGL Fluid Layer**: `<canvas id="mak-bg-shader">` enabled with native WebGL alpha blending (`alpha: true`), rendering transparent navy with luminous fluid highlights (`mix-blend-mode: screen; opacity: 0.40`).
+
+### 3. Cards & Panels Glass-Navy Elevation
+- Applied unified glass-navy gradient (`linear-gradient(145deg, rgba(18, 63, 112, 0.40), rgba(7, 17, 31, 0.68))`), `backdrop-filter: blur(8px)`, and gold hairline borders (`rgba(231, 199, 102, 0.20)`) to:
+  - Process step cards (`.process-step-card`)
+  - Studio leadership card (`.studio-card`)
+  - Contact cards (`.contact-info-card`) & Enquiry form (`.enquiry-form`)
+  - Estimator box (`.estimator-box`)
+  - Package cards (`.package-card`) & Service cards (`.service-card`)
+  - Footer hiring banner (`.footer-hiring-line`)
+- Form inputs styled with `background: rgba(5, 11, 20, 0.55)` and gold focus outline.
+
+### 4. Glossy Gold UI System
+- **CTA Buttons**: Enhanced "Get Free Quote", "Get Directions", and "Send Enquiry" with glossy gradient `linear-gradient(135deg, #D4AF37, #F3D477, #D4AF37)`, crisp `#050B14` typography, and gold aura shadow.
+- **Section Eyebrows**: Sized and styled with `#E7C766` and subtle gold aura glow.
+- **Workflow Step Numbers**: Rendered bold 800 weight in `#F3D477`.
+- **WhatsApp Green**: Retained authentic brand colors (`#25D366` / `#4ADE80`).
+
+### 5. Multi-Device QA Verification
+- Full test suites passed:
+  - `tools/verify-nebula-shader.cjs`: WebGL active, non-blocking pointer events, correct DPR scaling.
+  - `tools/test-suite.cjs`: 0 console errors, 0 horizontal overflow, 100% assertions satisfied.
+  - `tools/capture-sections.cjs`: Full-page top-to-bottom screenshot audit confirms continuous atmosphere across all viewports.
+
+
 
 
 
