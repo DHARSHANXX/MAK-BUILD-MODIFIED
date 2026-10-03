@@ -91,15 +91,14 @@
       "uniform vec2 uMouse;" +
       "uniform float uIters;" +
       "uniform float uReducedMotion;" +
-      // Exact MAK BUILD Color Flow: Deep Navy -> Architectural Blue -> Subtle Metallic Gold -> Soft White
-      "const vec3 cDeepNavy  = vec3(0.0275, 0.0667, 0.1216);" + // #07111F
+      // Exact MAK BUILD Color Flow: Deep Navy -> Architectural Blue -> Subtle Metallic Gold on White
+      "const vec3 cWhite     = vec3(0.9686, 0.9804, 0.9922);" + // #F7FAFD
       "const vec3 cNavy1     = vec3(0.0431, 0.1647, 0.2902);" + // #0B2A4A
       "const vec3 cBlueMid   = vec3(0.0706, 0.2471, 0.4392);" + // #123F70
       "const vec3 cBlueHigh  = vec3(0.1059, 0.3608, 0.6196);" + // #1B5C9E
       "const vec3 cGoldBase  = vec3(0.8314, 0.6863, 0.2157);" + // #D4AF37
       "const vec3 cGoldMid   = vec3(0.9059, 0.7804, 0.4000);" + // #E7C766
       "const vec3 cGoldLight = vec3(0.9529, 0.8314, 0.4667);" + // #F3D477
-      "const vec3 cSoftWhite = vec3(0.9176, 0.9412, 0.9647);" + // #EAF0F6
       "mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }" +
       "float map(vec3 p, float t){" +
       "  p.xz *= rot(t * 0.08);" +
@@ -114,7 +113,7 @@
       "  vec2 drift = vec2(sin(t * 0.20) * 0.16, cos(t * 0.15) * 0.12);" +
       "  uv += drift;" +
       "  uv += uMouse * 0.035;" +
-      "  vec3 col = cDeepNavy;" +
+      "  vec3 col = cWhite;" +
       "  float d = 2.4;" +
       "  vec3 ro = vec3(0.0, 0.0, 4.6);" +
       "  vec3 rd = normalize(vec3(uv, -1.0));" +
@@ -124,17 +123,15 @@
       "    float f = clamp((rz - map(p + 0.14, t)) * 0.5, -0.1, 1.0);" +
       "    vec3 blueCol = mix(cNavy1, cBlueMid, clamp(f * 1.3, 0.0, 1.0));" +
       "    blueCol = mix(blueCol, cBlueHigh, clamp(f * 2.2 - 0.6, 0.0, 1.0));" +
-      "    col += blueCol * (smoothstep(2.4, 0.0, rz) * 0.34);" +
+      "    float blueWeight = smoothstep(2.4, 0.0, rz) * 0.08;" +
+      "    col = mix(col, blueCol, blueWeight);" +
       "    float goldWave = sin(p.x * 0.58 + p.y * 0.42 - t * 0.32);" +
-      "    float goldFactor = smoothstep(0.72, 0.98, goldWave) * clamp(f * 1.45, 0.0, 1.0);" +
+      "    float goldFactor = smoothstep(0.74, 0.98, goldWave) * clamp(f * 1.45, 0.0, 1.0);" +
       "    vec3 goldCol = mix(cGoldBase, cGoldMid, clamp(goldFactor * 1.4, 0.0, 1.0));" +
       "    goldCol = mix(goldCol, cGoldLight, clamp(goldFactor * 2.0 - 0.6, 0.0, 1.0));" +
-      "    col += goldCol * (goldFactor * 0.36);" +
-      "    float whiteFactor = pow(clamp(f, 0.0, 1.0), 3.2) * smoothstep(0.86, 1.0, goldWave) * 0.28;" +
-      "    col += cSoftWhite * whiteFactor;" +
+      "    col = mix(col, goldCol, goldFactor * 0.14);" +
       "    d += min(rz, 1.0);" +
       "  }" +
-      "  col = mix(cDeepNavy, col, 0.88);" +
       "  col = clamp(col, 0.0, 1.0);" +
       "  gl_FragColor = vec4(col, 1.0);" +
       "}";
