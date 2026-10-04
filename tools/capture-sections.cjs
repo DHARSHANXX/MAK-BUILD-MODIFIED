@@ -40,7 +40,7 @@ server.listen(PORT, async () => {
   await page.goto(`http://localhost:${PORT}/index.html`, { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1000));
   
-  const sections = ['#hero', '#services', '#packages', '#work', '#estimator', '.process-section', '#about', '#contact', 'footer'];
+  const sections = ['#hero', '#services', '#packages', '#work', '#estimator', '.process-section', '#feedback', '#about', '#faq', '#contact', 'footer'];
   for (const s of sections) {
     const el = await page.$(s);
     if (el) {

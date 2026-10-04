@@ -384,10 +384,10 @@ window.MAK_CONTENT = {
 
   // 8. PROVEN TRACK RECORD / STATS COUNTER
   stats: [
-    { value: 12, suffix: "+", labelEn: "Years Experience", labelTa: "ஆண்டுகள் அனுபவம்" },
-    { value: 150, suffix: "+", labelEn: "Projects Delivered", labelTa: "நிறைவுற்ற திட்டங்கள்" },
+    { value: 10, suffix: "+", labelEn: "Years Experience", labelTa: "ஆண்டுகள் அனுபவம்" },
+    { value: 20, suffix: "+", labelEn: "Projects Delivered", labelTa: "நிறைவுற்ற திட்டங்கள்" },
     { value: 100, suffix: "%", labelEn: "Vasthu Compliant", labelTa: "வாஸ்து பொருத்தம்" },
-    { value: 350, suffix: "+", labelEn: "Happy Families", labelTa: "மகிழ்வான குடும்பங்கள்" }
+    { value: 50, suffix: "+", labelEn: "Happy Families", labelTa: "மகிழ்வான குடும்பங்கள்" }
   ],
 
   // 9. FREQUENTLY ASKED QUESTIONS (FAQ)

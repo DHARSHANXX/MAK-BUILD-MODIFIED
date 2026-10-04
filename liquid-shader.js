@@ -134,12 +134,6 @@
       "    col = mix(col, goldCol, goldFactor * (uIsDark > 0.5 ? 0.30 : 0.14));" +
       "    d += min(rz, 1.0);" +
       "  }" +
-      // Subtle architectural gold light streak sweeping across at ~22 degrees
-      "  float streakCoord = uv.x * 0.92 - uv.y * 0.38;" +
-      "  float sweep = fract(streakCoord * 0.50 - t * 0.10);" +
-      "  float streakLine = smoothstep(0.0, 0.012, sweep) * smoothstep(0.045, 0.012, sweep);" +
-      "  vec3 streakColor = mix(cGoldBase, cGoldLight, 0.75);" +
-      "  col = mix(col, streakColor, streakLine * (uIsDark > 0.5 ? 0.30 : 0.20));" +
       "  col = clamp(col, 0.0, 1.0);" +
       "  gl_FragColor = vec4(col, 1.0);" +
       "}";
