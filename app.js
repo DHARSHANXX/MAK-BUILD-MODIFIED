@@ -1435,7 +1435,7 @@
       return `₹${l.toFixed(2)} Lakhs`;
     }
 
-    amountEl.innerHTML = `<span style="white-space: nowrap;">${formatLakhs(lowCost)}</span> – <span style="white-space: nowrap;">${formatLakhs(highCost)}</span>`;
+    amountEl.innerHTML = `<span class="est-amount-part">${formatLakhs(lowCost)}</span> <span class="est-amount-sep">–</span> <span class="est-amount-part">${formatLakhs(highCost)}</span>`;
     noteEl.textContent = t.estIndicativeNote;
 
     // WhatsApp Message

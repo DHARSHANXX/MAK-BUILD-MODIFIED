@@ -759,7 +759,7 @@ img {
 .mobile-nav-drawer {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
   width: 280px;
   height: 100vh;
   background: var(--bg-surface);
@@ -769,12 +769,15 @@ img {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
   box-shadow: var(--shadow-lg);
 }
 
 .mobile-nav-drawer.open {
-  right: 0;
+  transform: translateX(0);
+  visibility: visible;
 }
 
 .mobile-nav-link {
@@ -2076,19 +2079,31 @@ img {
   margin-top: auto;
   padding-top: 14px;
   border-top: 1px solid var(--line);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+  .project-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 }
 
 .proj-whatsapp-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--gold);
   text-decoration: none;
   transition: color 0.15s ease, transform 0.15s ease;
-  min-height: 38px;
-  padding: 4px 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  box-sizing: border-box;
 }
 
 .proj-whatsapp-link:hover {
@@ -2099,8 +2114,9 @@ img {
 .btn-request-design {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 18px;
+  padding: 10px 18px;
   font-size: 0.84rem;
   font-weight: 700;
   color: #0b1220;
@@ -2108,12 +2124,25 @@ img {
   border-radius: var(--radius-pill);
   text-decoration: none;
   transition: transform 0.15s ease, filter 0.15s ease;
-  min-height: 38px;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .btn-request-design:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  .project-actions-row .service-btn.view-proj-btn,
+  .project-actions-row .btn-request-design,
+  .project-actions-row .proj-whatsapp-link {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+  }
 }
 
 .gold-glass {
@@ -2128,17 +2157,30 @@ img {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  padding: 36px;
+  padding: 32px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 20px;
   align-items: center;
   box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .instagram-follow-card {
-    grid-template-columns: 180px 1fr auto;
+    grid-template-columns: 160px 1fr auto;
+    padding: 36px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .instagram-follow-card {
+    padding: 22px 16px;
+    gap: 16px;
+    text-align: center;
   }
 }
 
@@ -2153,6 +2195,7 @@ img {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .instagram-qr-img {
@@ -2161,11 +2204,29 @@ img {
   object-fit: contain;
 }
 
+.instagram-card-text {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .instagram-card-text {
+    text-align: center;
+  }
+}
+
 .instagram-card-text h3 {
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 6px;
+}
+
+@media (max-width: 767px) {
+  .instagram-card-text h3 {
+    font-size: 1.18rem;
+  }
 }
 
 .instagram-card-text p {
@@ -2176,8 +2237,9 @@ img {
 .instagram-follow-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 12px 26px;
+  padding: 12px 24px;
   font-size: 0.9rem;
   font-weight: 700;
   color: #ffffff;
@@ -2185,6 +2247,19 @@ img {
   border-radius: var(--radius-pill);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .instagram-follow-btn {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.86rem;
+    padding: 12px 16px;
+  }
 }
 
 .instagram-follow-btn:hover {
@@ -2207,6 +2282,15 @@ img {
   padding: 32px 24px;
   box-shadow: 0 16px 44px rgba(11, 18, 32, 0.28);
   color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .estimator-box {
+    padding: 20px 16px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -2217,14 +2301,26 @@ img {
 
 .estimator-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 36px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 900px) {
   .estimator-grid {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 36px;
   }
+}
+
+.estimator-controls,
+.estimator-result-card {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .estimator-control-group {
@@ -2277,10 +2373,21 @@ img {
   align-items: center;
   gap: 16px;
   margin-top: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+  .estimator-area-inputs {
+    gap: 10px;
+  }
 }
 
 .estimator-range {
   flex-grow: 1;
+  min-width: 0;
+  width: 100%;
   -webkit-appearance: none;
   appearance: none;
   height: 8px;
@@ -2345,6 +2452,17 @@ img {
   text-align: right;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+  .estimator-number-input {
+    width: 86px;
+    min-width: 76px;
+    padding: 8px 6px;
+    font-size: 0.92rem;
+  }
 }
 
 .estimator-number-input:focus {
@@ -2356,12 +2474,14 @@ img {
 /* Packages Radio Grid */
 .estimator-package-select {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pkg-radio-btn {
-  padding: 10px 12px;
+  padding: 10px 10px;
   font-size: 0.82rem;
   font-weight: 700;
   text-align: center;
@@ -2370,6 +2490,10 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-pill);
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .pkg-radio-btn.active {
@@ -2433,6 +2557,15 @@ img {
   flex-direction: column;
   justify-content: flex-start;
   gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .estimator-result-card {
+    padding: 20px 16px;
+  }
 }
 
 .result-card-header {
@@ -2449,18 +2582,35 @@ img {
 }
 
 .result-amount-range {
-  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  font-size: clamp(1.4rem, 4.2vw, 2.4rem);
   font-weight: 800;
   color: var(--gold-bright);
-  line-height: 1.1;
+  line-height: 1.2;
   margin-bottom: 6px;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+  white-space: normal;
+  word-break: normal;
   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.est-amount-part {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.est-amount-sep {
+  opacity: 0.8;
 }
 
 .result-note {
   font-size: 0.82rem;
   color: #94a3b8;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 /* 100% Cost Distribution Breakdown Bar */
@@ -2490,30 +2640,42 @@ img {
 
 .breakdown-legend {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   font-size: 0.74rem;
   color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .breakdown-legend {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    font-size: 0.78rem;
+  }
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .legend-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .estimator-whatsapp-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 14px 20px;
   font-size: 0.95rem;
   font-weight: 800;
   color: #0b1220;
@@ -2522,6 +2684,19 @@ img {
   box-shadow: 0 4px 18px var(--gold-glow);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   min-height: 48px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.estimator-whatsapp-btn svg {
+  flex-shrink: 0;
+}
+
+.estimator-whatsapp-btn span {
+  white-space: normal;
+  word-break: break-word;
 }
 
 .estimator-whatsapp-btn:hover {
@@ -3239,9 +3414,15 @@ img {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .floating-mobile-bar {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--mobile-bar-height) + env(safe-area-inset-bottom, 16px) + 20px);
   }
 }
 
@@ -3253,12 +3434,15 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-muted);
   padding: 6px 12px;
   min-width: 64px;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .mobile-bar-btn.active,
@@ -3417,7 +3601,7 @@ img {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 2500;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   opacity: 0;
@@ -3427,6 +3611,7 @@ img {
 }
 
 .lightbox-overlay.open {
+  display: flex;
   opacity: 1;
   visibility: visible;
 }
@@ -3688,10 +3873,12 @@ img {
 
 @media (max-width: 768px) {
   .back-to-top-btn {
-    bottom: 80px;
+    bottom: calc(var(--mobile-bar-height) + 16px) !important;
     right: 16px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 
