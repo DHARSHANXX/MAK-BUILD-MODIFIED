@@ -286,6 +286,7 @@
     const sub = document.getElementById('heroSub');
     const tagline = document.getElementById('heroTamilTagline');
     const infoEngineer = document.getElementById('heroInfoEngineer');
+    const infoDesigner = document.getElementById('heroInfoDesigner');
     const infoScope = document.getElementById('heroInfoScope');
     const infoStudio = document.getElementById('heroInfoStudio');
 
@@ -295,6 +296,9 @@
 
     if (infoEngineer) {
       infoEngineer.innerHTML = `<strong>${t.heroInfoEngineer}</strong>`;
+    }
+    if (infoDesigner && t.heroInfoDesigner) {
+      infoDesigner.innerHTML = `<strong>${t.heroInfoDesigner}</strong>`;
     }
     if (infoScope) infoScope.textContent = t.heroInfoScope;
     if (infoStudio) infoStudio.textContent = t.heroInfoStudio;
@@ -697,8 +701,6 @@
   const IMAGE_WIDTHS = {
     'villa-facade-before': [480, 768, 1080, 1600, 2400],
     'villa-facade-after': [480, 768, 1080, 1600, 2400],
-    'peb-facility-before': [480, 768, 1080, 1600, 2400],
-    'peb-facility-after': [480, 768, 1080, 1600, 2400],
     'commercial-retail-before': [480, 768, 1024],
     'commercial-retail-after': [480, 768, 1024],
     'penthouse-before': [480, 768, 1080, 1376],
@@ -857,33 +859,6 @@
       afterLabel: "COMPLETED JEWELLERY SHOWROOM",
       description: "Complete retail transformation from unfinished structural shell to luxury retail showroom.",
       descriptionTa: "வெறும் கான்கிரீட் சுவர்களில் இருந்து முழுமையான சொகுசு நகைக்கடையாக மாற்றியமைத்தல்.",
-      blurBrand: false,
-      blurNameplate: false,
-      clientPermission: true
-    },
-    {
-      id: "peb-industrial-facility",
-      title: "PEB Industrial & Warehouse Facility",
-      titleTa: "தொழில்துறை கூடம் & கிடங்கு",
-      category: "Commercial & PEB",
-      badge: "Completed",
-      location: "Mayiladuthurai District",
-      area: "8,500 sq.ft",
-      year: "2024",
-      base: "peb-facility-after",
-      cover: "assets/img/peb-facility-after-1080.webp",
-      coverThumb: "assets/img/peb-facility-after-480.webp",
-      coverWidth: 2560,
-      coverHeight: 1440,
-      hasBeforeAfter: true,
-      beforeBase: "peb-facility-before",
-      afterBase: "peb-facility-after",
-      beforeImg: "assets/img/peb-facility-before-1600.webp",
-      afterImg: "assets/img/peb-facility-after-1600.webp",
-      beforeLabel: "FOUNDATION & FRAMEWORK",
-      afterLabel: "ENGINEERED PEB SHED",
-      description: "Engineered pre-engineered steel building fabricated to rigorous structural standards.",
-      descriptionTa: "தொழில்துறை தரநிலைகளுக்கு ஏற்ப துல்லியமாக வடிவமைக்கப்பட்ட எஃகு கட்டமைப்பு.",
       blurBrand: false,
       blurNameplate: false,
       clientPermission: true

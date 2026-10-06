@@ -80,8 +80,8 @@ function startServer() {
     { label: '3D Designs', count: '3' },
     { label: 'Interiors', count: '2' },
     { label: 'Villas', count: '1' },
-    { label: 'Commercial & PEB', count: '2' },
-    { label: 'All', count: '8' }
+    { label: 'Commercial & PEB', count: '1' },
+    { label: 'All', count: '7' }
   ];
 
   let orderCorrect = true;
@@ -119,8 +119,8 @@ function startServer() {
     { name: '3D Designs', expectedCount: 3, expectedHash: '#work?cat=3d', checkCat: '3D Designs' },
     { name: 'Interiors', expectedCount: 2, expectedHash: '#work?cat=interiors', checkCat: 'Interiors' },
     { name: 'Villas', expectedCount: 1, expectedHash: '#work?cat=villas', checkCat: 'Villas' },
-    { name: 'Commercial & PEB', expectedCount: 2, expectedHash: '#work?cat=commercial', checkCat: 'Commercial & PEB' },
-    { name: 'All', expectedCount: 8, expectedHash: '#work', checkCat: null }
+    { name: 'Commercial & PEB', expectedCount: 1, expectedHash: '#work?cat=commercial', checkCat: 'Commercial & PEB' },
+    { name: 'All', expectedCount: 7, expectedHash: '#work', checkCat: null }
   ];
 
   console.log('\n--- Testing Click & Filter for Each Tab ---');
