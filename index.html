@@ -206,13 +206,15 @@
           <div class="hero-profiles-group">
             <div class="hero-info-item hero-info-engineer">
               <img 
-                src="/public/images/mani-photo-128.webp" 
-                srcset="/public/images/mani-photo-128.webp 1x, /public/images/mani-photo-256.webp 2x, /public/images/mani-photo.png 4x" 
+                src="public/images/mani-photo-128.webp" 
+                srcset="public/images/mani-photo-128.webp 1x, public/images/mani-photo-256.webp 2x, public/images/mani-photo.png 4x" 
                 alt="Er. Manikandan Rajendran" 
                 class="hero-engineer-photo" 
                 width="60" 
                 height="60" 
                 loading="eager"
+                decoding="async"
+                onerror="if(!this.dataset.fallbackTried){this.dataset.fallbackTried='1';this.srcset='';this.src='images/mani-photo.png';}"
               />
               <span id="heroInfoEngineer"><strong>Led by Er. Manikandan Rajendran – Registered Civil &amp; Structural Engineer</strong></span>
             </div>
@@ -221,13 +223,15 @@
 
             <div class="hero-info-item hero-info-designer">
               <img 
-                src="/public/images/kalai-photo-128.webp" 
-                srcset="/public/images/kalai-photo-128.webp 1x, /public/images/kalai-photo-256.webp 2x, /public/images/kalai-photo.png 4x" 
+                src="public/images/kalai-photo-128.webp" 
+                srcset="public/images/kalai-photo-128.webp 1x, public/images/kalai-photo-256.webp 2x, public/images/kalai-photo.png 4x" 
                 alt="Kalaiyarasi Sundar" 
                 class="hero-designer-photo" 
                 width="60" 
                 height="60" 
                 loading="eager"
+                decoding="async"
+                onerror="if(!this.dataset.fallbackTried){this.dataset.fallbackTried='1';this.srcset='';this.src='images/kalai-photo.png';}"
               />
               <span id="heroInfoDesigner"><strong>Kalaiyarasi Sundar – Associate Designer</strong></span>
             </div>
