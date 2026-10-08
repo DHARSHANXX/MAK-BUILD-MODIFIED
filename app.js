@@ -155,14 +155,54 @@
   }
 
   // ==========================================
+  // ==========================================
   // 3. Hero Background Slider
   // ==========================================
+  let isHeroOffscreen = false;
+  let heroResumeTimer = null;
+  let heroTransitionEndTimeout = null;
+
   const heroSlidesData = [
     { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-1024.webp', widths: [480, 768, 1024], is3d: false },
     { base: 'residence-elevation', src: 'assets/img/residence-elevation-1024.webp', widths: [480, 768, 1024], is3d: true },
-    { base: 'showroom-interior', src: 'assets/img/showroom-interior-1024.webp', widths: [480, 768, 1024], is3d: true },
-    { base: 'living-interior', src: 'assets/img/living-interior-1024.webp', widths: [480, 768, 1024], is3d: true }
+    { base: 'slide-3-exterior', src: 'assets/img/slide-3-exterior-1024.webp', widths: [640, 1024, 1440, 1920], is3d: true },
+    { base: 'slide-4-interior', src: 'assets/img/slide-4-interior-1024.webp', widths: [640, 1024, 1440, 1920], is3d: true }
   ];
+
+  function preloadSubsequentSlides() {
+    const isMobile = window.innerWidth <= 640;
+    const isTablet = window.innerWidth <= 1024;
+    function getPreloadUrl(slide) {
+      let targetWidth;
+      if (isMobile) {
+        targetWidth = slide.widths[0];
+      } else if (isTablet) {
+        targetWidth = slide.widths[Math.min(1, slide.widths.length - 1)];
+      } else {
+        targetWidth = slide.widths[Math.min(2, slide.widths.length - 1)];
+      }
+      return `assets/img/${slide.base}-${targetWidth}.webp`;
+    }
+
+    let nextIdx = 1;
+    function loadNext() {
+      if (nextIdx >= heroSlidesData.length) return;
+      const slide = heroSlidesData[nextIdx];
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = img.onerror = () => {
+        nextIdx++;
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadNext, { timeout: 1000 });
+        } else {
+          setTimeout(loadNext, 120);
+        }
+      };
+      img.src = getPreloadUrl(slide);
+    }
+
+    loadNext();
+  }
 
   function initHeroSlider() {
     const sliderWrap = document.getElementById('heroSliderWrap');
@@ -189,7 +229,7 @@
                alt="MAK BUILD Architectural Showcase ${idx + 1}"
                ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
                decoding="async"
-               width="1280" height="720">
+               width="1920" height="1080">
         </picture>
       `;
       sliderWrap.appendChild(div);
@@ -205,18 +245,70 @@
     updateSlideChip();
     startHeroAutoplay();
 
-    // Pause autoplay on hover or touch-hold
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-      heroSection.addEventListener('mouseenter', () => { isHeroPaused = true; });
-      heroSection.addEventListener('mouseleave', () => { isHeroPaused = false; });
-      heroSection.addEventListener('touchstart', () => { isHeroPaused = true; }, { passive: true });
-      heroSection.addEventListener('touchend', () => { isHeroPaused = false; });
+    // Trigger sequential background preloading after active slide 1 finishes loading
+    const firstSlideImg = sliderWrap.querySelector('.hero-slide:first-child .hero-slide-img');
+    if (firstSlideImg) {
+      if (firstSlideImg.complete) {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(preloadSubsequentSlides, { timeout: 1500 });
+        } else {
+          setTimeout(preloadSubsequentSlides, 300);
+        }
+      } else {
+        firstSlideImg.addEventListener('load', () => {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(preloadSubsequentSlides, { timeout: 1500 });
+          } else {
+            setTimeout(preloadSubsequentSlides, 300);
+          }
+        }, { once: true });
+      }
     }
 
-    // Pause when tab hidden
+    // Autoplay pause and resume handling
+    function pauseHero() {
+      if (heroResumeTimer) {
+        clearTimeout(heroResumeTimer);
+        heroResumeTimer = null;
+      }
+      isHeroPaused = true;
+    }
+
+    function resumeHeroWithDelay(delay = 2000) {
+      if (heroResumeTimer) clearTimeout(heroResumeTimer);
+      heroResumeTimer = setTimeout(() => {
+        if (!isHeroOffscreen && !document.hidden) {
+          isHeroPaused = false;
+        }
+      }, delay);
+    }
+
+    // Pause autoplay on hover or touch-hold, resume after a delay
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', pauseHero);
+      heroSection.addEventListener('mouseleave', () => resumeHeroWithDelay(2000));
+      heroSection.addEventListener('touchstart', pauseHero, { passive: true });
+      heroSection.addEventListener('touchend', () => resumeHeroWithDelay(2000), { passive: true });
+
+      // Pause when hero is scrolled out of view
+      if ('IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isHeroOffscreen = !entry.isIntersecting;
+          });
+        }, { threshold: 0.15 });
+        heroObserver.observe(heroSection);
+      }
+    }
+
+    // Pause when tab is not active, resume with delay when active
     document.addEventListener('visibilitychange', () => {
-      isHeroPaused = document.hidden;
+      if (document.hidden) {
+        pauseHero();
+      } else {
+        resumeHeroWithDelay(1000);
+      }
     });
 
     // Arrow keys & swipe
@@ -243,19 +335,33 @@
   }
 
   function goToSlide(index) {
+    if (index === heroCurrentIndex) return;
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
     if (!slides.length) return;
 
-    slides[heroCurrentIndex].classList.remove('active');
+    const prevSlide = slides[heroCurrentIndex];
+    const nextSlide = slides[index];
+
+    // Scoped will-change: add to transitioning slides only
+    if (prevSlide) prevSlide.classList.add('is-transitioning');
+    if (nextSlide) nextSlide.classList.add('is-transitioning');
+
+    if (prevSlide) prevSlide.classList.remove('active');
     if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.remove('active');
 
     heroCurrentIndex = index;
 
-    slides[heroCurrentIndex].classList.add('active');
+    if (nextSlide) nextSlide.classList.add('active');
     if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.add('active');
 
     updateSlideChip();
+
+    // Remove will-change once transition finishes so GPU memory is freed
+    if (heroTransitionEndTimeout) clearTimeout(heroTransitionEndTimeout);
+    heroTransitionEndTimeout = setTimeout(() => {
+      slides.forEach(s => s.classList.remove('is-transitioning'));
+    }, 1300);
   }
 
   function updateSlideChip() {
@@ -274,7 +380,8 @@
   function startHeroAutoplay() {
     if (heroTimer) clearInterval(heroTimer);
     heroTimer = setInterval(() => {
-      if (!isHeroPaused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!isHeroPaused && !isHeroOffscreen && !document.hidden && !prefersReduced) {
         goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
       }
     }, HERO_INTERVAL);
@@ -710,6 +817,8 @@
     'residence-elevation': [480, 768, 1024],
     'showroom-interior': [480, 768, 1024],
     'living-interior': [480, 768, 1024],
+    'slide-3-exterior': [640, 1024, 1440, 1920],
+    'slide-4-interior': [640, 1024, 1440, 1920],
     'office-signboard': [480, 768, 1080, 1600]
   };
 
