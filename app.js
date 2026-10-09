@@ -21,7 +21,7 @@
   let moderateOption = 'standard'; // 'standard' (2300) | 'plus' (2400)
   let heroCurrentIndex = 0;
   let heroTimer = null;
-  const HERO_INTERVAL = 6000;
+  const HERO_INTERVAL = 5000;
   let isHeroPaused = false;
 
   // DOM Elements
@@ -163,16 +163,41 @@
   let heroTransitionEndTimeout = null;
 
   const heroSlidesData = [
-    { base: 'villa-contemporary-after', src: 'assets/img/villa-contemporary-after-1024.webp', widths: [480, 768, 1024], is3d: false },
-    { base: 'residence-elevation', src: 'assets/img/residence-elevation-1024.webp', widths: [480, 768, 1024], is3d: true },
-    { base: 'slide-3-exterior', src: 'assets/img/slide-3-exterior-1024.webp', widths: [640, 1024, 1440, 1920], is3d: true },
-    { base: 'slide-4-interior', src: 'assets/img/slide-4-interior-1024.webp', widths: [640, 1024, 1440, 1920], is3d: true }
+    { 
+      base: 'hero-bg', 
+      src: 'images/hero-bg.png', 
+      widths: [], 
+      is3d: false, 
+      alt: 'MAK BUILD Architectural Line-Art - Good Design Builds Better Lives' 
+    },
+    { 
+      base: 'residence-elevation', 
+      src: 'assets/img/residence-elevation-1024.webp', 
+      widths: [480, 768, 1024], 
+      is3d: true, 
+      alt: 'MAK BUILD 3D Villa Elevation & Modern Residence' 
+    },
+    { 
+      base: 'slide-3-exterior', 
+      src: 'assets/img/slide-3-exterior-1024.webp', 
+      widths: [640, 1024, 1440, 1920], 
+      is3d: false, 
+      alt: 'MAK BUILD Modern Architecture Exterior with Balcony' 
+    },
+    { 
+      base: 'slide-4-interior', 
+      src: 'assets/img/slide-4-interior-1024.webp', 
+      widths: [640, 1024, 1440, 1920], 
+      is3d: true, 
+      alt: 'MAK BUILD Luxury Office Interior & Wooden Slat Design' 
+    }
   ];
 
   function preloadSubsequentSlides() {
     const isMobile = window.innerWidth <= 640;
     const isTablet = window.innerWidth <= 1024;
     function getPreloadUrl(slide) {
+      if (!slide.widths || slide.widths.length === 0) return slide.src;
       let targetWidth;
       if (isMobile) {
         targetWidth = slide.widths[0];
@@ -208,40 +233,59 @@
     const sliderWrap = document.getElementById('heroSliderWrap');
     const dotsWrap = document.getElementById('heroDotsWrap');
     const chip = document.getElementById('heroSlideChip');
+    const heroEl = document.getElementById('hero');
     if (!sliderWrap || !dotsWrap) return;
 
     sliderWrap.innerHTML = '';
     dotsWrap.innerHTML = '';
 
     heroSlidesData.forEach((slide, idx) => {
-      // Create slide element with responsive picture set
+      // Create slide element with responsive picture set or single img
       const div = document.createElement('div');
       div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
       div.setAttribute('data-slide', slide.base);
-      const avifSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.avif ${w}w`).join(', ');
-      const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
-      div.innerHTML = `
-        <picture>
-          <source type="image/avif" srcset="${avifSrcset}" sizes="100vw">
-          <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
+
+      if (slide.widths && slide.widths.length > 0) {
+        const avifSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.avif ${w}w`).join(', ');
+        const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
+        div.innerHTML = `
+          <picture>
+            <source type="image/avif" srcset="${avifSrcset}" sizes="100vw">
+            <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
+            <img class="hero-slide-img" 
+                 src="${slide.src}" 
+                 alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
+                 ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+                 decoding="async"
+                 width="1920" height="1080">
+          </picture>
+        `;
+      } else {
+        div.innerHTML = `
           <img class="hero-slide-img" 
                src="${slide.src}" 
-               alt="MAK BUILD Architectural Showcase ${idx + 1}"
+               alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
                ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
                decoding="async"
-               width="1920" height="1080">
-        </picture>
-      `;
+               width="1600" height="900">
+        `;
+      }
       sliderWrap.appendChild(div);
 
       // Create dot
       const dot = document.createElement('button');
       dot.className = `hero-dot ${idx === 0 ? 'active' : ''}`;
       dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-      dot.addEventListener('click', () => goToSlide(idx));
+      dot.addEventListener('click', () => {
+        goToSlide(idx);
+        startHeroAutoplay(); // Restart 5-second timer on dot click
+      });
       dotsWrap.appendChild(dot);
     });
 
+    if (heroEl) {
+      heroEl.setAttribute('data-active-slide', '0');
+    }
     updateSlideChip();
     startHeroAutoplay();
 
@@ -272,13 +316,18 @@
         heroResumeTimer = null;
       }
       isHeroPaused = true;
+      if (heroTimer) {
+        clearInterval(heroTimer);
+        heroTimer = null;
+      }
     }
 
-    function resumeHeroWithDelay(delay = 2000) {
+    function resumeHeroWithDelay(delay = 1000) {
       if (heroResumeTimer) clearTimeout(heroResumeTimer);
       heroResumeTimer = setTimeout(() => {
         if (!isHeroOffscreen && !document.hidden) {
           isHeroPaused = false;
+          startHeroAutoplay();
         }
       }, delay);
     }
@@ -314,8 +363,14 @@
     // Arrow keys & swipe
     window.addEventListener('keydown', (e) => {
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-      if (e.key === 'ArrowRight') goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
-      if (e.key === 'ArrowLeft') goToSlide((heroCurrentIndex - 1 + heroSlidesData.length) % heroSlidesData.length);
+      if (e.key === 'ArrowRight') {
+        goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
+        startHeroAutoplay();
+      }
+      if (e.key === 'ArrowLeft') {
+        goToSlide((heroCurrentIndex - 1 + heroSlidesData.length) % heroSlidesData.length);
+        startHeroAutoplay();
+      }
     });
 
     // Touch swipe on hero
@@ -329,6 +384,7 @@
         if (Math.abs(diffX) > 40) {
           if (diffX < 0) goToSlide((heroCurrentIndex + 1) % heroSlidesData.length);
           else goToSlide((heroCurrentIndex - 1 + heroSlidesData.length) % heroSlidesData.length);
+          startHeroAutoplay();
         }
       }, { passive: true });
     }
@@ -336,6 +392,7 @@
 
   function goToSlide(index) {
     if (index === heroCurrentIndex) return;
+    const heroEl = document.getElementById('hero');
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
     if (!slides.length) return;
@@ -343,11 +400,12 @@
     const prevSlide = slides[heroCurrentIndex];
     const nextSlide = slides[index];
 
-    // Scoped will-change: add to transitioning slides only
-    if (prevSlide) prevSlide.classList.add('is-transitioning');
-    if (nextSlide) nextSlide.classList.add('is-transitioning');
+    slides.forEach(s => s.classList.remove('prev'));
 
-    if (prevSlide) prevSlide.classList.remove('active');
+    if (prevSlide) {
+      prevSlide.classList.remove('active');
+      prevSlide.classList.add('prev');
+    }
     if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.remove('active');
 
     heroCurrentIndex = index;
@@ -355,13 +413,16 @@
     if (nextSlide) nextSlide.classList.add('active');
     if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.add('active');
 
+    if (heroEl) {
+      heroEl.setAttribute('data-active-slide', heroCurrentIndex);
+    }
+
     updateSlideChip();
 
-    // Remove will-change once transition finishes so GPU memory is freed
     if (heroTransitionEndTimeout) clearTimeout(heroTransitionEndTimeout);
     heroTransitionEndTimeout = setTimeout(() => {
-      slides.forEach(s => s.classList.remove('is-transitioning'));
-    }, 1300);
+      slides.forEach(s => s.classList.remove('prev'));
+    }, 550);
   }
 
   function updateSlideChip() {

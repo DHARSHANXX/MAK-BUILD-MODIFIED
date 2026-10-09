@@ -166,21 +166,13 @@
 
   <!-- Main Content Landmark -->
   <main id="mainContent">
-    <!-- 2. Hero Section & Architectural Line-Art Showcase -->
-    <section id="hero" class="hero" aria-label="Hero Showcase">
-      <!-- Hero Line-Art Showcase Image (1600x900, 16:9 full, uncropped) -->
-      <div class="hero-media-wrap">
-        <img 
-          src="images/hero-bg.png" 
-          alt="MAK BUILD Architectural Line-Art - Good Design Builds Better Lives" 
-          class="hero-bg-img" 
-          width="1600" 
-          height="900" 
-          loading="eager" 
-          fetchpriority="high"
-          decoding="async"
-        />
+    <!-- 2. Hero Section & Background Slider -->
+    <section id="hero" class="hero" aria-label="Hero Showcase" data-active-slide="0">
+      <div id="heroSliderWrap" class="hero-slider-wrap">
+        <!-- Rendered dynamically by app.js -->
       </div>
+      <div class="hero-overlay"></div>
+      <span id="heroSlideChip" class="hero-slide-chip" style="display: none;">3D Design</span>
 
       <div class="container hero-container" style="position: relative; z-index: 5; width: 100%;">
         <div class="hero-content">
@@ -200,6 +192,11 @@
             <a href="#work" class="btn-secondary" data-i18n="heroCtaWork">
               View Our Work
             </a>
+          </div>
+
+          <!-- Hero Dot Controls -->
+          <div id="heroDotsWrap" class="hero-controls" aria-label="Slider Pagination">
+            <!-- Rendered by app.js -->
           </div>
         </div>
 
