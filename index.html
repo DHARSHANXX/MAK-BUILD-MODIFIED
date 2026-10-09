@@ -39,9 +39,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
   </noscript>
 
-  <!-- Responsive Preload for LCP Hero Slide -->
-  <link rel="preload" as="image" href="assets/img/villa-contemporary-after-480.webp" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/img/villa-contemporary-after-1024.webp" type="image/webp" media="(min-width: 641px)" fetchpriority="high">
+  <!-- Preload for Hero Background Image -->
+  <link rel="preload" as="image" href="images/hero-bg.png" type="image/png" fetchpriority="high">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -167,15 +166,23 @@
 
   <!-- Main Content Landmark -->
   <main id="mainContent">
-    <!-- 2. Hero Section & Background Slider -->
+    <!-- 2. Hero Section & Architectural Line-Art Showcase -->
     <section id="hero" class="hero" aria-label="Hero Showcase">
-      <div id="heroSliderWrap" class="hero-slider-wrap">
-        <!-- Rendered dynamically by app.js -->
+      <!-- Hero Line-Art Showcase Image (1600x900, 16:9 full, uncropped) -->
+      <div class="hero-media-wrap">
+        <img 
+          src="images/hero-bg.png" 
+          alt="MAK BUILD Architectural Line-Art - Good Design Builds Better Lives" 
+          class="hero-bg-img" 
+          width="1600" 
+          height="900" 
+          loading="eager" 
+          fetchpriority="high"
+          decoding="async"
+        />
       </div>
-      <div class="hero-overlay"></div>
-      <span id="heroSlideChip" class="hero-slide-chip" style="display: none;">3D Design</span>
 
-      <div class="container" style="position: relative; z-index: 5; width: 100%;">
+      <div class="container hero-container" style="position: relative; z-index: 5; width: 100%;">
         <div class="hero-content">
           <div class="hero-eyebrow-pill">
             <span class="hero-eyebrow-dot"></span>
@@ -193,11 +200,6 @@
             <a href="#work" class="btn-secondary" data-i18n="heroCtaWork">
               View Our Work
             </a>
-          </div>
-
-          <!-- Hero Dot Controls -->
-          <div id="heroDotsWrap" class="hero-controls" aria-label="Slider Pagination">
-            <!-- Rendered by app.js -->
           </div>
         </div>
 
