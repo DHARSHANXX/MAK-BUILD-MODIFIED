@@ -39,8 +39,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
   </noscript>
 
-  <!-- Preload for Hero Background Image -->
-  <link rel="preload" as="image" href="images/hero-bg.png" type="image/png" fetchpriority="high">
+  <!-- Preload for Hero Background Image (Responsive WebP) -->
+  <link rel="preload" as="image" href="assets/img/hero-bg-1080.webp" imagesrcset="assets/img/hero-bg-828.webp 828w, assets/img/hero-bg-1080.webp 1080w, assets/img/hero-bg-1440.webp 1440w, assets/img/hero-bg-1920.webp 1920w, assets/img/hero-bg-2560.webp 2560w" imagesizes="100vw" type="image/webp" fetchpriority="high">
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -167,7 +167,7 @@
   <!-- Main Content Landmark -->
   <main id="mainContent">
     <!-- 2. Hero Section & Background Slider -->
-    <section id="hero" class="hero" aria-label="Hero Showcase" data-active-slide="0">
+    <section id="hero" class="hero" aria-label="Hero Showcase" data-active-slide="0" data-slide="1">
       <div id="heroSliderWrap" class="hero-slider-wrap">
         <!-- Rendered dynamically by app.js -->
       </div>
@@ -533,13 +533,39 @@
         </div>
 
         <div class="studio-card reveal-init">
-          <div class="studio-signboard-col">
-            <picture>
-              <source type="image/avif" srcset="assets/img/office-signboard-480.avif 480w, assets/img/office-signboard-768.avif 768w, assets/img/office-signboard-1080.avif 1080w, assets/img/office-signboard-1600.avif 1600w" sizes="(min-width: 1024px) 500px, 100vw">
-              <source type="image/webp" srcset="assets/img/office-signboard-480.webp 480w, assets/img/office-signboard-768.webp 768w, assets/img/office-signboard-1080.webp 1080w, assets/img/office-signboard-1600.webp 1600w" sizes="(min-width: 1024px) 500px, 100vw">
-              <img src="assets/img/office-signboard-1080.webp" alt="MAK BUILD Sirkazhi Studio Signboard" class="studio-signboard-img" loading="lazy" decoding="async" width="800" height="500">
-            </picture>
-          </div>
+          <article class="studio-profile-card" aria-label="Er. Manikandan Rajendran Engineering Profile">
+            <div class="profile-card-logo-wrap">
+              <img src="assets/mak-build-logo-darktheme.png" 
+                   alt="MAK BUILD Construction &amp; Design" 
+                   class="profile-card-logo" 
+                   width="150" 
+                   height="108" 
+                   loading="lazy" 
+                   decoding="async">
+            </div>
+
+            <h3 class="profile-card-name" data-i18n="aboutEngineerName">Er. Manikandan Rajendran</h3>
+
+            <div class="profile-card-badges">
+              <span class="profile-badge" data-i18n="aboutBadgeCivil">Civil &amp; Structural Engineer</span>
+              <span class="profile-badge" data-i18n="aboutBadgeRegistered">Registered Engineer</span>
+            </div>
+
+            <div class="profile-card-address">
+              <svg class="profile-pin-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span data-i18n="aboutCardAddress">117C, Pidari South Street, Sirkazhi 609110</span>
+            </div>
+
+            <a href="https://maps.google.com/?q=117c+Pidari+South+Street,+Sirkazhi+609110" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="profile-card-btn">
+              <span data-i18n="aboutStudioBtn">VISIT OUR SIRKAZHI STUDIO</span>
+            </a>
+          </article>
 
           <div class="studio-details-col">
             <div class="studio-brand-header">

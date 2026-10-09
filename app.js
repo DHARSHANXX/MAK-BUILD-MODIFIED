@@ -165,29 +165,29 @@
   const heroSlidesData = [
     { 
       base: 'hero-bg', 
-      src: 'images/hero-bg.png', 
-      widths: [], 
+      src: 'assets/img/hero-bg-1920.webp', 
+      widths: [828, 1080, 1440, 1920, 2560], 
       is3d: false, 
       alt: 'MAK BUILD Architectural Line-Art - Good Design Builds Better Lives' 
     },
     { 
-      base: 'residence-elevation', 
-      src: 'assets/img/residence-elevation-1024.webp', 
-      widths: [480, 768, 1024], 
+      base: 'slide-2-living', 
+      src: 'assets/img/slide-2-living-1920.webp', 
+      widths: [828, 1080, 1440, 1920, 2560], 
       is3d: true, 
-      alt: 'MAK BUILD 3D Villa Elevation & Modern Residence' 
+      alt: 'MAK BUILD Luxury Living Room & Home Theatre Interior Design' 
     },
     { 
       base: 'slide-3-exterior', 
-      src: 'assets/img/slide-3-exterior-1024.webp', 
-      widths: [640, 1024, 1440, 1920], 
+      src: 'assets/img/slide-3-exterior-1920.webp', 
+      widths: [828, 1080, 1440, 1920, 2560], 
       is3d: false, 
       alt: 'MAK BUILD Modern Architecture Exterior with Balcony' 
     },
     { 
       base: 'slide-4-interior', 
-      src: 'assets/img/slide-4-interior-1024.webp', 
-      widths: [640, 1024, 1440, 1920], 
+      src: 'assets/img/slide-4-interior-1920.webp', 
+      widths: [828, 1080, 1440, 1920, 2560], 
       is3d: true, 
       alt: 'MAK BUILD Luxury Office Interior & Wooden Slat Design' 
     }
@@ -200,11 +200,11 @@
       if (!slide.widths || slide.widths.length === 0) return slide.src;
       let targetWidth;
       if (isMobile) {
-        targetWidth = slide.widths[0];
+        targetWidth = 828;
       } else if (isTablet) {
-        targetWidth = slide.widths[Math.min(1, slide.widths.length - 1)];
+        targetWidth = 1440;
       } else {
-        targetWidth = slide.widths[Math.min(2, slide.widths.length - 1)];
+        targetWidth = window.devicePixelRatio > 1 ? 2560 : 1920;
       }
       return `assets/img/${slide.base}-${targetWidth}.webp`;
     }
@@ -240,22 +240,22 @@
     dotsWrap.innerHTML = '';
 
     heroSlidesData.forEach((slide, idx) => {
-      // Create slide element with responsive picture set or single img
+      // Create slide element with responsive picture set
       const div = document.createElement('div');
       div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
       div.setAttribute('data-slide', slide.base);
 
       if (slide.widths && slide.widths.length > 0) {
-        const avifSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.avif ${w}w`).join(', ');
         const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
+        const jpgSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.jpg ${w}w`).join(', ');
         div.innerHTML = `
           <picture>
-            <source type="image/avif" srcset="${avifSrcset}" sizes="100vw">
             <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
+            <source type="image/jpeg" srcset="${jpgSrcset}" sizes="100vw">
             <img class="hero-slide-img" 
                  src="${slide.src}" 
                  alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
-                 ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+                 ${idx === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"'}
                  decoding="async"
                  width="1920" height="1080">
           </picture>
@@ -265,9 +265,9 @@
           <img class="hero-slide-img" 
                src="${slide.src}" 
                alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
-               ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+               ${idx === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"'}
                decoding="async"
-               width="1600" height="900">
+               width="1920" height="1080">
         `;
       }
       sliderWrap.appendChild(div);
@@ -285,6 +285,7 @@
 
     if (heroEl) {
       heroEl.setAttribute('data-active-slide', '0');
+      heroEl.setAttribute('data-slide', '1');
     }
     updateSlideChip();
     startHeroAutoplay();
@@ -414,7 +415,8 @@
     if (dots[heroCurrentIndex]) dots[heroCurrentIndex].classList.add('active');
 
     if (heroEl) {
-      heroEl.setAttribute('data-active-slide', heroCurrentIndex);
+      heroEl.setAttribute('data-active-slide', heroCurrentIndex.toString());
+      heroEl.setAttribute('data-slide', (heroCurrentIndex + 1).toString());
     }
 
     updateSlideChip();
@@ -873,7 +875,7 @@
     'commercial-retail-after': [480, 768, 1024],
     'penthouse-before': [480, 768, 1080, 1376],
     'penthouse-after': [480, 768, 1024],
-    'bespoke-living-kitchen': [480, 768, 1080, 1376],
+    'bespoke-living-kitchen': [480, 768, 1080, 1376, 1600, 1920, 2048],
     'villa-contemporary-after': [480, 768, 1024],
     'residence-elevation': [480, 768, 1024],
     'showroom-interior': [480, 768, 1024],
@@ -1072,8 +1074,8 @@
       base: "bespoke-living-kitchen",
       cover: "assets/img/bespoke-living-kitchen-1080.webp",
       coverThumb: "assets/img/bespoke-living-kitchen-480.webp",
-      coverWidth: 1376,
-      coverHeight: 768,
+      coverWidth: 2048,
+      coverHeight: 1152,
       hasBeforeAfter: false,
       description: "Full home interior design featuring fluted wall panels, warm ambient lighting and premium joinery.",
       descriptionTa: "சுவர் அலங்காரம் மற்றும் நவீன மாடுலர் சமையலறையுடன் கூடிய முழுமையான உட்புற வடிவமைப்பு.",
@@ -1233,7 +1235,7 @@
         const blurClass = isBlurBrand ? 'blur-brand' : '';
         mediaHtml = `
           <div class="project-media-wrap" role="button" tabindex="0" aria-label="Open preview for ${title}">
-            ${buildPicture(proj.base, proj.coverThumb || proj.cover, title, '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw', 'lazy', false, proj.coverWidth || 640, proj.coverHeight || 400, `project-cover-img ${blurClass}`)}
+            ${buildPicture(proj.base, proj.coverThumb || proj.cover, title, '(min-width:1024px) 600px, (min-width:768px) 50vw, 100vw', 'lazy', false, proj.coverWidth || 640, proj.coverHeight || 400, `project-cover-img ${blurClass}`)}
           </div>
         `;
       }

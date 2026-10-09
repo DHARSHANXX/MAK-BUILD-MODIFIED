@@ -85,14 +85,14 @@ window.MAK_CONTENT = {
       suitsTa: "வாடகை வீடுகள் மற்றும் குறைந்த பட்ஜெட் இல்லங்கள்",
       highlights: [
         "Water test included",
-        "Fly ash brick (₹8.50)",
+        "Fly ash brick",
         "Kavery steel & Coromandel cement",
         "Wood window (Vembu/Badak)",
         "Birla Opus paint finish"
       ],
       highlightsTa: [
         "நீர் பரிசோதனை சேர்க்கப்பட்டுள்ளது",
-        "பறக்கும் சாம்பல் செங்கல் (₹8.50)",
+        "பறக்கும் சாம்பல் செங்கல்",
         "காவேரி ஸ்டீல் & கோரமண்டல் சிமெண்ட்",
         "மர ஜன்னல் (வேம்பு அல்லது படாக்)",
         "பிர்லா ஓபஸ் பெயிண்ட்"
@@ -115,16 +115,16 @@ window.MAK_CONTENT = {
           suitsTa: "நவீன தனிப்பட்ட குடும்ப இல்லங்கள்",
           highlights: [
             "Termite control & chemical curing",
-            "Red brick construction (₹10)",
+            "Red brick construction",
             "Agni steel & Dalmia cement",
-            "UPVC windows (₹400/sq.ft)",
+            "UPVC windows",
             "Asian putty + Tractor emulsion"
           ],
           highlightsTa: [
             "கரையான் தடுப்பு & க்யூரிங்",
-            "சிவப்பு செங்கல் கட்டுமானம் (₹10)",
+            "சிவப்பு செங்கல் கட்டுமானம்",
             "அக்னி ஸ்டீல் & டால்மியா சிமெண்ட்",
-            "UPVC ஜன்னல்கள் (₹400/ச.அடி)",
+            "UPVC ஜன்னல்கள்",
             "ஏசியன் புட்டி + டிராக்டர் பெயிண்ட்"
           ]
         },
@@ -139,16 +139,16 @@ window.MAK_CONTENT = {
           suitsTa: "மேம்பட்ட பாதுகாப்புடன் கூடிய குடும்ப வீடுகள்",
           highlights: [
             "Concrete cube strength testing",
-            "Class-A red brick (₹11)",
+            "Class-A red brick",
             "Amman steel & UltraTech / Ramco cement",
-            "UPVC windows (₹450/sq.ft)",
+            "UPVC windows",
             "Asian putty + Premium + Ace exterior"
           ],
           highlightsTa: [
             "கான்கிரீட் க்யூப் சோதனை உறுதி",
-            "முதல் தர சிவப்பு செங்கல் (₹11)",
+            "முதல் தர சிவப்பு செங்கல்",
             "அம்மன் ஸ்டீல் & அல்ட்ராடெக் / ராம்கோ",
-            "UPVC ஜன்னல்கள் (₹450/ச.அடி)",
+            "UPVC ஜன்னல்கள்",
             "ஏசியன் புட்டி + பிரீமியம் + ஏஸ் பெயிண்ட்"
           ]
         }
@@ -167,14 +167,14 @@ window.MAK_CONTENT = {
       highlights: [
         "Soil test & cube test included",
         "JSW steel & UltraTech Super / Ramco Super",
-        "Red brick (₹12) / AAC blocks",
+        "Red brick / AAC blocks",
         "Full wall sill mat & full lintel beam",
         "Jaquar & Legrand fittings + Birla Apex paint"
       ],
       highlightsTa: [
         "மண் சோதனை மற்றும் க்யூப் சோதனை",
         "JSW எஃகு & அல்ட்ராடெக் சூப்பர் சிமெண்ட்",
-        "சிவப்பு செங்கல் (₹12) / AAC பிளாக்",
+        "சிவப்பு செங்கல் / AAC பிளாக்",
         "முழு சுவர் சில் மேட் & முழு லிண்டல் பீம்",
         "ஜாகுவார், லெக்ராண்ட் பிட்டிங்ஸ் & பிர்லா அபெக்ஸ்"
       ]
@@ -217,7 +217,7 @@ window.MAK_CONTENT = {
       group: "Materials",
       groupTa: "கட்டுமான பொருட்கள்",
       items: [
-        { no: 15, name: "Brick type", nameTa: "செங்கல் வகை", a: "Fly ash brick (₹8.50)", b: "Red brick (₹10)", c: "Red brick (₹11)", d: "Red brick (₹12) / AAC block", diffPremium: true },
+        { no: 15, name: "Brick type", nameTa: "செங்கல் வகை", a: "Fly ash brick", b: "Red brick", c: "Red brick", d: "Red brick / AAC block", diffPremium: true },
         { no: 16, name: "Steel", nameTa: "எஃகு (Steel)", a: "Kavery", b: "Agni", c: "Amman", d: "JSW", diffPremium: true },
         { no: 17, name: "Cement", nameTa: "சிமெண்ட்", a: "Coromandel", b: "Dalmia", c: "UltraTech / Ramco", d: "UltraTech Super / Ramco Super", diffPremium: true },
         { no: 18, name: "Sand", nameTa: "மணல் (Sand)", a: "M-sand / P-sand", b: "M-sand / P-sand", c: "M-sand / P-sand", d: "M-sand / P-sand", diffPremium: false }
@@ -513,6 +513,11 @@ window.MAK_CONTENT = {
       aboutHeading: "Engineering Leadership",
       aboutSub: "Registered civil engineering precision at every stage.",
       aboutStudioTitle: "Visit our Sirkazhi Studio",
+      aboutEngineerName: "Er. Manikandan Rajendran",
+      aboutBadgeCivil: "Civil & Structural Engineer",
+      aboutBadgeRegistered: "Registered Engineer",
+      aboutCardAddress: "117C, Pidari South Street, Sirkazhi 609110",
+      aboutStudioBtn: "VISIT OUR SIRKAZHI STUDIO",
       aboutIntro1: "MAK BUILD is headed by Er. Manikandan Rajendran, a qualified Civil and Structural Engineer dedicated to delivering durable, architecturally refined homes.",
       aboutIntro2: "Every project combines modern structural engineering with strict Vasthu compliance, ensuring aesthetic excellence and generational strength.",
 
@@ -627,6 +632,11 @@ window.MAK_CONTENT = {
       aboutHeading: "பொறியியல் தலைமை",
       aboutSub: "ஒவ்வொரு நிலையிலும் பதிவுபெற்ற பொறியாளரின் நேரடி பாதுகாப்பு.",
       aboutStudioTitle: "எங்கள் சீர்காழி ஸ்டுடியோவிற்கு வருகை தருக",
+      aboutEngineerName: "பொறி. மணிகண்டன் ராஜேந்திரன்",
+      aboutBadgeCivil: "சிவில் & கட்டமைப்பு பொறியாளர்",
+      aboutBadgeRegistered: "பதிவுபெற்ற பொறியாளர்",
+      aboutCardAddress: "117C, பிடாரி தெற்கு தெரு, சீர்காழி 609110",
+      aboutStudioBtn: "எங்கள் சீர்காழி ஸ்டுடியோவிற்கு வருகை தருக",
       aboutIntro1: "MAK BUILD நிறுவனம் சிவில் மற்றும் கட்டமைப்பு பொறியாளர் மணிகண்டன் ராஜேந்திரன் தலைமையில் இயங்குகிறது.",
       aboutIntro2: "நவீன கட்டமைப்பு பொறியியலுடன் துல்லியமான வாஸ்து சாஸ்திரத்தையும் இணைத்து தலைமுறை கடந்து நிற்கும் இல்லங்களை உருவாக்குகிறோம்.",
 
