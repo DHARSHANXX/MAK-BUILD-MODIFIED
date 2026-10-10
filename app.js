@@ -53,7 +53,9 @@
   function applyTheme(theme) {
     currentTheme = theme;
     localStorage.setItem('mak_theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
+    if (document.documentElement.getAttribute('data-theme') !== theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
 
     if (themeToggleBtn) {
       themeToggleBtn.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`);
@@ -67,36 +69,76 @@
   // ==========================================
   // 1. Language & Translations Engine
   // ==========================================
-  function setLanguage(lang) {
+  let belowFoldRendered = false;
+
+  function ensureBelowFoldRendered() {
+    if (belowFoldRendered) return;
+    belowFoldRendered = true;
+    renderServices();
+    renderPackages();
+    loadProjects();
+    initEstimator();
+    renderProcess();
+    renderFaqs();
+    renderAboutAndContact();
+    initContactForm();
+    initScrollReveal();
+  }
+
+  function setLanguage(lang, isInitial = false) {
     currentLang = lang;
     localStorage.setItem('mak_lang', lang);
-    document.documentElement.lang = lang;
+    if (document.documentElement.lang !== lang) {
+      document.documentElement.lang = lang;
+    }
 
-    // Update text content with data-i18n
+    // Update text content with data-i18n only when text differs
     const strings = CONTENT.ui[lang] || CONTENT.ui.en;
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (strings[key]) {
+      if (strings[key] && el.textContent !== strings[key]) {
         el.textContent = strings[key];
       }
     });
 
+    // Update Hero Feature Checklist (trustStrip) items
+    if (Array.isArray(strings.trustStrip)) {
+      document.querySelectorAll('[data-trust-idx]').forEach(el => {
+        const idx = parseInt(el.getAttribute('data-trust-idx'), 10);
+        if (strings.trustStrip[idx] && el.textContent !== strings.trustStrip[idx]) {
+          el.textContent = strings.trustStrip[idx];
+        }
+      });
+    }
+
     // Update language toggle button label
     if (langToggleBtn) {
-      langToggleBtn.textContent = strings.langBtn;
+      if (langToggleBtn.textContent !== strings.langBtn) {
+        langToggleBtn.textContent = strings.langBtn;
+      }
       langToggleBtn.setAttribute('aria-label', `Switch to ${lang === 'en' ? 'Tamil' : 'English'}`);
     }
 
-    // Re-render dynamic sections
+    // Render above-the-fold sections immediately
     renderHeroCaptions();
     renderStats();
-    renderServices();
-    renderPackages();
-    renderProjects();
-    updateEstimator();
-    renderProcess();
-    renderFaqs();
-    renderAboutAndContact();
+
+    if (!isInitial) {
+      if (!belowFoldRendered) {
+        ensureBelowFoldRendered();
+      } else {
+        renderServices();
+        renderPackages();
+        if (allProjects.length > 0) {
+          renderProjectsTabs();
+          renderProjects();
+        }
+        updateEstimator();
+        renderProcess();
+        renderFaqs();
+        renderAboutAndContact();
+      }
+    }
   }
 
   if (langToggleBtn) {
@@ -109,17 +151,24 @@
   // 2. Header Scroll & Sheen
   // ==========================================
   function initHeader() {
+    let headerScrollTicking = false;
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 30) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
+      if (!headerScrollTicking) {
+        headerScrollTicking = true;
+        requestAnimationFrame(() => {
+          if (window.scrollY > 30) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+          headerScrollTicking = false;
+        });
       }
     }, { passive: true });
 
-    // Logo sheen trigger
+    // Logo sheen trigger (desktop only to avoid mobile post-load style invalidation)
     const logoWrap = document.querySelector('.brand-logo-wrap');
-    if (logoWrap) {
+    if (logoWrap && window.innerWidth > 768) {
       setTimeout(() => {
         logoWrap.parentElement.classList.add('sheen-active');
         setTimeout(() => logoWrap.parentElement.classList.remove('sheen-active'), 1500);
@@ -193,39 +242,34 @@
     }
   ];
 
-  function preloadSubsequentSlides() {
-    const isMobile = window.innerWidth <= 640;
-    const isTablet = window.innerWidth <= 1024;
-    function getPreloadUrl(slide) {
-      if (!slide.widths || slide.widths.length === 0) return slide.src;
-      let targetWidth;
-      if (isMobile) {
-        targetWidth = 828;
-      } else if (isTablet) {
-        targetWidth = 1440;
-      } else {
-        targetWidth = window.devicePixelRatio > 1 ? 2560 : 1920;
-      }
-      return `assets/img/${slide.base}-${targetWidth}.webp`;
+  function hydrateHeroSlide(slideEl) {
+    if (!slideEl || slideEl.dataset.hydrated === 'true') return;
+    slideEl.querySelectorAll('source[data-srcset]').forEach(source => {
+      source.srcset = source.getAttribute('data-srcset');
+      source.removeAttribute('data-srcset');
+    });
+    const img = slideEl.querySelector('img[data-src]');
+    if (img) {
+      img.src = img.getAttribute('data-src');
+      img.removeAttribute('data-src');
     }
+    slideEl.dataset.hydrated = 'true';
+  }
 
+  function preloadSubsequentSlides() {
+    const slides = document.querySelectorAll('.hero-slide');
     let nextIdx = 1;
     function loadNext() {
-      if (nextIdx >= heroSlidesData.length) return;
-      const slide = heroSlidesData[nextIdx];
-      const img = new Image();
-      img.decoding = 'async';
-      img.onload = img.onerror = () => {
-        nextIdx++;
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadNext, { timeout: 1000 });
-        } else {
-          setTimeout(loadNext, 120);
-        }
-      };
-      img.src = getPreloadUrl(slide);
+      if (nextIdx >= slides.length) return;
+      const slideEl = slides[nextIdx];
+      hydrateHeroSlide(slideEl);
+      nextIdx++;
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadNext, { timeout: 1000 });
+      } else {
+        setTimeout(loadNext, 200);
+      }
     }
-
     loadNext();
   }
 
@@ -236,41 +280,66 @@
     const heroEl = document.getElementById('hero');
     if (!sliderWrap || !dotsWrap) return;
 
-    sliderWrap.innerHTML = '';
+    const existingFirstSlide = sliderWrap.querySelector('.hero-slide[data-slide="hero-bg"]');
+    if (!existingFirstSlide) {
+      sliderWrap.innerHTML = '';
+    } else {
+      existingFirstSlide.dataset.hydrated = 'true';
+      Array.from(sliderWrap.querySelectorAll('.hero-slide')).slice(1).forEach(el => el.remove());
+    }
     dotsWrap.innerHTML = '';
 
     heroSlidesData.forEach((slide, idx) => {
-      // Create slide element with responsive picture set
-      const div = document.createElement('div');
-      div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
-      div.setAttribute('data-slide', slide.base);
+      if (!(idx === 0 && existingFirstSlide)) {
+        // Create slide element with responsive picture set
+        const div = document.createElement('div');
+        div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+        div.setAttribute('data-slide', slide.base);
 
-      if (slide.widths && slide.widths.length > 0) {
-        const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
-        const jpgSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.jpg ${w}w`).join(', ');
-        div.innerHTML = `
-          <picture>
-            <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
-            <source type="image/jpeg" srcset="${jpgSrcset}" sizes="100vw">
+        if (slide.widths && slide.widths.length > 0) {
+          const webpSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.webp ${w}w`).join(', ');
+          const jpgSrcset = slide.widths.map(w => `assets/img/${slide.base}-${w}.jpg ${w}w`).join(', ');
+          if (idx === 0) {
+            div.dataset.hydrated = 'true';
+            div.innerHTML = `
+              <picture>
+                <source type="image/webp" srcset="${webpSrcset}" sizes="100vw">
+                <source type="image/jpeg" srcset="${jpgSrcset}" sizes="100vw">
+                <img class="hero-slide-img" 
+                     src="${slide.src}" 
+                     alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
+                     fetchpriority="high" loading="eager"
+                     decoding="async"
+                     width="1920" height="1080">
+              </picture>
+            `;
+          } else {
+            div.innerHTML = `
+              <picture>
+                <source type="image/webp" data-srcset="${webpSrcset}" sizes="100vw">
+                <source type="image/jpeg" data-srcset="${jpgSrcset}" sizes="100vw">
+                <img class="hero-slide-img" 
+                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                     data-src="${slide.src}" 
+                     alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
+                     loading="lazy"
+                     decoding="async"
+                     width="1920" height="1080">
+              </picture>
+            `;
+          }
+        } else {
+          div.innerHTML = `
             <img class="hero-slide-img" 
                  src="${slide.src}" 
                  alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
                  ${idx === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"'}
                  decoding="async"
                  width="1920" height="1080">
-          </picture>
-        `;
-      } else {
-        div.innerHTML = `
-          <img class="hero-slide-img" 
-               src="${slide.src}" 
-               alt="${slide.alt || `MAK BUILD Architectural Showcase ${idx + 1}`}"
-               ${idx === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"'}
-               decoding="async"
-               width="1920" height="1080">
-        `;
+          `;
+        }
+        sliderWrap.appendChild(div);
       }
-      sliderWrap.appendChild(div);
 
       // Create dot
       const dot = document.createElement('button');
@@ -288,27 +357,26 @@
       heroEl.setAttribute('data-slide', '1');
     }
     updateSlideChip();
-    startHeroAutoplay();
 
-    // Trigger sequential background preloading after active slide 1 finishes loading
-    const firstSlideImg = sliderWrap.querySelector('.hero-slide:first-child .hero-slide-img');
-    if (firstSlideImg) {
-      if (firstSlideImg.complete) {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(preloadSubsequentSlides, { timeout: 1500 });
-        } else {
-          setTimeout(preloadSubsequentSlides, 300);
-        }
-      } else {
-        firstSlideImg.addEventListener('load', () => {
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(preloadSubsequentSlides, { timeout: 1500 });
-          } else {
-            setTimeout(preloadSubsequentSlides, 300);
-          }
-        }, { once: true });
-      }
+    // Start autoplay and hydrate subsequent slides after initial load settles (or on first interaction)
+    let sliderDeferredStarted = false;
+    const startDeferredSlider = () => {
+      if (sliderDeferredStarted) return;
+      sliderDeferredStarted = true;
+      preloadSubsequentSlides();
+      startHeroAutoplay();
+    };
+    const scheduleSlidePreload = () => {
+      setTimeout(startDeferredSlider, 6500);
+    };
+    if (document.readyState === 'complete') {
+      scheduleSlidePreload();
+    } else {
+      window.addEventListener('load', scheduleSlidePreload, { once: true });
     }
+    ['pointerdown', 'touchstart', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, startDeferredSlider, { once: true, passive: true });
+    });
 
     // Autoplay pause and resume handling
     function pauseHero() {
@@ -400,6 +468,8 @@
 
     const prevSlide = slides[heroCurrentIndex];
     const nextSlide = slides[index];
+    hydrateHeroSlide(nextSlide);
+    hydrateHeroSlide(slides[(index + 1) % slides.length]);
 
     slides.forEach(s => s.classList.remove('prev'));
 
@@ -705,7 +775,7 @@
       <div class="package-cta">
         <a href="https://wa.me/918144166022?text=${encodeURIComponent('Hello MAK BUILD, I would like a quote for the Basic Package (₹2,200/sq.ft).')}" 
            target="_blank" rel="noopener noreferrer" class="package-quote-btn">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           <span>${t.getQuoteBtn.replace('{tier}', 'Basic')}</span>
         </a>
       </div>
@@ -749,7 +819,7 @@
       <div class="package-cta">
         <a id="modQuoteBtn" href="https://wa.me/918144166022?text=${encodeURIComponent(`Hello MAK BUILD, I would like a quote for the Moderate ${activeMod.label} Package (₹${activeMod.rate}/sq.ft).`)}" 
            target="_blank" rel="noopener noreferrer" class="package-quote-btn">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           <span>${t.getQuoteBtn.replace('{tier}', `Moderate ${activeMod.label}`)}</span>
         </a>
       </div>
@@ -792,7 +862,7 @@
       <div class="package-cta">
         <a href="https://wa.me/918144166022?text=${encodeURIComponent('Hello MAK BUILD, I would like a quote for the Premium Package with Soil Test (₹2,500/sq.ft).')}" 
            target="_blank" rel="noopener noreferrer" class="package-quote-btn">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           <span>${t.getQuoteBtn.replace('{tier}', 'Premium')}</span>
         </a>
       </div>
@@ -1085,19 +1155,8 @@
     }
   ];
 
-  async function loadProjects() {
+  function loadProjects() {
     allProjects = DEFAULT_PROJECTS;
-    try {
-      const res = await fetch('projects.json');
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length) {
-          allProjects = data;
-        }
-      }
-    } catch (e) {
-      // Flawlessly uses DEFAULT_PROJECTS
-    }
 
     // Check URL Hash for Deep Linking (#work?cat=3d, #work?cat=villas, etc.)
     syncTabFromHash();
@@ -1371,8 +1430,10 @@
       });
     }
 
+    let cachedRect = null;
+
     function getPercentFromPointer(e) {
-      const rect = container.getBoundingClientRect();
+      const rect = cachedRect || container.getBoundingClientRect();
       if (!rect.width) return 50;
       return ((e.clientX - rect.left) / rect.width) * 100;
     }
@@ -1380,6 +1441,7 @@
     function onPointerDown(e) {
       container.classList.remove('ba-nudge-active');
       isDragging = true;
+      cachedRect = container.getBoundingClientRect();
       try {
         container.setPointerCapture(e.pointerId);
       } catch (_) {}
@@ -1394,6 +1456,7 @@
     function onPointerUp(e) {
       if (!isDragging) return;
       isDragging = false;
+      cachedRect = null;
       try {
         if (container.hasPointerCapture(e.pointerId)) {
           container.releasePointerCapture(e.pointerId);
@@ -1423,8 +1486,6 @@
         e.preventDefault();
       }
     });
-
-    setPosition(50);
   }
 
   // ==========================================
@@ -1538,7 +1599,7 @@
       const scopeName = currentLang === 'ta' ? currentScope.nameTa : currentScope.nameEn;
       const msg = `Hello MAK BUILD, I would like an estimate for ${scopeName} with approximately ${estState.area} sq.ft built-up area.`;
       whatsappBtn.href = `https://wa.me/918144166022?text=${encodeURIComponent(msg)}`;
-      whatsappBtn.innerHTML = `<svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> <span>${t.estWhatsAppBtn}</span>`;
+      whatsappBtn.innerHTML = `<svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> <span>${t.estWhatsAppBtn}</span>`;
       return;
     }
 
@@ -1589,7 +1650,7 @@
     const scopeName = currentLang === 'ta' ? currentScope.nameTa : currentScope.nameEn;
     const msg = `Hello MAK BUILD,\nI used your Quick Estimator for:\n- Project: ${scopeName}\n- Area: ${estState.area} sq.ft\n- Package: ${pkgLabel} (₹${rate.toLocaleString('en-IN')}/sq.ft)\n- Add-ons: ${selectedAddonNames.join(', ') || 'None'}\n- Indicative Estimate: ${formatLakhs(lowCost)} to ${formatLakhs(highCost)}\n\nPlease schedule a free site visit to verify the estimate.`;
     whatsappBtn.href = `https://wa.me/918144166022?text=${encodeURIComponent(msg)}`;
-    whatsappBtn.innerHTML = `<svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> <span>${t.estWhatsAppBtn}</span>`;
+    whatsappBtn.innerHTML = `<svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> <span>${t.estWhatsAppBtn}</span>`;
   }
 
   // ==========================================
@@ -2012,14 +2073,23 @@
 
     sections.forEach(sec => spyObserver.observe(sec));
 
-    // Back to top scroll listener
+    // Back to top scroll listener (RAF-throttled, shown only after scrolling past stats strip)
+    const statsStripEl = document.getElementById('statsStrip');
+    let topBtnScrollTicking = false;
     window.addEventListener('scroll', () => {
-      if (backToTopBtn) {
-        if (window.scrollY > 400) {
-          backToTopBtn.classList.add('visible');
-        } else {
-          backToTopBtn.classList.remove('visible');
-        }
+      if (!topBtnScrollTicking && backToTopBtn) {
+        topBtnScrollTicking = true;
+        requestAnimationFrame(() => {
+          const threshold = statsStripEl
+            ? Math.max(600, statsStripEl.offsetTop + statsStripEl.offsetHeight - 120)
+            : 600;
+          if (window.scrollY > threshold) {
+            backToTopBtn.classList.add('visible');
+          } else {
+            backToTopBtn.classList.remove('visible');
+          }
+          topBtnScrollTicking = false;
+        });
       }
     }, { passive: true });
 
@@ -2071,13 +2141,27 @@
     initHeader();
     initHeroSlider();
     initModals();
-    setLanguage(currentLang);
-    loadProjects();
-    initEstimator();
+    setLanguage(currentLang, true);
     initStatsObserver();
     initScrollSpyAndBackToTop();
-    initContactForm();
-    initScrollReveal();
+
+    if (window.innerWidth > 768 || window.location.hash || window.scrollY > 0) {
+      ensureBelowFoldRendered();
+    } else {
+      ['scroll', 'touchstart', 'pointerdown', 'keydown', 'click'].forEach(evt => {
+        window.addEventListener(evt, ensureBelowFoldRendered, { once: true, passive: true });
+      });
+      const servicesEl = document.getElementById('services');
+      if (servicesEl && 'IntersectionObserver' in window) {
+        const bfObserver = new IntersectionObserver((entries, obs) => {
+          if (entries.some(e => e.isIntersecting)) {
+            ensureBelowFoldRendered();
+            obs.disconnect();
+          }
+        }, { rootMargin: '120px 0px' });
+        bfObserver.observe(servicesEl);
+      }
+    }
   });
 
 })();

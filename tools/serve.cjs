@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const zlib = require('zlib');
 
 const PORT = process.env.PORT || 3000;
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -24,6 +25,8 @@ const MIME_TYPES = {
   '.otf': 'font/otf'
 };
 
+const COMPRESSIBLE_EXTS = new Set(['.html', '.css', '.js', '.mjs', '.json', '.svg']);
+
 const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0].split('#')[0];
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
@@ -34,12 +37,20 @@ const server = http.createServer((req, res) => {
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    res.writeHead(200, {
+    const acceptEncoding = req.headers['accept-encoding'] || '';
+    const headers = {
       'Content-Type': contentType,
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Access-Control-Allow-Origin': '*'
-    });
-    fs.createReadStream(filePath).pipe(res);
+    };
+    if (COMPRESSIBLE_EXTS.has(ext) && /\bgzip\b/.test(acceptEncoding)) {
+      headers['Content-Encoding'] = 'gzip';
+      res.writeHead(200, headers);
+      fs.createReadStream(filePath).pipe(zlib.createGzip()).pipe(res);
+    } else {
+      res.writeHead(200, headers);
+      fs.createReadStream(filePath).pipe(res);
+    }
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
     res.end('404 Not Found');

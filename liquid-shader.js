@@ -47,6 +47,7 @@
     } catch (e) {}
 
     var isMobile = isCoarse || window.innerWidth <= 768;
+    if (isMobile) return;
     var isTablet = !isMobile && window.innerWidth < 1024;
 
     function setFallback() {
