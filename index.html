@@ -101,6 +101,9 @@
   </div>
   <canvas id="mak-bg-shader" class="mak-bg-shader" aria-hidden="true"></canvas>
 
+  <!-- Top Scroll Sentinel for Header Transparent-to-Matte Transition -->
+  <div id="headerScrollSentinel" class="header-scroll-sentinel" aria-hidden="true"></div>
+
   <!-- 1. Header -->
   <header class="header" role="banner">
     <div class="container header-inner">
@@ -337,12 +340,6 @@
         </div>
 
         <div class="packages-compare-wrap reveal-init">
-          <button id="openCompareModalBtn" class="packages-compare-btn">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
-            <span data-i18n="compareFull">Compare full specification</span>
-          </button>
           <p class="packages-indicative-note" data-i18n="indicativeFooter">
             Indicative rates for residential construction. Final quotation after site visit.
           </p>
@@ -353,18 +350,64 @@
     <!-- 6. Projects Section -->
     <section id="work" class="projects-section section-contained">
       <div class="container">
-        <div class="section-header reveal-init">
-          <span class="section-eyebrow" data-i18n="navWork">OUR WORK</span>
+        <div id="projectsSectionHeader" class="section-header reveal-init">
+          <span class="section-eyebrow" data-i18n="projectsEyebrow">PROJECTS</span>
           <h2 class="section-title" data-i18n="projectsHeading">Featured Showcase</h2>
-          <p class="section-sub" data-i18n="projectsSub">Real completed buildings and upcoming architectural 3D designs.</p>
+          <p class="section-sub" data-i18n="projectsSub">Explore our residential, interior, and commercial project albums.</p>
         </div>
 
-        <div id="projectsTabs" class="projects-tabs reveal-init">
-          <!-- Rendered by app.js -->
+        <!-- Level 1: Album Covers View -->
+        <div id="albumCoversView" class="album-covers-view">
+          <div id="projectsTabs" class="projects-tabs reveal-init" role="tablist" aria-label="Filter projects by category">
+            <!-- Rendered by app.js -->
+          </div>
+
+          <div id="projectsGrid" class="projects-grid album-covers-grid reveal-init">
+            <!-- Rendered by app.js -->
+          </div>
         </div>
 
-        <div id="projectsGrid" class="projects-grid reveal-init">
-          <!-- Rendered by app.js -->
+        <!-- Level 2: Project Detail View (#project/<slug>) -->
+        <div id="projectDetailView" class="project-detail-view" hidden aria-live="polite">
+          <div class="project-detail-topbar">
+            <a href="#work" id="projectBackBtnTop" class="project-back-btn">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+              </svg>
+              <span data-i18n="backToProjects">Back to Projects</span>
+            </a>
+          </div>
+
+          <div class="project-detail-header">
+            <h3 id="projectDetailTitle" class="project-detail-title"></h3>
+            <div id="projectDetailMeta" class="project-detail-meta"></div>
+          </div>
+
+          <div id="projectGalleryStack" class="project-gallery-stack">
+            <!-- Full-width uncropped project images rendered by app.js -->
+          </div>
+
+          <div class="project-detail-footer">
+            <a id="projectWhatsAppCta" href="https://wa.me/918144166022" target="_blank" rel="noopener noreferrer" class="project-whatsapp-cta">
+              <svg width="22" height="22" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              <span id="projectWhatsAppCtaText" data-i18n="chatAboutProject">Chat on WhatsApp about this project</span>
+            </a>
+
+            <div id="projectPrevNextGrid" class="project-prev-next-grid">
+              <!-- Prev / Next project links rendered by app.js -->
+            </div>
+
+            <div class="project-bottom-back-wrap">
+              <a href="#work" id="projectBackBtnBottom" class="project-back-btn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+                </svg>
+                <span data-i18n="backToProjects">Back to Projects</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <!-- Instagram Follow Card -->
@@ -498,8 +541,11 @@
           <p class="section-sub" data-i18n="processSub">From your initial idea to the day you step inside.</p>
         </div>
 
-        <div id="processStepsGrid" class="process-steps-grid reveal-init">
-          <!-- Rendered by app.js -->
+        <div class="process-timeline-wrap">
+          <div id="processConnectorLine" class="process-connector-line" aria-hidden="true"></div>
+          <div id="processStepsGrid" class="process-steps-grid">
+            <!-- Rendered by app.js -->
+          </div>
         </div>
       </div>
     </section>
@@ -533,8 +579,8 @@
       <div class="container">
         <div class="section-header reveal-init">
           <span class="section-eyebrow" data-i18n="aboutHeading">ENGINEERING LEADERSHIP</span>
-          <h2 class="section-title">Visit Our Sirkazhi Studio</h2>
-          <p class="section-sub">Direct consultations and structural engineering under Er. Manikandan Rajendran.</p>
+          <h2 class="section-title" data-i18n="aboutStudioTitle">Visit Our Sirkazhi Studio</h2>
+          <p class="section-sub" data-i18n="aboutSub">Direct consultations and structural engineering under Er. Manikandan Rajendran.</p>
         </div>
 
         <div class="studio-card reveal-init">
@@ -583,10 +629,10 @@
             </div>
 
             <div class="studio-engineer-block">
-              <h4 class="studio-engineer-name">Er. Manikandan Rajendran</h4>
+              <h4 class="studio-engineer-name" data-i18n="aboutEngineerName">Er. Manikandan Rajendran</h4>
               <div class="studio-credentials-pills">
-                <span class="credential-pill">Civil &amp; Structural Engineer</span>
-                <span class="credential-pill">Registered Engineer</span>
+                <span class="credential-pill" data-i18n="aboutBadgeCivil">Civil &amp; Structural Engineer</span>
+                <span class="credential-pill" data-i18n="aboutBadgeRegistered">Registered Engineer</span>
               </div>
             </div>
 
@@ -599,7 +645,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
-              <span class="studio-address-text" id="contactAddressAbout">117C, Pidari South Street, Sirkazhi 609110</span>
+              <span class="studio-address-text" id="contactAddressAbout" data-i18n="aboutCardAddress">117C, Pidari South Street, Sirkazhi 609110</span>
             </div>
 
             <div class="studio-actions-row">
@@ -677,7 +723,7 @@
               <div class="contact-card-content">
                 <h3 data-i18n="contactWhatsAppTitle">WhatsApp Desk</h3>
                 <p>
-                  <a href="https://wa.me/918144166022" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/918144166022" target="_blank" rel="noopener noreferrer" data-i18n="contactWhatsAppLink">
                     Chat with us on WhatsApp (+91 81441 66022)
                   </a>
                 </p>
@@ -765,7 +811,7 @@
       <!-- Hiring Banner Line -->
       <div class="footer-hiring-line">
         <span data-i18n="footerHiring">We're hiring a Draftsman – WhatsApp us</span>
-        <a href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20am%20applying%20for%20the%20Draftsman%20role." target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20am%20applying%20for%20the%20Draftsman%20role." target="_blank" rel="noopener noreferrer" data-i18n="footerApplyWhatsApp">
           Apply on WhatsApp &rarr;
         </a>
       </div>
@@ -781,26 +827,26 @@
               <span class="brand-tag">CONSTRUCTION &amp; DESIGN</span>
             </div>
           </a>
-          <p class="footer-brand-p">
+          <p class="footer-brand-p" data-i18n="footerBrandDesc">
             We Build Dreams with Precision. Building Stronger Spaces for a Better Tomorrow. Led by Er. Manikandan Rajendran.
           </p>
         </div>
 
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <h4 data-i18n="footerNavTitle">Navigation</h4>
           <ul class="footer-links">
-            <li><a href="#hero" class="footer-link">Home</a></li>
-            <li><a href="#services" class="footer-link">Services</a></li>
-            <li><a href="#packages" class="footer-link">Packages 2026</a></li>
-            <li><a href="#work" class="footer-link">Our Work</a></li>
-            <li><a href="#estimator" class="footer-link">Cost Estimator</a></li>
-            <li><a href="#about" class="footer-link">About Leadership</a></li>
+            <li><a href="#hero" class="footer-link" data-i18n="navHero">Home</a></li>
+            <li><a href="#services" class="footer-link" data-i18n="navServices">Services</a></li>
+            <li><a href="#packages" class="footer-link" data-i18n="navPackages">Packages 2026</a></li>
+            <li><a href="#work" class="footer-link" data-i18n="navWork">Our Work</a></li>
+            <li><a href="#estimator" class="footer-link" data-i18n="navEstimator">Cost Estimator</a></li>
+            <li><a href="#about" class="footer-link" data-i18n="navAbout">About Leadership</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Head Office</h4>
-          <p class="footer-address">
+          <h4 data-i18n="footerOfficeTitle">Head Office</h4>
+          <p class="footer-address" data-i18n="aboutCardAddress">
             117C, Pidari South Street, Sirkazhi, Tamil Nadu 609110
           </p>
           <p class="footer-contact-details">
@@ -823,79 +869,143 @@
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
       </svg>
-      <span>Call</span>
+      <span data-i18n="mobileCall">Call</span>
     </a>
     <a href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20am%20inquiring%20about%20house%20construction." target="_blank" rel="noopener noreferrer" class="mobile-bar-btn whatsapp" aria-label="WhatsApp">
       <svg fill="currentColor" viewBox="0 0 24 24">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
       </svg>
-      <span>WhatsApp</span>
+      <span data-i18n="mobileWhatsApp">WhatsApp</span>
     </a>
     <a href="#estimator" class="mobile-bar-btn" aria-label="Estimate">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
       </svg>
-      <span>Estimate</span>
+      <span data-i18n="mobileEstimate">Estimate</span>
     </a>
   </nav>
 
-  <!-- 13. Specification Compare Modal Dialog -->
-  <div id="compareModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="compareModalTitle">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 id="compareModalTitle" class="modal-title" data-i18n="compareTitle">Complete 2026 Technical Specification</h3>
-        <button class="modal-close-btn" aria-label="Close modal">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-      <div id="compareModalBody" class="modal-body">
-        <!-- Rendered by app.js -->
-      </div>
-    </div>
-  </div>
+  <!-- 13. Service Details Modal Dialog (Lazy DOM Shell + Single Template) -->
+  <div id="serviceModal" class="service-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle" hidden></div>
 
-  <!-- 14. Service Details Modal Dialog -->
-  <div id="serviceModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
-    <div class="modal-dialog" style="max-width: 640px;">
-      <div class="modal-header">
-        <h3 id="serviceModalTitle" class="modal-title">Service Details</h3>
-        <button class="modal-close-btn" aria-label="Close modal">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
+  <template id="serviceModalTemplate">
+    <div class="service-modal-backdrop" data-svc-close="backdrop" aria-hidden="true"></div>
+    <div id="serviceModalSheet" class="service-modal-sheet" role="document">
+      <div id="serviceModalDragHandle" class="service-modal-drag-bar" aria-hidden="true">
+        <span class="service-modal-drag-pill"></span>
       </div>
-      <div id="serviceModalBody" class="modal-body">
-        <!-- Rendered by app.js -->
-      </div>
-    </div>
-  </div>
 
-  <!-- 15. Lightbox Modal & Concept Render Viewer -->
-  <div id="lightboxModal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Project Preview">
-    <button class="lightbox-close" aria-label="Close preview">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-    <div class="lightbox-dialog">
-      <div id="lightboxMediaWrap" class="lightbox-media-wrap">
-        <img id="lightboxImg" class="lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Project Preview" width="1280" height="720" loading="lazy" decoding="async">
-      </div>
-      <div class="lightbox-info">
-        <span id="lightboxConceptBadge" class="lightbox-concept-badge" style="display: none;">
-          Concept render, not a completed project
-        </span>
-        <h3 id="lightboxTitle" class="lightbox-title"></h3>
-        <p id="lightboxDesc" class="lightbox-desc"></p>
-        <div id="lightboxActions" class="lightbox-actions">
-          <a id="lightboxWhatsAppCta" href="#" target="_blank" rel="noopener noreferrer" class="lightbox-cta-btn">
-            Request this design
-          </a>
+      <button type="button" id="serviceModalCloseBtn" class="service-modal-close-btn" data-svc-close="button" aria-label="Close">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="service-modal-grid">
+        <!-- Left / Top Vivid Photo Column -->
+        <div id="serviceModalMedia" class="service-modal-media">
+          <div id="serviceModalSlides" class="service-modal-slides">
+            <!-- 6 <picture> slides mounted once on first modal open; never re-rendered -->
+          </div>
+          <div class="service-modal-media-gradient" aria-hidden="true"></div>
+
+          <div class="service-modal-media-top">
+            <span id="serviceModalCounter" class="service-modal-counter" aria-live="polite">1 / 6</span>
+          </div>
+
+          <div class="service-modal-media-bottom">
+            <div id="serviceModalIconBadge" class="service-modal-icon-badge" aria-hidden="true"></div>
+            <div class="service-modal-nav-group">
+              <button type="button" id="serviceModalPrevBtn" class="service-modal-nav-btn" aria-label="Previous service">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+              </button>
+              <button type="button" id="serviceModalNextBtn" class="service-modal-nav-btn" aria-label="Next service">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right / Bottom Content Column -->
+        <div id="serviceModalScroll" class="service-modal-content">
+          <div id="serviceModalBody" class="service-modal-body">
+            <div class="service-modal-header">
+              <h3 id="serviceModalTitle" class="service-modal-title"></h3>
+              <span id="serviceModalGoldLine" class="service-modal-gold-line" aria-hidden="true"></span>
+              <p id="serviceModalShort" class="service-modal-short"></p>
+            </div>
+
+            <div id="serviceModalChips" class="service-modal-chips" aria-label="Service highlights"></div>
+
+            <div class="service-modal-scope">
+              <h4 id="serviceModalScopeHeading" class="service-modal-scope-title">Scope of Work</h4>
+              <ul id="serviceModalBullets" class="service-modal-bullets"></ul>
+            </div>
+          </div>
+
+          <div class="service-modal-footer">
+            <button type="button" id="serviceModalBackBtn" class="service-modal-back-btn" data-svc-close="back">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+              </svg>
+              <span id="serviceModalBackText">Back to services</span>
+            </button>
+
+            <a id="serviceModalWaBtn" href="https://wa.me/918144166022" target="_blank" rel="noopener noreferrer" class="service-modal-wa-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              <span id="serviceModalWaText">Enquire on WhatsApp</span>
+            </a>
+          </div>
         </div>
       </div>
+    </div>
+  </template>
+
+  <!-- 15. Album Gallery Lightbox -->
+  <div id="lightboxModal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Album photo viewer">
+    <div class="lightbox-topbar">
+      <div id="lightboxCounter" class="lightbox-counter" aria-live="polite">1 / 1</div>
+      <div class="lightbox-top-actions">
+        <button id="lightboxZoomBtn" type="button" class="lightbox-icon-btn" aria-label="Toggle zoom">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
+          </svg>
+        </button>
+        <button id="lightboxCloseBtn" type="button" class="lightbox-close lightbox-icon-btn" aria-label="Close gallery">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <button id="lightboxPrevBtn" type="button" class="lightbox-nav-btn lightbox-prev" aria-label="Previous image">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <div id="lightboxStage" class="lightbox-stage">
+      <div id="lightboxMediaWrap" class="lightbox-media-wrap">
+        <!-- Rendered dynamically when an album image is tapped -->
+      </div>
+    </div>
+
+    <button id="lightboxNextBtn" type="button" class="lightbox-nav-btn lightbox-next" aria-label="Next image">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="lightbox-footer">
+      <p id="lightboxCaption" class="lightbox-caption"></p>
     </div>
   </div>
 
@@ -904,7 +1014,7 @@
     <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
-    <span>Chat with us</span>
+    <span data-i18n="floatingWhatsApp">Chat with us</span>
   </a>
 
   <!-- Back to Top Button -->

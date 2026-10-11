@@ -92,7 +92,7 @@ window.MAK_CONTENT = {
       ],
       highlightsTa: [
         "நீர் பரிசோதனை சேர்க்கப்பட்டுள்ளது",
-        "பறக்கும் சாம்பல் செங்கல்",
+        "ஃப்ளை ஆஷ் செங்கல்",
         "காவேரி ஸ்டீல் & கோரமண்டல் சிமெண்ட்",
         "மர ஜன்னல் (வேம்பு அல்லது படாக்)",
         "பிர்லா ஓபஸ் பெயிண்ட்"
@@ -125,7 +125,7 @@ window.MAK_CONTENT = {
             "சிவப்பு செங்கல் கட்டுமானம்",
             "அக்னி ஸ்டீல் & டால்மியா சிமெண்ட்",
             "UPVC ஜன்னல்கள்",
-            "ஏசியன் புட்டி + டிராக்டர் பெயிண்ட்"
+            "ஏசியன் பட்டி + டிராக்டர் பெயிண்ட்"
           ]
         },
         plus: {
@@ -149,7 +149,7 @@ window.MAK_CONTENT = {
             "முதல் தர சிவப்பு செங்கல்",
             "அம்மன் ஸ்டீல் & அல்ட்ராடெக் / ராம்கோ",
             "UPVC ஜன்னல்கள்",
-            "ஏசியன் புட்டி + பிரீமியம் + ஏஸ் பெயிண்ட்"
+            "ஏசியன் பட்டி + பிரீமியம் + ஏஸ் பெயிண்ட்"
           ]
         }
       }
@@ -173,7 +173,7 @@ window.MAK_CONTENT = {
       ],
       highlightsTa: [
         "மண் சோதனை மற்றும் க்யூப் சோதனை",
-        "JSW எஃகு & அல்ட்ராடெக் சூப்பர் சிமெண்ட்",
+        "JSW ஸ்டீல் & அல்ட்ராடெக் சூப்பர் சிமெண்ட்",
         "சிவப்பு செங்கல் / AAC பிளாக்",
         "முழு சுவர் சில் மேட் & முழு லிண்டல் பீம்",
         "ஜாகுவார், லெக்ராண்ட் பிட்டிங்ஸ் & பிர்லா அபெக்ஸ்"
@@ -181,74 +181,24 @@ window.MAK_CONTENT = {
     }
   },
 
-  // 4. SPECIFICATION 2026 TABLE (Single Source of Truth, all 27 rows x 4 columns)
-  // Columns: A=2200, B=2300, C=2400, D=2500
-  spec2026: [
-    // GROUP 1: Tests & Quality
-    {
-      group: "Tests & Quality",
-      groupTa: "சோதனைகள் & தரம்",
-      items: [
-        { no: 1, name: "Water test", nameTa: "நீர் பரிசோதனை", a: "Yes", b: "Yes", c: "Yes", d: "Yes", diffPremium: false },
-        { no: 2, name: "Soil test", nameTa: "மண் பரிசோதனை", a: "No", b: "No", c: "No", d: "Yes", diffPremium: true },
-        { no: 3, name: "Cube test", nameTa: "கான்கிரீட் க்யூப் சோதனை", a: "No", b: "No", c: "Yes", d: "Yes", diffPremium: false },
-        { no: 4, name: "Termite control", nameTa: "கரையான் தடுப்பு", a: "No", b: "Yes", c: "Yes", d: "Yes", diffPremium: false },
-        { no: 5, name: "Curing", nameTa: "முறையான க்யூரிங்", a: "No", b: "Yes", c: "Yes", d: "Yes", diffPremium: false }
-      ]
-    },
-    // GROUP 2: Structure
-    {
-      group: "Structure",
-      groupTa: "கட்டமைப்பு விவரங்கள்",
-      items: [
-        { no: 6, name: "Footing size", nameTa: "அஸ்திவாரம் (Footing)", a: "4' × 4'", b: "4.5' × 4.5'", c: "As per structure", d: "As per structure", diffPremium: false },
-        { no: 7, name: "Basement height", nameTa: "பேஸ்மென்ட் உயரம்", a: "2'", b: "2'6\"", c: "3'", d: "3'6\"", diffPremium: true },
-        { no: 8, name: "Basement floor", nameTa: "பேஸ்மென்ட் தரைத்தளம்", a: "PCC", b: "PCC", c: "Mat", d: "Mat", diffPremium: false },
-        { no: 9, name: "Column size", nameTa: "தூண் அளவு (Column)", a: "9\" × 9\"", b: "1' × 9\"", c: "As per structure", d: "As per structure", diffPremium: false },
-        { no: 10, name: "Sill mat", nameTa: "சில் மேட் (Sill)", a: "Only window area", b: "Only window area", c: "Only window area", d: "Full wall", diffPremium: true },
-        { no: 11, name: "Lintel", nameTa: "லிண்டல் பீம்", a: "Full lintel beam", b: "Cut lintel", c: "Cut lintel", d: "Full lintel", diffPremium: true },
-        { no: 12, name: "Roof beam", nameTa: "ரூஃப் பீம்", a: "No", b: "Yes", c: "As per structural", d: "As per structural", diffPremium: false },
-        { no: 13, name: "Roof slab", nameTa: "ரூஃப் தளம் (Slab)", a: "One-way slab", b: "Two-way & one-way slab", c: "As per structural", d: "As per structural", diffPremium: false },
-        { no: 14, name: "Parapet wall", nameTa: "கைப்பிடி சுவர்", a: "2.5 ft, 4.5\" wall", b: "2.5 ft, 4.5\" wall", c: "3 ft, 4.5\" wall", d: "3 ft, 9\" wall", diffPremium: true }
-      ]
-    },
-    // GROUP 3: Materials
-    {
-      group: "Materials",
-      groupTa: "கட்டுமான பொருட்கள்",
-      items: [
-        { no: 15, name: "Brick type", nameTa: "செங்கல் வகை", a: "Fly ash brick", b: "Red brick", c: "Red brick", d: "Red brick / AAC block", diffPremium: true },
-        { no: 16, name: "Steel", nameTa: "எஃகு (Steel)", a: "Kavery", b: "Agni", c: "Amman", d: "JSW", diffPremium: true },
-        { no: 17, name: "Cement", nameTa: "சிமெண்ட்", a: "Coromandel", b: "Dalmia", c: "UltraTech / Ramco", d: "UltraTech Super / Ramco Super", diffPremium: true },
-        { no: 18, name: "Sand", nameTa: "மணல் (Sand)", a: "M-sand / P-sand", b: "M-sand / P-sand", c: "M-sand / P-sand", d: "M-sand / P-sand", diffPremium: false }
-      ]
-    },
-    // GROUP 4: Fittings & Finishes
-    {
-      group: "Fittings & Finishes",
-      groupTa: "பொருத்துதல்கள் & பூச்சுகள்",
-      items: [
-        { no: 19, name: "Pipes", nameTa: "குழாய்கள் (Pipes)", a: "Any ISI brand", b: "Avon Plast", c: "Ashirvad", d: "Finolex", diffPremium: true },
-        { no: 20, name: "Wire", nameTa: "மின்சார வயர்", a: "Any ISI brand", b: "Kundan", c: "Orbit", d: "Havells / Polycab", diffPremium: true },
-        { no: 21, name: "Switch", nameTa: "சுவிட்சுகள்", a: "Any ISI brand", b: "Lisha / Hi-Fi", c: "Anchor", d: "Legrand / Havells", diffPremium: true },
-        { no: 22, name: "Plumbing fittings", nameTa: "பிளம்பிங் பிட்டிங்ஸ்", a: "Any ISI brand", b: "Waterman", c: "Parryware", d: "Jaquar", diffPremium: true },
-        { no: 23, name: "Water tank", nameTa: "தண்ணீர் தொட்டி", a: "500 L", b: "1000 L", c: "1000 L", d: "2000 L", diffPremium: true },
-        { no: 24, name: "Main door allowance", nameTa: "முக்கிய கதவு ஒதுக்கீடு", a: "₹30,000", b: "₹50,000", c: "₹60,000", d: "₹70,000", diffPremium: true },
-        { no: 25, name: "Windows", nameTa: "ஜன்னல்கள்", a: "Wood window (Vembu or Badak)", b: "UPVC ₹400/sq.ft", c: "UPVC ₹450/sq.ft", d: "UPVC ₹500/sq.ft", diffPremium: true },
-        { no: 26, name: "Tiles allowance", nameTa: "டைல்ஸ் ஒதுக்கீடு", a: "₹40/sq.ft", b: "₹50/sq.ft", c: "₹60/sq.ft", d: "₹70/sq.ft", diffPremium: true },
-        { no: 27, name: "Painting", nameTa: "வண்ணப்பூச்சு (Painting)", a: "Birla Opus paint", b: "Asian putty, Tractor, Ace", c: "Asian putty, Premium, Ace", d: "Birla putty, Premium, Apex", diffPremium: true }
-      ]
-    }
-  ],
-
-  // 5. SERVICES FROM SIGNBOARD & SITE
+  // 4. SERVICES FROM SIGNBOARD & SITE (Restored original long card copy from commit 76990cf + popup metadata)
   services: [
     {
       id: "construction",
+      slug: "construction",
       titleEn: "Construction (Villas & Homes)",
       titleTa: "வீடு & வில்லா கட்டுமானம்",
       shortEn: "Turnkey build from Vasthu planning and foundation to full interior finishing.",
-      shortTa: "வாஸ்து திட்டம், அஸ்திவாரம் முதல் முழுமையான தரை பூச்சு வரை.",
+      shortTa: "வாஸ்து திட்டமிடல், அஸ்திவாரம் முதல் முழுமையான பினிஷிங் பணிகள் வரை.",
+      modalShortEn: "Turnkey homes, from foundation to finishing.",
+      modalShortTa: "அஸ்திவாரம் முதல் முழு பூச்சு வரை நேரடி கட்டுமானம்.",
+      chipsEn: ["Turnkey delivery", "IS standards", "Site supervision"],
+      chipsTa: ["முழுமையான ஒப்படைப்பு", "IS தரநிலைகள்", "கள மேற்பார்வை"],
+      imageBase: "images/services/construction",
+      imageType: 1,
+      focalPoint: "center 42%",
+      imageAltEn: "Senthil Residence in Sirkazhi — Turnkey two-storey villa construction by MAK BUILD",
+      imageAltTa: "சீர்காழி செந்தில் இல்லம் — MAK BUILD நேரடி வில்லா கட்டுமானம்",
       bulletsEn: [
         "100% turnkey residential delivery",
         "Structural design & IS standard adherence",
@@ -262,10 +212,20 @@ window.MAK_CONTENT = {
     },
     {
       id: "plans-elevations",
+      slug: "plans-elevations",
       titleEn: "Plans & Elevations",
       titleTa: "பிளான் & 3D முகப்பு வடிவமைப்பு",
       shortEn: "2D architectural floor plans, photorealistic 3D elevations and Vasthu layouts.",
       shortTa: "2D கட்டட வரைபடங்கள் மற்றும் 3D நவீன முகப்பு வடிவமைப்பு.",
+      modalShortEn: "2D plans and realistic 3D elevations.",
+      modalShortTa: "2D வரைபடங்கள் மற்றும் தத்ரூபமான 3D முகப்புகள்.",
+      chipsEn: ["Working plans", "3D elevations", "Vasthu layouts"],
+      chipsTa: ["2D வரைபடங்கள்", "3D முகப்புகள்", "வாஸ்து அமைப்பு"],
+      imageBase: "images/services/plans-elevations",
+      imageType: 2,
+      focalPoint: "center 52%",
+      imageAltEn: "Illustrative scene of an architect's desk with 2D floor plan drawings and a 3D South Indian villa elevation on a tablet",
+      imageAltTa: "2D தரைத்தள வரைபடம் மற்றும் 3D வில்லா முகப்பு வடிவமைப்பு கொண்ட மேசை காட்சி",
       bulletsEn: [
         "Custom 2D working floor plans",
         "Ultra-realistic 3D elevations & walk-throughs",
@@ -279,10 +239,20 @@ window.MAK_CONTENT = {
     },
     {
       id: "building-approvals",
+      slug: "approvals",
       titleEn: "Building Approvals",
       titleTa: "கட்டட அனுமதி & சான்றிதழ்கள்",
       shortEn: "Complete DTCP, panchayat and municipal drawing documentation and sanction support.",
       shortTa: "DTCP மற்றும் நகராட்சி கட்டட அனுமதி ஒப்புதல்கள்.",
+      modalShortEn: "DTCP and local body approvals, handled for you.",
+      modalShortTa: "DTCP மற்றும் உள்ளாட்சி கட்டட அனுமதி சேவைகள்.",
+      chipsEn: ["Sanction drawings", "Compliance", "Easy clearance"],
+      chipsTa: ["அனுமதி வரைபடங்கள்", "விதிமுறை இணக்கம்", "எளிய ஒப்புதல்"],
+      imageBase: "images/services/approvals",
+      imageType: 2,
+      focalPoint: "center 48%",
+      imageAltEn: "Illustrative scene of architectural sanction drawings, stamp, files and scale house model on a desk",
+      imageAltTa: "கட்டட அனுமதி வரைபடங்கள் மற்றும் மாதிரி இல்லம் கொண்ட மேசை",
       bulletsEn: [
         "DTCP & Local body sanction drawings",
         "Statutory compliance & documentation",
@@ -296,10 +266,20 @@ window.MAK_CONTENT = {
     },
     {
       id: "interiors",
+      slug: "interiors",
       titleEn: "Interiors & Modular Fitouts",
       titleTa: "உட்புற அலங்காரம் & மாடுலர்",
       shortEn: "Modular kitchens, false ceilings, custom woodwork, lighting and complete fit-outs.",
       shortTa: "மாடுலர் சமையலறை, சீலிங் மற்றும் பிரீமியம் மர வேலைப்பாடுகள்.",
+      modalShortEn: "Modular kitchens, ceilings and complete fit-outs.",
+      modalShortTa: "மாடுலர் கிச்சன், சீலிங் மற்றும் முழு உட்புற அமைப்பு.",
+      chipsEn: ["Kitchen & wardrobes", "False ceilings", "Ambient lighting"],
+      chipsTa: ["கிச்சன் & வார்ட்ரோப்", "ஃபால்ஸ் சீலிங்", "நவீன அலங்கார விளக்குகள்"],
+      imageBase: "images/services/interiors",
+      imageType: 1,
+      focalPoint: "center 50%",
+      imageAltEn: "Interior at Chennai by MAK BUILD — Coffered wood false ceiling, marble TV unit and warm cove lighting",
+      imageAltTa: "MAK BUILD சென்னை உட்புற வடிவமைப்பு — ஃபால்ஸ் சீலிங் மற்றும் டிவி யூனிட்",
       bulletsEn: [
         "Custom modular kitchen & wardrobes",
         "Designer gypsum & wooden false ceilings",
@@ -313,10 +293,20 @@ window.MAK_CONTENT = {
     },
     {
       id: "renovations",
+      slug: "renovation",
       titleEn: "Renovations & Floor Additions",
       titleTa: "புதுப்பித்தல் & கூடுதல் தளங்கள்",
       shortEn: "Structural strengthening, additional floors, elevation makeovers and remodeling.",
-      shortTa: "பழைய வீடுகளை புதுப்பித்தல் மற்றும் கூடுதல் மாடி அமைத்தல்.",
+      shortTa: "பழைய வீடுகளைப் புதுப்பித்தல் மற்றும் கூடுதல் தளம் அமைத்தல்.",
+      modalShortEn: "Strengthen, extend and refresh your home.",
+      modalShortTa: "வீட்டை வலுப்படுத்தி, விரிவாக்கி, நவீனமாகப் புதுப்பிக்கிறோம்.",
+      chipsEn: ["Structural strengthening", "Facade makeover", "Plumbing & electrical"],
+      chipsTa: ["கட்டமைப்பு வலுவூட்டல்", "முகப்பு மாற்றம்", "பிளம்பிங் & மின்சாரம்"],
+      imageBase: "images/services/renovation",
+      imageType: 2,
+      focalPoint: "center 38%",
+      imageAltEn: "Illustrative scene of a South Indian residential house undergoing a floor addition and facade renovation",
+      imageAltTa: "வீடு புதுப்பித்தல் மற்றும் கூடுதல் தளம் அமைக்கும் மாதிரி காட்சி",
       bulletsEn: [
         "Column & beam structural strengthening",
         "Modern facade elevation makeovers",
@@ -330,35 +320,105 @@ window.MAK_CONTENT = {
     },
     {
       id: "estimation-consulting",
+      slug: "estimation",
       titleEn: "Estimation & Consulting",
       titleTa: "மதிப்பீடு & பொறியியல் ஆலோசனை",
       shortEn: "Itemised BOQ estimates, on-site structural inspections and certified engineer guidance.",
       shortTa: "துல்லியமான செலவு மதிப்பீடு மற்றும் தள ஆய்வு ஆலோசனைகள்.",
+      modalShortEn: "Clear BOQ estimates and expert site advice.",
+      modalShortTa: "துல்லியமான BOQ மதிப்பீடு மற்றும் பொறியாளர் ஆலோசனை.",
+      chipsEn: ["Material & labour BOQ", "Bank loan estimates", "Soil guidance"],
+      chipsTa: ["பொருள் & கூலி BOQ", "வங்கிக் கடன் மதிப்பீடு", "மண் பரிசோதனை ஆலோசனை"],
+      imageBase: "images/services/estimation",
+      imageType: 2,
+      focalPoint: "center 34%",
+      imageAltEn: "Illustrative scene of a civil engineer inspecting a residential foundation column with measuring tape and clipboard",
+      imageAltTa: "அஸ்திவார தூண் மற்றும் கம்பிகளை ஆய்வு செய்யும் பொறியாளர் காட்சி",
       bulletsEn: [
         "Itemised material & labour BOQ",
         "Bank loan estimate documentation",
         "Expert site inspection & soil guidance"
       ],
       bulletsTa: [
-        "விரிவான கட்டுமான செலவு பட்டியல்",
-        "வங்கி கடன் மதிப்பீட்டு ஆவணங்கள்",
+        "விரிவான கட்டுமானச் செலவுப் பட்டியல் (BOQ)",
+        "வங்கிக் கடன் மதிப்பீட்டு ஆவணங்கள்",
         "நேரடி கள ஆய்வு மற்றும் வழிகாட்டுதல்"
       ]
     }
   ],
 
   serviceChips: [
-    { en: "PEB & Industrial Sheds", ta: "தொழில்துறை எஃகு கூடங்கள் (PEB)" },
+    { en: "PEB & Industrial Sheds", ta: "தொழில்துறை ஸ்டீல் கூடங்கள் (PEB)" },
     { en: "Commercial & Retail Buildings", ta: "வணிக வளாகங்கள் & கடைகள்" }
   ],
 
-  // 6. PROCESS STEPS (5 short steps)
+  // 5. PROCESS STEPS (5 short steps with original flat vector illustrations)
   processSteps: [
-    { no: "01", titleEn: "Site Visit", titleTa: "தள ஆய்வு", descEn: "Free initial inspection & land assessment.", descTa: "இலவச நேரடி நில ஆய்வு & பரிசீலனை." },
-    { no: "02", titleEn: "Design & Approval", titleTa: "வடிவமைப்பு & அனுமதி", descEn: "2D Vasthu plan, 3D render & sanction drawing.", descTa: "2D வாஸ்து வரைபடம் & 3D தோற்றம்." },
-    { no: "03", titleEn: "Agreement", titleTa: "ஒப்பந்தம்", descEn: "Transparent rate, clear BOQ & scheduled milestones.", descTa: "வெளிப்படையான விலை & பணி ஒப்பந்தம்." },
-    { no: "04", titleEn: "Build", titleTa: "கட்டுமானம்", descEn: "Engineered execution with regular photo updates.", descTa: "பொறியாளர் மேற்பார்வையில் தரமான கட்டமைப்பு." },
-    { no: "05", titleEn: "Handover", titleTa: "ஒப்படைப்பு", descEn: "Final quality check, deep clean & key handover.", descTa: "முழு ஆய்வு மற்றும் சாவியுடன் ஒப்படைப்பு." }
+    {
+      no: "01",
+      slug: "site-visit",
+      titleEn: "Site Visit",
+      titleTa: "தள ஆய்வு",
+      descEn: "Free initial inspection & land assessment.",
+      descTa: "இலவச நேரடி நில ஆய்வு & பரிசீலனை.",
+      illustrationSrc: "images/process/illustrations/01-site-visit.svg",
+      imageBase: "images/process/site-visit",
+      imageType: 2,
+      imageAltEn: "Flat vector illustration of two people in safety helmets looking at a tablet on a plot with dashed boundary, surveying tripod and coconut tree",
+      imageAltTa: "தமிழ்நாட்டில் வீட்டு மனையை நேரில் ஆய்வு செய்யும் பொறியாளர் மற்றும் குடும்பத்தினர்"
+    },
+    {
+      no: "02",
+      slug: "design-approval",
+      titleEn: "Design & Approval",
+      titleTa: "வடிவமைப்பு & அனுமதி",
+      descEn: "2D Vasthu plan, 3D render & sanction drawing.",
+      descTa: "2D வாஸ்து வரைபடம் & 3D தோற்றம்.",
+      illustrationSrc: "images/process/illustrations/02-design-approval.svg",
+      imageBase: "images/process/design-approval",
+      imageType: 2,
+      imageAltEn: "Flat vector illustration of a rolled architectural house plan, drawing compass and approval shield with checkmark",
+      imageAltTa: "2D வரைபடம் மற்றும் அனுமதி சான்றிதழ் கொண்ட வடிவமைப்பு காட்சி"
+    },
+    {
+      no: "03",
+      slug: "agreement",
+      titleEn: "Agreement",
+      titleTa: "ஒப்பந்தம்",
+      descEn: "Transparent rate, clear BOQ & scheduled milestones.",
+      descTa: "வெளிப்படையான விலை & பணி ஒப்பந்தம்.",
+      illustrationSrc: "images/process/illustrations/03-agreement.svg",
+      imageBase: "images/process/agreement",
+      imageType: 2,
+      imageAltEn: "Flat vector illustration of a checklist clipboard and handshake in front of it",
+      imageAltTa: "சரிபார்ப்பு பட்டியல் மற்றும் கட்டுமான ஒப்பந்த கைகுலுக்கல் காட்சி"
+    },
+    {
+      no: "04",
+      slug: "build",
+      titleEn: "Build",
+      titleTa: "கட்டுமானம்",
+      descEn: "Engineered execution with regular photo updates.",
+      descTa: "பொறியாளர் மேற்பார்வையில் தரமான கட்டமைப்பு.",
+      illustrationSrc: "images/process/illustrations/04-build.svg",
+      imageBase: "images/process/build",
+      imageType: 2,
+      imageAltEn: "Flat vector illustration of a house frame under construction with scaffolding, tower crane and hammer",
+      imageAltTa: "சாரம், கிரேன் மற்றும் சுத்தியலுடன் வீடு கட்டுமானப் பணி காட்சி"
+    },
+    {
+      no: "05",
+      slug: "handover",
+      titleEn: "Handover",
+      titleTa: "ஒப்படைப்பு",
+      descEn: "Final quality check, deep clean & key handover.",
+      descTa: "முழு ஆய்வு மற்றும் சாவியுடன் ஒப்படைப்பு.",
+      illustrationSrc: "images/process/illustrations/05-handover.svg",
+      imageBase: "images/process/handover",
+      imageType: 2,
+      imageAltEn: "Flat vector illustration of two hands passing a house key with a completed home behind",
+      imageAltTa: "புதிய இல்லத்தின் பின்னணியில் சாவி ஒப்படைக்கும் காட்சி"
+    }
   ],
 
   // 7. QUICK ESTIMATOR DATA
@@ -372,7 +432,7 @@ window.MAK_CONTENT = {
       { id: "kitchen", labelEn: "Modular Kitchen & Wardrobes", labelTa: "மாடுலர் கிச்சன் & வார்ட்ரோப்", cost: 275000 },
       { id: "elevation", labelEn: "3D Elevation & CAD Plans", labelTa: "3D முகப்பு & CAD வரைபடங்கள்", cost: 45000 },
       { id: "vasthu", labelEn: "Vasthu Blueprints & Sanction", labelTa: "வாஸ்து வரைபடம் & அரசு அனுமதி", cost: 35000 },
-      { id: "borewell", labelEn: "Borewell & Water Sump", labelTa: "ஆழ்துளை கிணறு & நீர் தொட்டி", cost: 120000 }
+      { id: "borewell", labelEn: "Borewell & Water Sump", labelTa: "ஆழ்துளைக் கிணறு & நீர்த்தொட்டி", cost: 120000 }
     ],
     breakdownPercentages: {
       structure: 55, // Civil & RCC Structure
@@ -397,7 +457,7 @@ window.MAK_CONTENT = {
       qEn: "What is the construction cost per sq.ft in Sirkazhi & coastal Tamil Nadu?",
       qTa: "சீர்காழி மற்றும் கடலோர பகுதியில் ஒரு சதுர அடி கட்டுமான விலை என்ன?",
       aEn: "Our 2026 residential construction packages range from ₹2,200/sq.ft (Basic), ₹2,300/sq.ft (Standard), ₹2,400/sq.ft (Plus), to ₹2,500/sq.ft (Premium). This includes all materials, skilled labour, registered engineer supervision, and complete turnkey delivery. We provide an exact itemised estimate after a free site visit.",
-      aTa: "எங்களின் 2026 கட்டுமான பேக்கேஜ்கள் சதுர அடிக்கு ₹2,200 (அடிப்படை), ₹2,300 (ஸ்டாண்டர்ட்), ₹2,400 (பிளஸ்), ₹2,500 (பிரீமியம்) வரை உள்ளன. இதில் அனைத்து கட்டுமான பொருட்கள் மற்றும் தொழிலாளர் கூலி முழுமையாக அடங்கும். நேரடி நில ஆய்வுக்குப் பின் விரிவான மதிப்பீடு வழங்கப்படும்."
+      aTa: "எங்களின் 2026 கட்டுமான பேக்கேஜ்கள் சதுர அடிக்கு ₹2,200 (அடிப்படை), ₹2,300 (ஸ்டாண்டர்ட்), ₹2,400 (பிளஸ்), ₹2,500 (பிரீமியம்) வரை உள்ளன. இதில் அனைத்துக் கட்டுமானப் பொருட்கள் மற்றும் தொழிலாளர் கூலி முழுமையாக அடங்கும். நேரடி நில ஆய்வுக்குப் பின் விரிவான மதிப்பீடு வழங்கப்படும்."
     },
     {
       id: "faq-timeline",
@@ -457,32 +517,43 @@ window.MAK_CONTENT = {
       servicesSub: "Turnkey engineering solutions from blueprint to handover.",
       knowMore: "Know more",
       closeModal: "Close",
+      scopeHeading: "Scope of Work",
+      enquireWhatsApp: "Enquire on WhatsApp",
+      backToServices: "Back to services",
+      prevService: "Previous service",
+      nextService: "Next service",
+      waServiceMsg: "Hello MAK BUILD, I would like to enquire about your {service} service.",
+      conceptTag: "Concept visualization",
 
       packagesHeading: "Packages 2026",
       packagesSub: "Price per sq.ft, including materials & labour.",
       mostPopular: "Most Popular",
       selectOption: "Option:",
-      compareFull: "Compare full specification",
       getQuoteBtn: "Get {tier} quote on WhatsApp",
       indicativeFooter: "Indicative rates for residential construction. Final quotation after site visit.",
 
-      compareTitle: "Complete 2026 Technical Specification",
-      compareSub: "Cell-by-cell comparison across all 4 construction tiers.",
-      tableColSpec: "Work & Material",
-      tableColA: "Basic (₹2,200)",
-      tableColB: "Standard (₹2,300)",
-      tableColC: "Plus (₹2,400)",
-      tableColD: "Premium (₹2,500)",
-
+      projectsEyebrow: "PROJECTS",
       projectsHeading: "Featured Showcase",
-      projectsSub: "Real completed buildings and upcoming architectural 3D designs.",
+      projectsSub: "Explore our residential, interior, and commercial project albums.",
       tabAll: "All",
-      tabVillas: "Villas",
-      tabCommercial: "Commercial & PEB",
-      tabInteriors: "Interiors",
-      tabDesigns: "3D Designs",
-      dragToCompare: "Drag slider or swipe to compare",
-      viewProject: "View project",
+      tabResidential: "Residential",
+      tabInterior: "Interior",
+      tabCommercial: "Commercial",
+      catResidential: "Residential",
+      catInterior: "Interior",
+      catCommercial: "Commercial",
+      photoSingular: "1 photo",
+      photoPlural: "{count} photos",
+      viewProject: "View Project",
+      backToProjects: "Back to Projects",
+      metaProjectName: "Project Name",
+      metaCategory: "Category",
+      metaLocation: "Location",
+      metaStatus: "Status",
+      prevProject: "Previous Project",
+      nextProject: "Next Project",
+      chatProjectWhatsApp: "Chat on WhatsApp about this project",
+      chatAboutProject: "Chat on WhatsApp about this project",
       followInstagram: "Follow @mak_build_construction",
       instagramCardTitle: "See Our Daily Site Updates",
       instagramCardSub: "Scan the QR code or follow us on Instagram for live construction walkthroughs.",
@@ -537,11 +608,21 @@ window.MAK_CONTENT = {
       contactError: "Could not send form directly. Redirecting to WhatsApp...",
       contactPhoneTitle: "Call Us Directly",
       contactWhatsAppTitle: "WhatsApp Desk",
+      contactWhatsAppLink: "Chat with us on WhatsApp (+91 81441 66022)",
       contactAddressTitle: "Our Studio",
 
       footerHiring: "We're hiring a Draftsman – WhatsApp us",
+      footerApplyWhatsApp: "Apply on WhatsApp →",
+      footerBrandDesc: "We Build Dreams with Precision. Building Stronger Spaces for a Better Tomorrow. Led by Er. Manikandan Rajendran.",
+      footerNavTitle: "Navigation",
+      footerOfficeTitle: "Head Office",
       footerRights: "© 2026 MAK BUILD – Construction & Design. All rights reserved.",
-      footerNotice: "Sirkazhi, Mayiladuthurai District, Tamil Nadu."
+      footerNotice: "Sirkazhi, Mayiladuthurai District, Tamil Nadu.",
+
+      mobileCall: "Call",
+      mobileWhatsApp: "WhatsApp",
+      mobileEstimate: "Estimate",
+      floatingWhatsApp: "Chat with us"
     },
     ta: {
       langBtn: "English",
@@ -550,14 +631,14 @@ window.MAK_CONTENT = {
       navServices: "சேவைகள்",
       navPackages: "விலை",
       navEstimator: "மதிப்பீடு",
-      navAbout: "எங்களை பற்றி",
+      navAbout: "எங்களைப் பற்றி",
       navContact: "தொடர்பு",
 
       heroEyebrow: "MAK BUILD · சீர்காழி",
       heroH1: "தமிழ்நாட்டில் நவீன கட்டுமானம் மற்றும் வடிவமைப்பு",
       heroSub: "வில்லாக்கள் • வணிக வளாகங்கள் • உட்புற அலங்காரம் • வாஸ்து",
       heroCtaQuote: "இலவச மதிப்பீடு பெற",
-      heroCtaWork: "திட்டங்களை காண்க",
+      heroCtaWork: "திட்டங்களைக் காண்க",
       heroInfoEngineer: "பொறியாளர் மணிகண்டன் ராஜேந்திரன் – பதிவுபெற்ற சிவில் & கட்டமைப்பு பொறியாளர்",
       heroInfoDesigner: "கலையரசி சுந்தர் – இணை வடிவமைப்பாளர்",
       heroInfoScope: "திட்டங்கள் • அனுமதிகள் • கட்டுமானம்",
@@ -576,38 +657,49 @@ window.MAK_CONTENT = {
       servicesSub: "வரைபடம் முதல் வீடு ஒப்படைப்பு வரையிலான முழுமையான பொறியியல் தீர்வுகள்.",
       knowMore: "மேலும் அறிய",
       closeModal: "மூடுக",
+      scopeHeading: "பணி விவரங்கள்",
+      enquireWhatsApp: "வாட்ஸ்அப்பில் விசாரிக்க",
+      backToServices: "சேவைகளுக்குத் திரும்பு",
+      prevService: "முந்தைய சேவை",
+      nextService: "அடுத்த சேவை",
+      waServiceMsg: "வணக்கம் MAK BUILD, உங்கள் '{service}' சேவை குறித்து விசாரிக்க விரும்புகிறேன்.",
+      conceptTag: "மாதிரி வடிவமைப்பு காட்சி",
 
       packagesHeading: "கட்டுமான பேக்கேஜ்கள் 2026",
       packagesSub: "சதுர அடி விலை, பொருட்கள் மற்றும் கூலி உட்பட.",
       mostPopular: "அதிகம் விரும்பப்படும் தேர்வு",
       selectOption: "தேர்வு:",
-      compareFull: "முழு விவரங்களையும் ஒப்பிடுக",
       getQuoteBtn: "வாட்ஸ்அப்பில் {tier} விலை பெற",
-      indicativeFooter: "இது உத்தேச குடியிருப்பு வீடுகளுக்கான விலை. நேரடி ஆய்வுக்கு பின் இறுதியாகும்.",
+      indicativeFooter: "இது குடியிருப்புக் கட்டுமானத்திற்கான உத்தேச விலை. நேரடி தள ஆய்வுக்குப் பின் இறுதி விலைப்பட்டியல் வழங்கப்படும்.",
 
-      compareTitle: "முழுமையான 2026 தொழில்நுட்ப விவரங்கள்",
-      compareSub: "4 வகை கட்டுமான பேக்கேஜ்களின் ஒப்பீடு.",
-      tableColSpec: "பணி & பொருள்",
-      tableColA: "அடிப்படை (₹2,200)",
-      tableColB: "ஸ்டாண்டர்ட் (₹2,300)",
-      tableColC: "பிளஸ் (₹2,400)",
-      tableColD: "பிரீமியம் (₹2,500)",
-
+      projectsEyebrow: "திட்டங்கள்",
       projectsHeading: "எங்கள் படைப்புகள்",
-      projectsSub: "முடிவடைந்த திட்டங்கள் மற்றும் 3D நவீன வடிவமைப்பு காட்சிகள்.",
+      projectsSub: "எங்கள் குடியிருப்பு, உட்புற மற்றும் வணிகத் திட்ட ஆல்பங்களைக் காணுங்கள்.",
       tabAll: "அனைத்தும்",
-      tabVillas: "வில்லாக்கள்",
-      tabCommercial: "வணிகம் & PEB",
-      tabInteriors: "உட்புறம்",
-      tabDesigns: "3D வடிவமைப்பு",
-      dragToCompare: "நகர்த்தி ஒப்பீடு செய்க",
-      viewProject: "காண்க",
+      tabResidential: "குடியிருப்பு",
+      tabInterior: "உட்புறம்",
+      tabCommercial: "வணிகம்",
+      catResidential: "குடியிருப்பு",
+      catInterior: "உட்புறம்",
+      catCommercial: "வணிகம்",
+      photoSingular: "1 படம்",
+      photoPlural: "{count} படங்கள்",
+      viewProject: "திட்டத்தைக் காண்க",
+      backToProjects: "திட்டங்களுக்குத் திரும்பு",
+      metaProjectName: "திட்டத்தின் பெயர்",
+      metaCategory: "வகை",
+      metaLocation: "இடம்",
+      metaStatus: "நிலை",
+      prevProject: "முந்தைய திட்டம்",
+      nextProject: "அடுத்த திட்டம்",
+      chatProjectWhatsApp: "இந்தத் திட்டம் குறித்து வாட்ஸ்அப்பில் உரையாடுங்கள்",
+      chatAboutProject: "இந்தத் திட்டம் குறித்து வாட்ஸ்அப்பில் உரையாடுங்கள்",
       followInstagram: "இன்ஸ்டாகிராமில் தொடரவும்",
       instagramCardTitle: "தினசரி தள நேரலை அப்டேட்கள்",
-      instagramCardSub: "நேரடி வீடியோக்களை காண இன்ஸ்டாகிராமில் இணைந்திடுங்கள்.",
+      instagramCardSub: "நேரடி கட்டுமான வீடியோக்களைக் காண இன்ஸ்டாகிராமில் இணைந்திடுங்கள்.",
 
       estimatorHeading: "விரைவு செலவு மதிப்பீடு",
-      estimatorSub: "2026 விவரங்களின்படி உத்தேச செலவை கணக்கிடுங்கள்.",
+      estimatorSub: "2026 கட்டுமான விவரக்குறிப்புகளின்படி உத்தேச செலவைக் கணக்கிடுங்கள்.",
       estScopeLabel: "திட்ட வகை",
       estAreaLabel: "கட்டட பரப்பளவு (சதுர அடி)",
       estPackageLabel: "பேக்கேஜ் தேர்வு",
@@ -615,8 +707,8 @@ window.MAK_CONTENT = {
       estResultTitle: "உத்தேச செலவு",
       estIndicativeNote: "உத்தேச வரம்பு (±5%). பொருட்கள் மற்றும் தொழிலாளர் கூலி உட்பட.",
       estWhatsAppBtn: "வாட்ஸ்அப்பில் மதிப்பீட்டை அனுப்ப",
-      estEmptyRateNotice: "உங்கள் தேவையை பகிருங்கள் – வாட்ஸ்அப்பில் மதிப்பீடு வழங்கப்படும்.",
-      estBreakdownTitle: "செலவு பகிர்வு (100%)",
+      estEmptyRateNotice: "உங்கள் தேவையைப் பகிருங்கள் – வாட்ஸ்அப்பில் நேரடியாக மதிப்பீடு வழங்கப்படும்.",
+      estBreakdownTitle: "செலவுப் பகிர்வு (100%)",
       estBreakdownCivil: "சிவில் & ஆர்சிசி கட்டமைப்பு (55%)",
       estBreakdownFinishing: "பூச்சு & மர வேலைப்பாடுகள் (25%)",
       estBreakdownPlumbing: "பிளம்பிங் & எலக்ட்ரிக்கல் (12%)",
@@ -644,7 +736,7 @@ window.MAK_CONTENT = {
       faqSub: "கட்டுமானம், திட்ட அனுமதி மற்றும் செலவுகள் பற்றிய விளக்கங்கள்.",
 
       contactHeading: "தொடர்பு கொள்க",
-      contactSub: "இலவச தள ஆய்வு மற்றும் ஆலோசனைக்கு எங்களை தொடர்பு கொள்ளுங்கள்.",
+      contactSub: "இலவச தள ஆய்வு மற்றும் ஆலோசனைக்கு எங்களைத் தொடர்பு கொள்ளுங்கள்.",
       contactFormName: "உங்கள் பெயர்",
       contactFormPhone: "தொலைபேசி எண்",
       contactFormLocation: "இடத்தின் பெயர்",
@@ -656,11 +748,21 @@ window.MAK_CONTENT = {
       contactError: "படிவத்தை நேரடியாக அனுப்ப முடியவில்லை. வாட்ஸ்அப்பிற்கு மாற்றப்படுகிறது...",
       contactPhoneTitle: "தொலைபேசி",
       contactWhatsAppTitle: "வாட்ஸ்அப்",
+      contactWhatsAppLink: "வாட்ஸ்அப்பில் உரையாடுங்கள் (+91 81441 66022)",
       contactAddressTitle: "எங்கள் அலுவலகம்",
 
       footerHiring: "வரைவாளர் (Draftsman) தேவை – வாட்ஸ்அப் செய்க",
+      footerApplyWhatsApp: "வாட்ஸ்அப்பில் விண்ணப்பிக்க →",
+      footerBrandDesc: "துல்லியமான பொறியியலுடன் உங்கள் கனவு இல்லங்களை உருவாக்குகிறோம். பொறியாளர் மணிகண்டன் ராஜேந்திரன் தலைமையில்.",
+      footerNavTitle: "பக்கங்கள்",
+      footerOfficeTitle: "தலைமை அலுவலகம்",
       footerRights: "© 2026 MAK BUILD – Construction & Design. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
-      footerNotice: "சீர்காழி, மயிலாடுதுறை மாவட்டம், தமிழ்நாடு."
+      footerNotice: "சீர்காழி, மயிலாடுதுறை மாவட்டம், தமிழ்நாடு.",
+
+      mobileCall: "அழைக்க",
+      mobileWhatsApp: "வாட்ஸ்அப்",
+      mobileEstimate: "மதிப்பீடு",
+      floatingWhatsApp: "வாட்ஸ்அப்"
     }
   }
 };
