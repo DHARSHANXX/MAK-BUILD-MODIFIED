@@ -30,11 +30,11 @@
   <link rel="manifest" href="assets/favicons/site.webmanifest">
   <meta name="theme-color" content="#080b11">
 
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="styles.css" fetchpriority="high">
+  <!-- Main Stylesheet (Readable source: styles.css) -->
+  <link rel="stylesheet" href="styles.min.css" fetchpriority="high">
 
   <!-- Preload for Hero Background Image (Responsive WebP) -->
-  <link rel="preload" as="image" href="assets/img/hero-bg-1080.webp" imagesrcset="assets/img/hero-bg-828.webp 828w, assets/img/hero-bg-1080.webp 1080w, assets/img/hero-bg-1440.webp 1440w, assets/img/hero-bg-1920.webp 1920w, assets/img/hero-bg-2560.webp 2560w" imagesizes="100vw" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-bg-1080.webp" imagesrcset="assets/img/hero-bg-640.webp 640w, assets/img/hero-bg-828.webp 828w, assets/img/hero-bg-1080.webp 1080w, assets/img/hero-bg-1440.webp 1440w, assets/img/hero-bg-1600.webp 1600w, assets/img/hero-bg-1920.webp 1920w" imagesizes="100vw" type="image/webp" fetchpriority="high">
 
   <!-- Google Fonts Preconnect & Non-Blocking Async Loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -173,8 +173,8 @@
       <div id="heroSliderWrap" class="hero-slider-wrap">
         <div class="hero-slide active" data-slide="hero-bg">
           <picture>
-            <source type="image/webp" srcset="assets/img/hero-bg-828.webp 828w, assets/img/hero-bg-1080.webp 1080w, assets/img/hero-bg-1440.webp 1440w, assets/img/hero-bg-1920.webp 1920w, assets/img/hero-bg-2560.webp 2560w" sizes="100vw">
-            <source type="image/jpeg" srcset="assets/img/hero-bg-828.jpg 828w, assets/img/hero-bg-1080.jpg 1080w, assets/img/hero-bg-1440.jpg 1440w, assets/img/hero-bg-1920.jpg 1920w, assets/img/hero-bg-2560.jpg 2560w" sizes="100vw">
+            <source type="image/webp" srcset="assets/img/hero-bg-640.webp 640w, assets/img/hero-bg-828.webp 828w, assets/img/hero-bg-1080.webp 1080w, assets/img/hero-bg-1440.webp 1440w, assets/img/hero-bg-1600.webp 1600w, assets/img/hero-bg-1920.webp 1920w" sizes="100vw">
+            <source type="image/jpeg" srcset="assets/img/hero-bg-640.jpg 640w, assets/img/hero-bg-828.jpg 828w, assets/img/hero-bg-1080.jpg 1080w, assets/img/hero-bg-1440.jpg 1440w, assets/img/hero-bg-1600.jpg 1600w, assets/img/hero-bg-1920.jpg 1920w" sizes="100vw">
             <img class="hero-slide-img" src="assets/img/hero-bg-1920.webp" alt="MAK BUILD Architectural Line-Art - Good Design Builds Better Lives" fetchpriority="high" loading="eager" decoding="async" width="1920" height="1080">
           </picture>
         </div>
@@ -895,7 +895,7 @@
         <span class="service-modal-drag-pill"></span>
       </div>
 
-      <button type="button" id="serviceModalCloseBtn" class="service-modal-close-btn" data-svc-close="button" aria-label="Close">
+      <button type="button" id="serviceModalCloseBtn" class="service-modal-close-btn" data-svc-close="button" aria-label="Close dialog">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -948,14 +948,14 @@
           </div>
 
           <div class="service-modal-footer">
-            <button type="button" id="serviceModalBackBtn" class="service-modal-back-btn" data-svc-close="back">
+            <button type="button" id="serviceModalBackBtn" class="service-modal-back-btn" data-svc-close="back" aria-label="Close dialog">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7"/>
               </svg>
               <span id="serviceModalBackText">Back to services</span>
             </button>
 
-            <a id="serviceModalWaBtn" href="https://wa.me/918144166022" target="_blank" rel="noopener noreferrer" class="service-modal-wa-btn">
+            <a id="serviceModalWaBtn" href="https://wa.me/918144166022?text=Hello%20MAK%20BUILD%2C%20I%20would%20like%20to%20enquire%20about%20your%20services." target="_blank" rel="noopener noreferrer" class="service-modal-wa-btn">
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
@@ -978,7 +978,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
           </svg>
         </button>
-        <button id="lightboxCloseBtn" type="button" class="lightbox-close lightbox-icon-btn" aria-label="Close gallery">
+        <button id="lightboxCloseBtn" type="button" class="lightbox-close lightbox-icon-btn" aria-label="Close dialog">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -1024,9 +1024,9 @@
     </svg>
   </button>
 
-  <!-- Scripts: Deferred Vanilla Architecture -->
+  <!-- Scripts: Deferred Vanilla Architecture (Readable sources: app.js, content.js, liquid-shader.js) -->
   <script src="content.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.min.js" defer></script>
   <script src="liquid-shader.js" defer></script>
 </body>
 </html>

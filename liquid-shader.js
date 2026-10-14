@@ -344,9 +344,29 @@
     syncLoop();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initShader);
-  } else {
+  var shaderInitialized = false;
+  function startShader() {
+    if (shaderInitialized) return;
+    shaderInitialized = true;
     initShader();
   }
+
+  function scheduleShaderInit() {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(startShader, { timeout: 3500 });
+    } else {
+      setTimeout(startShader, 2000);
+    }
+  }
+
+  if (document.readyState === "complete") {
+    scheduleShaderInit();
+  } else {
+    window.addEventListener("load", scheduleShaderInit, { once: true });
+  }
+
+  // Also initialize on first user interaction if idle hasn't fired yet
+  ["pointerdown", "mousemove", "scroll", "touchstart", "keydown"].forEach(function (evt) {
+    window.addEventListener(evt, startShader, { once: true, passive: true });
+  });
 })();

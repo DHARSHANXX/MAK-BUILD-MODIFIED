@@ -300,7 +300,7 @@
     { 
       base: 'hero-bg', 
       src: 'assets/img/hero-bg-1920.webp', 
-      widths: [828, 1080, 1440, 1920, 2560], 
+      widths: [640, 828, 1024, 1080, 1440, 1600, 1920], 
       is3d: false, 
       alt: 'MAK BUILD Architectural Line-Art - Good Design Builds Better Lives' 
     },
@@ -960,7 +960,7 @@
 
     if (counterEl) counterEl.textContent = `${normIdx + 1} / ${total}`;
     if (iconBadgeEl) iconBadgeEl.innerHTML = serviceIcons[svc.id] || '';
-    if (closeBtn) closeBtn.setAttribute('aria-label', t.closeModal || 'Close');
+    if (closeBtn) closeBtn.setAttribute('aria-label', currentLang === 'ta' ? (t.closeModal || 'மூடுக') : 'Close dialog');
     if (prevBtn) prevBtn.setAttribute('aria-label', t.prevService || 'Previous service');
     if (nextBtn) nextBtn.setAttribute('aria-label', t.nextService || 'Next service');
 

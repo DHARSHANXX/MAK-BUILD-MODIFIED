@@ -1035,7 +1035,8 @@ img {
 /* Base Hero Layout & Height */
 .hero {
   position: relative;
-  min-height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -1075,7 +1076,7 @@ img {
 @media (min-width: 769px) {
   .hero {
     min-height: 100vh;
-    min-height: 100svh;
+    min-height: 100dvh;
     padding-top: calc(var(--header-height) + 24px);
     padding-bottom: clamp(24px, 3.5vw, 44px);
   }
@@ -1146,8 +1147,20 @@ img {
 
 .hero-slide[data-slide="hero-bg"] .hero-slide-img {
   object-fit: cover;
-  object-position: center;
+  object-position: 78% 50%;
   filter: none;
+}
+
+@media (max-width: 1024px) {
+  .hero-slide[data-slide="hero-bg"] .hero-slide-img {
+    object-position: 74% 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-slide[data-slide="hero-bg"] .hero-slide-img {
+    object-position: center center;
+  }
 }
 
 .hero-slide[data-slide="slide-2-living"] .hero-slide-img,
@@ -3486,11 +3499,16 @@ img {
   -webkit-appearance: none;
   appearance: none;
   height: 8px;
+  padding: 18px 0;
+  background-clip: content-box;
+  box-sizing: content-box;
   border-radius: var(--radius-full);
-  background: linear-gradient(to right, #D4AF37 0%, #D4AF37 var(--slider-progress, 9%), var(--slider-track-empty) var(--slider-progress, 9%), var(--slider-track-empty) 100%);
+  background-color: transparent;
+  background-image: linear-gradient(to right, #D4AF37 0%, #D4AF37 var(--slider-progress, 9%), var(--slider-track-empty) var(--slider-progress, 9%), var(--slider-track-empty) 100%);
   outline: none;
   cursor: pointer;
-  margin: 10px 0;
+  margin: 0;
+  touch-action: pan-y;
 }
 
 .estimator-range::-webkit-slider-thumb {
@@ -6188,7 +6206,6 @@ html[lang="ta"] h1,
 html[lang="ta"] h2,
 html[lang="ta"] h3,
 html[lang="ta"] h4,
-html[lang="ta"] .hero-h1,
 html[lang="ta"] .section-title,
 html[lang="ta"] .service-title,
 html[lang="ta"] .service-modal-title,
@@ -6202,6 +6219,14 @@ html[lang="ta"] .profile-card-name,
 html[lang="ta"] .studio-engineer-name {
   font-family: var(--font-tamil);
   line-height: 1.52;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+}
+
+html[lang="ta"] .hero-h1 {
+  font-family: var(--font-tamil);
+  font-size: clamp(1.45rem, 1.1rem + 1.2vw, 2.2rem);
+  line-height: 1.28;
   letter-spacing: 0;
   overflow-wrap: break-word;
 }
