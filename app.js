@@ -34,6 +34,7 @@
   const floatingMobileBar = document.querySelector('.floating-mobile-bar');
   const serviceModal = document.getElementById('serviceModal');
   const lightboxModal = document.getElementById('lightboxModal');
+  const mapModal = document.getElementById('mapModal');
 
   // ==========================================
   // 0. Theme Manager & Adaptive Performance Mode
@@ -2025,6 +2026,71 @@
           alt: "Office Interior — Managing Director suite side perspective highlighting executive desk, black leather sofa, and custom wooden wall sculptures"
         }
       ]
+    },
+    {
+      id: "tase-chennai",
+      slug: "tase-chennai",
+      sourceFolder: "tase-chennai",
+      titleEn: "TASE - Chennai",
+      titleTa: "TASE - சென்னை",
+      titleTaClean: "TASE - சென்னை",
+      titleTaStatus: "verified",
+      category: "commercial",
+      location: "Chennai",
+      locationTa: "சென்னை",
+      status: "Completed",
+      statusTa: "நிறைவுற்றது",
+      descriptionEn: "Commercial office interior with meeting and collaboration rooms.",
+      descriptionTa: "கூட்டம் மற்றும் கலந்துரையாடல் அறைகளுடன் கூடிய வணிக அலுவலக உட்புற வடிவமைப்பு.",
+      area: "—",
+      year: "—",
+      client: "TASE",
+      photoCount: 3,
+      cover: "images/projects/tase-chennai/cover-1080.jpg",
+      coverBase: "images/projects/tase-chennai/cover",
+      coverFilename: "tase-chennai-1-blue-meeting-room.webp",
+      coverAlt: "TASE - Chennai — Executive meeting room with conference table, presentation display, and whiteboard",
+      coverWidths: [768, 1080, 1600],
+      coverWidth: 1600,
+      coverHeight: 1200,
+      images: [
+        {
+          id: "tase-chennai-01",
+          index: 1,
+          filename: "tase-chennai-1-blue-meeting-room.webp",
+          base: "images/projects/tase-chennai/01-blue-meeting-room",
+          src: "images/projects/tase-chennai/01-blue-meeting-room-1080.jpg",
+          thumb: "images/projects/tase-chennai/01-blue-meeting-room-480.webp",
+          widths: [480, 768, 1080, 1600, 2000],
+          width: 1024,
+          height: 576,
+          alt: "TASE - Chennai — Executive meeting room with conference table, presentation display, and whiteboard"
+        },
+        {
+          id: "tase-chennai-02",
+          index: 2,
+          filename: "tase-chennai-2-orange-meeting-room.webp",
+          base: "images/projects/tase-chennai/02-orange-meeting-room",
+          src: "images/projects/tase-chennai/02-orange-meeting-room-1080.jpg",
+          thumb: "images/projects/tase-chennai/02-orange-meeting-room-480.webp",
+          widths: [480, 768, 1080, 1600, 2000],
+          width: 1024,
+          height: 576,
+          alt: "TASE - Chennai — Discussion room with wooden acoustic accent panel and curved presentation screen"
+        },
+        {
+          id: "tase-chennai-03",
+          index: 3,
+          filename: "tase-chennai-3-collab-room.webp",
+          base: "images/projects/tase-chennai/03-collab-room",
+          src: "images/projects/tase-chennai/03-collab-room-1080.jpg",
+          thumb: "images/projects/tase-chennai/03-collab-room-480.webp",
+          widths: [480, 768, 1080, 1600, 2000],
+          width: 1024,
+          height: 576,
+          alt: "TASE - Chennai — Collaboration room with high table, mint green stools, and architectural skyline wall art"
+        }
+      ]
     }
   ];
 
@@ -2331,6 +2397,18 @@
 
     if (titleEl) titleEl.textContent = title;
 
+    const descEl = document.getElementById('projectDetailDesc');
+    const desc = currentLang === 'ta' ? (proj.descriptionTa || proj.descriptionEn) : (proj.descriptionEn || proj.descriptionTa);
+    if (descEl) {
+      if (desc) {
+        descEl.textContent = desc;
+        descEl.hidden = false;
+      } else {
+        descEl.textContent = '';
+        descEl.hidden = true;
+      }
+    }
+
     if (metaEl) {
       metaEl.innerHTML = `
         <span class="project-meta-pill">
@@ -2343,6 +2421,14 @@
         ${statusLabel ? `
         <span class="project-meta-pill">
           <strong>${t.projectStatusLabel || t.metaStatus || 'Status'}:</strong> ${statusLabel}
+        </span>` : ''}
+        ${proj.area ? `
+        <span class="project-meta-pill">
+          <strong>${currentLang === 'ta' ? 'பரப்பளவு' : 'Area'}:</strong> ${proj.area}
+        </span>` : ''}
+        ${proj.year ? `
+        <span class="project-meta-pill">
+          <strong>${currentLang === 'ta' ? 'ஆண்டு' : 'Year'}:</strong> ${proj.year}
         </span>` : ''}
       `;
     }
@@ -2891,9 +2977,10 @@
     if (!modal) return;
     lastActiveElement = document.activeElement;
     modal.classList.add('open');
+    modal.hidden = false;
     document.body.style.overflow = 'hidden';
 
-    const closeBtn = modal.querySelector('#lightboxCloseBtn, .modal-close-btn, .lightbox-close');
+    const closeBtn = modal.querySelector('#lightboxCloseBtn, .modal-close-btn, .lightbox-close, #mapModalCloseBtn, .map-modal-close-btn');
     if (closeBtn) {
       closeBtn.focus();
     } else {
@@ -2905,6 +2992,7 @@
   function closeModal(modal) {
     if (!modal) return;
     modal.classList.remove('open');
+    modal.hidden = true;
     document.body.style.overflow = '';
     if (modal === lightboxModal) {
       resetLightboxZoom();
@@ -2927,6 +3015,54 @@
           closeModal(lightboxModal);
         }
       });
+    }
+
+    // Map Modal Interactive Controls
+    const btnExpandMap = document.getElementById('btnExpandMap');
+    const mapModalCloseBtn = document.getElementById('mapModalCloseBtn');
+    const mapModalBackdrop = document.getElementById('mapModalBackdrop');
+
+    function renderMapModalIframe() {
+      const modalBody = document.getElementById('mapModalBody');
+      if (!modalBody) return;
+
+      // Ensure it uses the exact same embed src as the inline map
+      const inlineIframe = document.querySelector('.location-map-iframe');
+      const targetSrc = (inlineIframe && inlineIframe.getAttribute('src'))
+        || (window.MAK_CONTENT && window.MAK_CONTENT.business && window.MAK_CONTENT.business.mapEmbedUrl)
+        || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.3349088498817!2d79.73960620000001!3d11.2367552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a54dfe70853801d%3A0xcccc61647a031879!2sMAK%20Build%20Construction%20%26%20Design!5e0!3m2!1sen!2sin!4v1792056956421!5m2!1sen!2sin';
+
+      let iframe = modalBody.querySelector('iframe');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.id = 'mapModalIframe';
+        iframe.className = 'map-modal-iframe';
+        iframe.title = 'MAK Build Construction & Design Location Map Expanded';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = '0';
+        iframe.src = targetSrc;
+        modalBody.appendChild(iframe);
+      } else if (!iframe.src || iframe.src === 'about:blank' || !iframe.src.startsWith('http')) {
+        iframe.src = targetSrc;
+      }
+    }
+
+    if (btnExpandMap && mapModal) {
+      btnExpandMap.addEventListener('click', () => {
+        openModal(mapModal);
+        renderMapModalIframe();
+      });
+    }
+
+    if (mapModalCloseBtn && mapModal) {
+      mapModalCloseBtn.addEventListener('click', () => closeModal(mapModal));
+    }
+
+    if (mapModalBackdrop && mapModal) {
+      mapModalBackdrop.addEventListener('click', () => closeModal(mapModal));
     }
 
     const prevBtn = document.getElementById('lightboxPrevBtn');
@@ -2989,7 +3125,8 @@
         return;
       }
 
-      const activeModal = lightboxModal && lightboxModal.classList.contains('open') ? lightboxModal : null;
+      const activeModal = (lightboxModal && lightboxModal.classList.contains('open')) ? lightboxModal :
+                          (mapModal && mapModal.classList.contains('open')) ? mapModal : null;
       if (!activeModal) return;
 
       if (e.key === 'Escape') {

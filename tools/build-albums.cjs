@@ -155,10 +155,40 @@ const PROJECTS_META = [
       'Enscape_2026-08-17-17-17-04_MD.png':
         'Office Interior — Managing Director suite side perspective highlighting executive desk, black leather sofa, and custom wooden wall sculptures'
     }
+  },
+  {
+    id: 'tase-chennai',
+    slug: 'tase-chennai',
+    sourceFolder: 'tase-chennai',
+    titleEn: 'TASE - Chennai',
+    titleTa: 'TASE - சென்னை',
+    titleTaReview: 'verified',
+    category: 'commercial',
+    location: 'Chennai',
+    locationTa: 'சென்னை',
+    status: 'Completed',
+    statusTa: 'நிறைவுற்றது',
+    descriptionEn: 'Commercial office interior with meeting and collaboration rooms.',
+    descriptionTa: 'கூட்டம் மற்றும் கலந்துரையாடல் அறைகளுடன் கூடிய வணிக அலுவலக உட்புற வடிவமைப்பு.',
+    area: '—',
+    year: '—',
+    client: 'TASE',
+    coverFile: 'tase-chennai-1-blue-meeting-room.webp',
+    altMap: {
+      'tase-chennai-1-blue-meeting-room.webp':
+        'TASE - Chennai — Executive meeting room with conference table, presentation display, and whiteboard',
+      'tase-chennai-2-orange-meeting-room.webp':
+        'TASE - Chennai — Discussion room with wooden acoustic accent panel and curved presentation screen',
+      'tase-chennai-3-collab-room.webp':
+        'TASE - Chennai — Collaboration room with high table, mint green stools, and architectural skyline wall art'
+    }
   }
 ];
 
 function cleanSlug(filename, idx) {
+  if (filename.includes('blue-meeting-room')) return '01-blue-meeting-room';
+  if (filename.includes('orange-meeting-room')) return '02-orange-meeting-room';
+  if (filename.includes('collab-room')) return '03-collab-room';
   const ext = path.extname(filename);
   const raw = path.basename(filename, ext)
     .toLowerCase()
@@ -292,7 +322,7 @@ async function run() {
       slug: meta.slug,
       sourceFolder: meta.sourceFolder,
       titleEn: meta.titleEn,
-      titleTa: `${meta.titleTa} (needs review)`,
+      titleTa: meta.titleTaReview === 'verified' ? meta.titleTa : `${meta.titleTa} (needs review)`,
       titleTaClean: meta.titleTa,
       titleTaStatus: meta.titleTaReview,
       category: meta.category,
@@ -300,6 +330,11 @@ async function run() {
       locationTa: meta.locationTa,
       status: meta.status,
       statusTa: meta.statusTa,
+      ...(meta.descriptionEn ? { descriptionEn: meta.descriptionEn } : {}),
+      ...(meta.descriptionTa ? { descriptionTa: meta.descriptionTa } : {}),
+      ...(meta.area ? { area: meta.area } : {}),
+      ...(meta.year ? { year: meta.year } : {}),
+      ...(meta.client ? { client: meta.client } : {}),
       photoCount: imagesList.length,
       cover: `images/projects/${meta.slug}/cover-1080.jpg`,
       coverBase: `images/projects/${meta.slug}/cover`,

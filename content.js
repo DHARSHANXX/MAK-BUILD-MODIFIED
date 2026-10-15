@@ -37,7 +37,9 @@ window.MAK_CONTENT = {
       pincode: "609110",
       full: "117C, Pidari South Street, Sirkazhi, Tamil Nadu 609110",
       fullTa: "117C, பிடாரி தெற்கு வீதி, சீர்காழி, தமிழ்நாடு 609110",
-      mapEmbedUrl: "https://www.google.com/maps?q=117c+Pidari+South+Street,+Sirkazhi+609110&output=embed"
+      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.3349088498817!2d79.73960620000001!3d11.2367552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a54dfe70853801d%3A0xcccc61647a031879!2sMAK%20Build%20Construction%20%26%20Design!5e0!3m2!1sen!2sin!4v1792056956421!5m2!1sen!2sin",
+      googleMapsUrl: "https://www.google.com/maps?cid=14757277163157919865",
+      directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=MAK+Build+Construction+%26+Design+Sirkazhi"
     },
     
     // Instagram
@@ -611,6 +613,23 @@ window.MAK_CONTENT = {
       contactWhatsAppLink: "Chat with us on WhatsApp (+91 81441 66022)",
       contactAddressTitle: "Our Studio",
 
+      locationMapHeading: "MAK BUILD LOCATION MAP",
+      locationMapSub: "117C, Pidari South Street, Sirkazhi",
+      locationGoogleMapsBadge: "Google Maps",
+      locationVerifiedBadge: "GOOGLE MAPS VERIFIED",
+      locationExpandMap: "Expand map view",
+      locationExpandMapText: "Expand Map",
+      locationOpenInMaps: "Open in Maps",
+      locationOpenInMapsText: "Open in Maps",
+      locationStudioBadge: "Engineering Studio & Office",
+      engineerCivilTitle: "• Civil & Structural Engineer",
+      locationAddressLabel: "Address",
+      locationFullAddress: "117C, Pidari South Street, Sirkazhi, Tamil Nadu 609110",
+      locationPhoneLabel: "Direct Calls",
+      locationWhatsAppLabel: "WhatsApp Inquiry",
+      locationEmailLabel: "Official Email",
+      locationGetDirections: "Get Directions",
+
       footerHiring: "We're hiring a Draftsman – WhatsApp us",
       footerApplyWhatsApp: "Apply on WhatsApp →",
       footerBrandDesc: "We Build Dreams with Precision. Building Stronger Spaces for a Better Tomorrow. Led by Er. Manikandan Rajendran.",
@@ -750,6 +769,23 @@ window.MAK_CONTENT = {
       contactWhatsAppTitle: "வாட்ஸ்அப்",
       contactWhatsAppLink: "வாட்ஸ்அப்பில் உரையாடுங்கள் (+91 81441 66022)",
       contactAddressTitle: "எங்கள் அலுவலகம்",
+
+      locationMapHeading: "MAK BUILD வரைபடம் & அலுவலகம்",
+      locationMapSub: "117C, பிடாரி தெற்கு வீதி, சீர்காழி",
+      locationGoogleMapsBadge: "கூகுள் மேப்ஸ்",
+      locationVerifiedBadge: "GOOGLE MAPS VERIFIED",
+      locationExpandMap: "வரைபடத்தை பெரிதாக்குக",
+      locationExpandMapText: "பெரிதாக்குக",
+      locationOpenInMaps: "வரைபடத்தில் காண்க",
+      locationOpenInMapsText: "வரைபடத்தில் காண்க",
+      locationStudioBadge: "பொறியியல் ஸ்டுடியோ & அலுவலகம்",
+      engineerCivilTitle: "• சிவில் & கட்டமைப்பு பொறியாளர்",
+      locationAddressLabel: "முகவரி",
+      locationFullAddress: "117C, பிடாரி தெற்கு வீதி, சீர்காழி, தமிழ்நாடு 609110",
+      locationPhoneLabel: "நேரடி அழைப்புகள்",
+      locationWhatsAppLabel: "வாட்ஸ்அப் உதவி",
+      locationEmailLabel: "மின்னஞ்சல்",
+      locationGetDirections: "வழிகாட்டுதல் பெறுக",
 
       footerHiring: "வரைவாளர் (Draftsman) தேவை – வாட்ஸ்அப் செய்க",
       footerApplyWhatsApp: "வாட்ஸ்அப்பில் விண்ணப்பிக்க →",

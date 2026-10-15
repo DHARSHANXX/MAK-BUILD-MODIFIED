@@ -5,8 +5,9 @@
       "slug": "senthil-residence-sirkazhi",
       "sourceFolder": "Senthil-residence- sirkazhi",
       "titleEn": "Senthil Residence, Sirkazhi",
-      "titleTa": "செந்தில் இல்லம், சீர்காழி",
+      "titleTa": "செந்தில் இல்லம், சீர்காழி (needs review)",
       "titleTaClean": "செந்தில் இல்லம், சீர்காழி",
+      "titleTaStatus": "needs review",
       "category": "residential",
       "location": "Sirkazhi",
       "locationTa": "சீர்காழி",
@@ -52,8 +53,9 @@
       "slug": "interior-chennai",
       "sourceFolder": "interior-chennai",
       "titleEn": "Interior at Chennai",
-      "titleTa": "சென்னை உட்புற வடிவமைப்பு",
+      "titleTa": "சென்னை உட்புற வடிவமைப்பு (needs review)",
       "titleTaClean": "சென்னை உட்புற வடிவமைப்பு",
+      "titleTaStatus": "needs review",
       "category": "interior",
       "location": "Chennai",
       "locationTa": "சென்னை",
@@ -156,8 +158,9 @@
       "slug": "interior-vellore",
       "sourceFolder": "Interior-vellore",
       "titleEn": "Interior at Vellore",
-      "titleTa": "வேலூர் உட்புற வடிவமைப்பு",
+      "titleTa": "வேலூர் உட்புற வடிவமைப்பு (needs review)",
       "titleTaClean": "வேலூர் உட்புற வடிவமைப்பு",
+      "titleTaStatus": "needs review",
       "category": "interior",
       "location": "Vellore",
       "locationTa": "வேலூர்",
@@ -194,7 +197,7 @@
           ],
           "width": 3840,
           "height": 2160,
-          "alt": "Interior at Vellore — Bedroom interior with sage-green panelled floor-to-ceiling wardrobe, botanical accent wall niche for TV, and teak wood door"
+          "alt": "Interior at Vellore — Bedroom interior with sage-green panelled floor-to-ceiling wardrobe, botanical accent wall niche for TV, and teak wood двери"
         },
         {
           "id": "interior-vellore-02",
@@ -241,8 +244,9 @@
       "slug": "kathir-interior",
       "sourceFolder": "Kathir-interior",
       "titleEn": "Kathir Interior",
-      "titleTa": "கதிர் உட்புற வடிவமைப்பு",
+      "titleTa": "கதிர் உட்புற வடிவமைப்பு (needs review)",
       "titleTaClean": "கதிர் உட்புற வடிவமைப்பு",
+      "titleTaStatus": "needs review",
       "category": "interior",
       "location": "Thanjavur",
       "locationTa": "தஞ்சாவூர்",
@@ -554,8 +558,9 @@
       "slug": "office-interior",
       "sourceFolder": "Office-interior",
       "titleEn": "Office Interior",
-      "titleTa": "அலுவலக உட்புற வடிவமைப்பு",
+      "titleTa": "அலுவலக உட்புற வடிவமைப்பு (needs review)",
       "titleTaClean": "அலுவலக உட்புற வடிவமைப்பு",
+      "titleTaStatus": "needs review",
       "category": "commercial",
       "location": "Sirkazhi",
       "locationTa": "சீர்காழி",
@@ -707,6 +712,97 @@
           "width": 3840,
           "height": 2160,
           "alt": "Office Interior — Managing Director suite side perspective highlighting executive desk, black leather sofa, and custom wooden wall sculptures"
+        }
+      ]
+    },
+    {
+      "id": "tase-chennai",
+      "slug": "tase-chennai",
+      "sourceFolder": "tase-chennai",
+      "titleEn": "TASE - Chennai",
+      "titleTa": "TASE - சென்னை",
+      "titleTaClean": "TASE - சென்னை",
+      "titleTaStatus": "verified",
+      "category": "commercial",
+      "location": "Chennai",
+      "locationTa": "சென்னை",
+      "status": "Completed",
+      "statusTa": "நிறைவுற்றது",
+      "descriptionEn": "Commercial office interior with meeting and collaboration rooms.",
+      "descriptionTa": "கூட்டம் மற்றும் கலந்துரையாடல் அறைகளுடன் கூடிய வணிக அலுவலக உட்புற வடிவமைப்பு.",
+      "area": "—",
+      "year": "—",
+      "client": "TASE",
+      "photoCount": 3,
+      "cover": "images/projects/tase-chennai/cover-1080.jpg",
+      "coverBase": "images/projects/tase-chennai/cover",
+      "coverFilename": "tase-chennai-1-blue-meeting-room.webp",
+      "coverOriginal": "images/originals/tase-chennai/tase-chennai-1-blue-meeting-room.webp",
+      "coverAlt": "TASE - Chennai — Executive meeting room with conference table, presentation display, and whiteboard",
+      "coverWidths": [
+        768,
+        1080,
+        1600
+      ],
+      "coverWidth": 1600,
+      "coverHeight": 1200,
+      "images": [
+        {
+          "id": "tase-chennai-01",
+          "index": 1,
+          "filename": "tase-chennai-1-blue-meeting-room.webp",
+          "original": "images/originals/tase-chennai/tase-chennai-1-blue-meeting-room.webp",
+          "base": "images/projects/tase-chennai/01-blue-meeting-room",
+          "src": "images/projects/tase-chennai/01-blue-meeting-room-1080.jpg",
+          "thumb": "images/projects/tase-chennai/01-blue-meeting-room-480.webp",
+          "widths": [
+            480,
+            768,
+            1080,
+            1600,
+            2000
+          ],
+          "width": 1024,
+          "height": 576,
+          "alt": "TASE - Chennai — Executive meeting room with conference table, presentation display, and whiteboard"
+        },
+        {
+          "id": "tase-chennai-02",
+          "index": 2,
+          "filename": "tase-chennai-2-orange-meeting-room.webp",
+          "original": "images/originals/tase-chennai/tase-chennai-2-orange-meeting-room.webp",
+          "base": "images/projects/tase-chennai/02-orange-meeting-room",
+          "src": "images/projects/tase-chennai/02-orange-meeting-room-1080.jpg",
+          "thumb": "images/projects/tase-chennai/02-orange-meeting-room-480.webp",
+          "widths": [
+            480,
+            768,
+            1080,
+            1600,
+            2000
+          ],
+          "width": 1024,
+          "height": 576,
+          "alt": "TASE - Chennai — Discussion room with wooden acoustic accent panel and curved presentation screen"
+        },
+        {
+          "id": "tase-chennai-03",
+          "index": 3,
+          "filename": "tase-chennai-3-collab-room.webp",
+          "original": "images/originals/tase-chennai/tase-chennai-3-collab-room.webp",
+          "base": "images/projects/tase-chennai/03-collab-room",
+          "src": "images/projects/tase-chennai/03-collab-room-1080.jpg",
+          "thumb": "images/projects/tase-chennai/03-collab-room-480.webp",
+          "widths": [
+            480,
+            768,
+            1080,
+            1600,
+            2000
+          ],
+          "width": 1024,
+          "height": 576,
+          "alt": "TASE - Chennai — Collaboration room with high table, mint green stools, and architectural skyline wall art"
         }
       ]
     }
