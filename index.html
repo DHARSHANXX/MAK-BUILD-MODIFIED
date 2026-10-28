@@ -1226,5 +1226,22 @@
   <script src="content.js" defer></script>
   <script src="app.min.js" defer></script>
   <script src="liquid-shader.js" defer></script>
+  <script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a');
+  if (!a || typeof gtag !== 'function') return;
+  var href = a.getAttribute('href') || '';
+  if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp.com') > -1) {
+    gtag('event', 'whatsapp_click', { link_url: href });
+  } else if (href.indexOf('tel:') === 0) {
+    gtag('event', 'phone_click', { phone_number: href.replace('tel:', '') });
+  } else if (href.indexOf('mailto:') === 0) {
+    gtag('event', 'email_click');
+  }
+});
+document.addEventListener('submit', function () {
+  if (typeof gtag === 'function') gtag('event', 'enquiry_form_submit');
+});
+</script>
 </body>
 </html>
